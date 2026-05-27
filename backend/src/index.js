@@ -97,8 +97,22 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
   console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
-  console.log(`Default Admin Email: ${process.env.ADMIN_EMAIL || 'admin@premiatto.com'}`);
+  
+  // Auto-seed admin if not exists
+  try {
+    const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
+    const password = process.env.ADMIN_PASSWORD || 'premiatto123';
+    const hash = await bcrypt.hash(password, 10);
+    await prisma.user.upsert({
+      where: { email },
+      update: { password: hash }, // Always update to match current ENV
+      create: { email, password: hash, name: "Admin", role: "admin" },
+    });
+    console.log(`Admin user ensured: ${email}`);
+  } catch (err) {
+    console.error("Failed to ensure admin user:", err.message);
+  }
 });
