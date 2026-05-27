@@ -10,12 +10,19 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const app = express();
 
-// CORS must come before helmet to ensure preflight is handled correctly
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
+// Permissive CORS for troubleshooting - can be hardened later
 app.use(cors({
-  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : true,
-  credentials: true,
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
 app.use(helmet({
@@ -68,5 +75,14 @@ app.put("/api/content", auth, async (req, res) => {
   res.json({ ok: true, updatedAt: row.updatedAt });
 });
 
+// Error handling
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err);
+  res.status(500).json({ error: "Internal Server Error", message: err.message });
+});
+
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, "0.0.0.0", () => console.log(`API on :${PORT}`));
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`API on :${PORT}`);
+  console.log(`CORS_ORIGIN set to: ${process.env.CORS_ORIGIN || 'Any (*)'}`);
+});
