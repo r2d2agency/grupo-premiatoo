@@ -121,15 +121,18 @@ export const setToken = (t: string) => localStorage.setItem(TOKEN_KEY, t);
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 export async function login(email: string, password: string) {
+  console.log(`Attempting login to: ${API_URL}/api/auth/login`);
   try {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
+      mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
+      console.error("Login failed response:", errorData);
       throw new Error(errorData.error || "Credenciais inválidas");
     }
     
