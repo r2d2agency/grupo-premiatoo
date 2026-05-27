@@ -13,21 +13,25 @@ const app = express();
 // Request logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log('Headers:', JSON.stringify(req.headers));
   next();
 });
 
-// Permissive CORS for troubleshooting - can be hardened later
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-}));
+// Explicit CORS handling for every single request
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  
+  if (req.method === "OPTIONS") {
+    return res.status(204).send();
+  }
+  next();
+});
 
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
+// Temporarily disabled helmet to debug CORS
+// app.use(helmet(...));
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
 
@@ -83,6 +87,7 @@ app.use((err, req, res, next) => {
 
 const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`API on :${PORT}`);
-  console.log(`CORS_ORIGIN set to: ${process.env.CORS_ORIGIN || 'Any (*)'}`);
+  console.log(`API running on port ${PORT}`);
+  console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
+  console.log(`Default Admin Email: ${process.env.ADMIN_EMAIL || 'admin@premiatto.com'}`);
 });
