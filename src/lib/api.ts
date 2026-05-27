@@ -1,8 +1,9 @@
 // Lightweight client for the CMS backend.
 // Set VITE_API_URL to your EasyPanel backend URL, e.g. https://api.yourdomain.com
-export const API_URL =
+export const API_URL = (
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) ||
-  "http://localhost:4000";
+  "http://localhost:4000"
+).replace(/\/$/, "");
 
 export type SiteContent = {
   hero: {
