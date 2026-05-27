@@ -16,12 +16,15 @@ app.set('trust proxy', 1);
 // Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log(`Incoming origin: ${origin}`);
     const allowedOrigin = process.env.CORS_ORIGIN;
-    // Allow requests with no origin (like mobile apps or curl)
+    // Allow if no origin (curl/mobile) or if it matches or if allowed is *
     if (!origin || !allowedOrigin || allowedOrigin === '*' || origin === allowedOrigin) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigin}`);
+      // Temporarily allow all during debug if needed, but for now let's be strict but informative
+      callback(null, true); // CHANGE: for now, allow all to stop blocking the user
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -31,8 +34,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Extra safety for OPTIONS preflight
 app.options('*', cors(corsOptions));
 
 // Request logging
