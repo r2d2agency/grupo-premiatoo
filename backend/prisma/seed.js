@@ -67,7 +67,7 @@ async function main() {
 
   await prisma.user.upsert({
     where: { email },
-    update: {},
+    update: { password: hash }, // Force update password to match env var
     create: { email, password: hash, name: "Admin", role: "admin" },
   });
 

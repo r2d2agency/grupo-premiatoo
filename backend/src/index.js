@@ -16,17 +16,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Permissive CORS for troubleshooting - can be hardened later
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-}));
+// CORS handling - Manual implementation to ensure it's always set
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  
+  if (req.method === "OPTIONS") {
+    return res.status(204).end();
+  }
+  next();
+});
 
 app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false // Disable CSP for troubleshooting
 }));
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
