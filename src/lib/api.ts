@@ -121,15 +121,27 @@ export const setToken = (t: string) => localStorage.setItem(TOKEN_KEY, t);
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 export async function login(email: string, password: string) {
-  const res = await fetch(`${API_URL}/api/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
-  if (!res.ok) throw new Error("Credenciais inválidas");
-  const data = await res.json();
-  setToken(data.token);
-  return data;
+  try {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Credenciais inválidas");
+    }
+    
+    const data = await res.json();
+    setToken(data.token);
+    return data;
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
+      throw new Error("Erro de conexão (CORS/Network). Verifique se o backend está acessível e configurado.");
+    }
+    throw error;
+  }
 }
 
 export async function saveContent(content: SiteContent) {
