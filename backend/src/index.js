@@ -87,6 +87,7 @@ app.use((err, req, res, next) => {
 
 const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`API on :${PORT}`);
-  console.log(`CORS_ORIGIN set to: ${process.env.CORS_ORIGIN || 'Any (*)'}`);
+  console.log(`API running on port ${PORT}`);
+  console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
+  console.log(`Default Admin Email: ${process.env.ADMIN_EMAIL || 'admin@premiatto.com'}`);
 });
