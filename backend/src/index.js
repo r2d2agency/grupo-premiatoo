@@ -21,6 +21,7 @@ app.use(cors({
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
+app.use(compression());
 app.use(express.json({ limit: "1mb" }));
 
 const JWT_SECRET = process.env.JWT_SECRET || "change-me-in-production";
