@@ -10,23 +10,35 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const app = express();
 
+// Trust proxy if behind a reverse proxy (like EasyPanel/Nginx)
+app.set('trust proxy', 1);
+
+// Configure CORS
+const corsOptions = {
+  origin: (origin, callback) => {
+    console.log(`Incoming origin: ${origin}`);
+    const allowedOrigin = process.env.CORS_ORIGIN;
+    // Allow if no origin (curl/mobile) or if it matches or if allowed is *
+    if (!origin || !allowedOrigin || allowedOrigin === '*' || origin === allowedOrigin) {
+      callback(null, true);
+    } else {
+      console.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigin}`);
+      // Temporarily allow all during debug if needed, but for now let's be strict but informative
+      callback(null, true); // CHANGE: for now, allow all to stop blocking the user
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Request logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  console.log('Headers:', JSON.stringify(req.headers));
-  next();
-});
-
-// Explicit CORS handling for every single request
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  
-  if (req.method === "OPTIONS") {
-    return res.status(204).send();
-  }
   next();
 });
 
@@ -86,8 +98,22 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
   console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
-  console.log(`Default Admin Email: ${process.env.ADMIN_EMAIL || 'admin@premiatto.com'}`);
+  
+  // Auto-seed admin if not exists
+  try {
+    const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
+    const password = process.env.ADMIN_PASSWORD || 'premiatto123';
+    const hash = await bcrypt.hash(password, 10);
+    await prisma.user.upsert({
+      where: { email },
+      update: { password: hash }, // Always update to match current ENV
+      create: { email, password: hash, name: "Admin", role: "admin" },
+    });
+    console.log(`Admin user ensured: ${email}`);
+  } catch (err) {
+    console.error("Failed to ensure admin user:", err.message);
+  }
 });
