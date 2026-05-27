@@ -10,23 +10,34 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const app = express();
 
+// Trust proxy if behind a reverse proxy (like EasyPanel/Nginx)
+app.set('trust proxy', 1);
+
+// Configure CORS
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigin = process.env.CORS_ORIGIN;
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin || !allowedOrigin || allowedOrigin === '*' || origin === allowedOrigin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
+// Extra safety for OPTIONS preflight
+app.options('*', cors(corsOptions));
+
 // Request logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  console.log('Headers:', JSON.stringify(req.headers));
-  next();
-});
-
-// Explicit CORS handling for every single request
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  
-  if (req.method === "OPTIONS") {
-    return res.status(204).send();
-  }
   next();
 });
 
