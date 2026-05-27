@@ -75,5 +75,14 @@ app.put("/api/content", auth, async (req, res) => {
   res.json({ ok: true, updatedAt: row.updatedAt });
 });
 
+// Error handling
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err);
+  res.status(500).json({ error: "Internal Server Error", message: err.message });
+});
+
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, "0.0.0.0", () => console.log(`API on :${PORT}`));
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`API on :${PORT}`);
+  console.log(`CORS_ORIGIN set to: ${process.env.CORS_ORIGIN || 'Any (*)'}`);
+});
