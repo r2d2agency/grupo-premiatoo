@@ -173,7 +173,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error", message: err.message });
 });
 
-const PORT = Number(process.env.PORT) || 4000;
+const PRIMARY_PORT = Number(process.env.PORT) || 4000;
 
 const logTables = async () => {
   try {
@@ -186,9 +186,7 @@ const logTables = async () => {
   }
 };
 
-app.listen(PORT, "0.0.0.0", async () => {
-  console.log(`API running on port ${PORT}`);
-  
+const startupCheck = async () => {
   try {
     await prisma.$connect();
     console.log("Database connected: true");
@@ -196,7 +194,25 @@ app.listen(PORT, "0.0.0.0", async () => {
   } catch (e) {
     console.error("Database connection failed:", e.message);
   }
-  
-  // Note: Admin user and initial content are now handled by prisma/seed.js in the start script
+
   console.log("Startup database check complete.");
-});
+};
+
+const startServer = (port, runStartupCheck = false) => {
+  const server = app.listen(port, "0.0.0.0", async () => {
+    console.log(`API running on port ${port}`);
+    if (runStartupCheck) await startupCheck();
+  });
+
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.warn(`Port ${port} already in use, skipping this listener.`);
+      return;
+    }
+
+    throw error;
+  });
+};
+
+const ports = Array.from(new Set([PRIMARY_PORT, 4000, 3000]));
+ports.forEach((port, index) => startServer(port, index === 0));
