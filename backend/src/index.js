@@ -122,9 +122,9 @@ app.listen(PORT, "0.0.0.0", async () => {
       });
       console.log(`Admin user ensured: ${email}`);
     } catch (err) {
-      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 5) {
-        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/5), retrying in 2s...`);
-        setTimeout(() => ensureAdmin(retryCount + 1), 2000);
+      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 10) {
+        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/10), retrying in 3s...`);
+        setTimeout(() => ensureAdmin(retryCount + 1), 3000);
       } else {
         console.error("Database sync/seed error:", err.message);
       }
