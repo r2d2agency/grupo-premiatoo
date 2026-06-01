@@ -36,6 +36,7 @@ console.log('----------------------');
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   
+  // Always allow the origin that sent the request
   if (origin) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   } else {
@@ -43,9 +44,9 @@ app.use((req, res, next) => {
   }
 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin, Cache-Control');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin, Cache-Control, X-App-Token');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Vary', 'Origin');
+  res.setHeader('Access-Control-Max-Age', '86400'); // Cache preflight for 24h
   
   if (req.method === 'OPTIONS') {
     return res.status(204).end();
