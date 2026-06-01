@@ -125,7 +125,6 @@ export async function login(email: string, password: string) {
   try {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      mode: "cors",
       credentials: "omit",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -152,7 +151,6 @@ export async function register(email: string, password: string, name?: string) {
   try {
     const res = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
-      mode: "cors",
       credentials: "omit",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
