@@ -32,27 +32,9 @@ const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
 console.log('DATABASE_URL:', maskedDbUrl);
 console.log('----------------------');
 
-// Simplest possible CORS setup to avoid all browser issues
-app.use(cors({
-  origin: true, // Reflects the request origin, equivalent to "*" but works with credentials
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["X-Requested-With", "Content-Type", "Authorization", "Accept", "Origin", "Cache-Control"],
-  credentials: true,
-  maxAge: 86400
-}));
-
-// Fallback manual headers just in case middleware fails for some reason
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin, Cache-Control');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(204).end();
-  }
-  next();
-});
+// CORS completely disabled - allow ALL origins, methods, headers
+app.use(cors());
+app.options('*', cors());
 
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
