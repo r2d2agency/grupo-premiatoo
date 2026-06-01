@@ -17,4 +17,4 @@ EXPOSE 4000
 
 # Run migrations + seed (idempotent) + start
 # Clear schema public CASCADE then push tables + seed + start
-CMD sh -c "node -e \"const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); prisma.\$executeRawUnsafe('DROP SCHEMA public CASCADE; CREATE SCHEMA public;').finally(() => prisma.\$disconnect());\" && npx prisma db push --force-reset && npx prisma db seed && node src/index.js"
+CMD sh -c "node -e \"const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); prisma['\$executeRawUnsafe']('DROP SCHEMA public CASCADE; CREATE SCHEMA public;').finally(() => prisma['\$disconnect']());\" && npx prisma db push --force-reset && npx prisma db seed && node src/index.js"
