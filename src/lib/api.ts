@@ -187,3 +187,39 @@ export async function saveContent(content: SiteContent) {
   if (!res.ok) throw new Error("Falha ao salvar");
   return res.json();
 }
+
+export async function getUsers() {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Falha ao buscar usuários");
+  return res.json();
+}
+
+export async function createUser(userData: any) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(userData),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || "Falha ao criar usuário");
+  }
+  return res.json();
+}
+
+export async function deleteUser(id: string) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/users/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Falha ao excluir usuário");
+  return res.json();
+}
