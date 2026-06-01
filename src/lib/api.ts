@@ -6,6 +6,20 @@ export const API_URL = (
 ).replace(/\/$/, "");
 
 export type SiteContent = {
+  branding: {
+    primaryColor: string;
+    secondaryColor: string;
+    logoUrl?: string;
+  };
+  modules: {
+    header: boolean;
+    hero: boolean;
+    stats: boolean;
+    garantias: boolean;
+    capital: boolean;
+    brandCards: boolean;
+    footer: boolean;
+  };
   hero: {
     title: string;
     subtitle: string;
@@ -28,17 +42,26 @@ export type SiteContent = {
   };
 };
 
+
 export const defaultContent: SiteContent = {
+  branding: {
+    primaryColor: "#001B3D", // Navy
+    secondaryColor: "#C5A059", // Gold/Tan
+  },
+  modules: {
+    header: true,
+    hero: true,
+    stats: true,
+    garantias: true,
+    capital: true,
+    brandCards: true,
+    footer: true,
+  },
   hero: {
-    title: "Estrutura, capital e segurança para operações que exigem critério e continuidade.",
-    subtitle:
-      "Atuamos na estruturação de garantias e soluções financeiras para empresas que precisam proteger contratos, fortalecer seu caixa e seguir em frente com segurança.",
-    ctaPrimary: "SOLICITAR ANÁLISE",
-    ctaSecondary: "FALAR COM ESPECIALISTA",
-    image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop",
+...
   },
   brandCards: [
+
     {
       title: "Garantias estruturadas para proteger o que sustenta o seu negócio.",
       description: "",
