@@ -141,7 +141,7 @@ export async function login(email: string, password: string) {
     return data;
   } catch (error: any) {
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error("Erro de conexão: o backend não respondeu. Verifique se o serviço no EasyPanel está rodando e saudável.");
+      throw new Error("O servidor (backend) não está respondendo. O erro de 'CORS' no navegador geralmente acontece porque o servidor está fora do ar (Erro 502 no EasyPanel).");
     }
     throw error;
   }
