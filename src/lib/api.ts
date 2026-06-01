@@ -126,6 +126,7 @@ export async function login(email: string, password: string) {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       mode: "cors",
+      credentials: "omit", // Since we use Bearer token, we don't need cookies
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
