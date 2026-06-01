@@ -32,30 +32,18 @@ const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
 console.log('DATABASE_URL:', maskedDbUrl);
 console.log('----------------------');
 
-// Explicitly handle CORS for all requests
+// Extremely permissive CORS for debugging/fixing the user's issue
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   
-  // Logic to determine if the origin is allowed
-  const isAllowed = !origin || 
-                   allowedOrigins.length === 0 || 
-                   allowedOrigins.includes('*') || 
-                   allowedOrigins.includes(origin);
-
   if (origin) {
-    // If it's an allowed origin, echo it back
-    if (isAllowed) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
-    } else {
-      // For debugging, if not allowed, we don't set the header (triggers CORS error)
-      console.warn(`CORS: Origin ${origin} not allowed. Allowed:`, allowedOrigins);
-    }
-  } else if (allowedOrigins.includes('*') || allowedOrigins.length === 0) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
     res.setHeader('Access-Control-Allow-Origin', '*');
   }
 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin, Cache-Control');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Vary', 'Origin');
   
@@ -156,6 +144,52 @@ app.put("/api/content", auth, async (req, res) => {
     res.json({ ok: true, updatedAt: row.updatedAt });
   } catch (err) {
     res.status(500).json({ error: "Error updating content", message: err.message });
+  }
+});
+
+// User Management Endpoints
+app.get("/api/users", auth, async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true, email: true, name: true, role: true, createdAt: true }
+    });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching users", message: err.message });
+  }
+});
+
+app.post("/api/users", auth, async (req, res) => {
+  try {
+    const { email, password, name, role } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "missing fields" });
+    
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) return res.status(400).json({ error: "user already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name: name || null,
+        role: role || "admin"
+      }
+    });
+
+    res.status(201).json({ id: user.id, email: user.email, name: user.name, role: user.role });
+  } catch (err) {
+    res.status(500).json({ error: "Error creating user", message: err.message });
+  }
+});
+
+app.delete("/api/users/:id", auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.user.delete({ where: { id } });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: "Error deleting user", message: err.message });
   }
 });
 
