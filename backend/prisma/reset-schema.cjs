@@ -5,8 +5,9 @@ const prisma = new PrismaClient();
 async function resetSchema() {
   console.log('Resetting public schema before Prisma db push...');
 
-  await prisma.$executeRawUnsafe('DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;');
-  await prisma.$executeRawUnsafe('GRANT ALL ON SCHEMA public TO PUBLIC;');
+  await prisma.$executeRawUnsafe('DROP SCHEMA IF EXISTS public CASCADE');
+  await prisma.$executeRawUnsafe('CREATE SCHEMA public');
+  await prisma.$executeRawUnsafe('GRANT ALL ON SCHEMA public TO public');
 
   console.log('Public schema reset complete.');
 }
