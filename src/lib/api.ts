@@ -126,7 +126,7 @@ export async function login(email: string, password: string) {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       mode: "cors",
-      credentials: "omit", // Since we use Bearer token, we don't need cookies
+      credentials: "omit",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
@@ -147,32 +147,32 @@ export async function login(email: string, password: string) {
     throw error;
   }
 }
-150: 
-151: export async function register(email: string, password: string, name?: string) {
-152:   try {
-153:     const res = await fetch(`${API_URL}/api/auth/register`, {
-154:       method: "POST",
-155:       mode: "cors",
-156:       credentials: "omit",
-157:       headers: { "Content-Type": "application/json" },
-158:       body: JSON.stringify({ email, password, name }),
-159:     });
-160:     
-161:     if (!res.ok) {
-162:       const errorData = await res.json().catch(() => ({}));
-163:       throw new Error(errorData.error || "Erro ao criar conta");
-164:     }
-165:     
-166:     const data = await res.json();
-167:     setToken(data.token);
-168:     return data;
-169:   } catch (error: any) {
-170:     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-171:       throw new Error("Erro de conexão (CORS/Network).");
-172:     }
-173:     throw error;
-174:   }
-175: }
+
+export async function register(email: string, password: string, name?: string) {
+  try {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      mode: "cors",
+      credentials: "omit",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+    });
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Erro ao criar conta");
+    }
+    
+    const data = await res.json();
+    setToken(data.token);
+    return data;
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
+      throw new Error("Erro de conexão (CORS/Network).");
+    }
+    throw error;
+  }
+}
 
 export async function saveContent(content: SiteContent) {
   const token = getToken();
