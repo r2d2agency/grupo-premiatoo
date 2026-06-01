@@ -108,31 +108,28 @@ app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
   console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
   
-  // Auto-create tables and seed admin if not exists
-  try {
-    const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
-    const password = process.env.ADMIN_PASSWORD || 'premiatto123';
-    const hash = await bcrypt.hash(password, 10);
-    
-    // Check if table exists by trying to find one user
+  // Auto-seed admin if not exists
+  const ensureAdmin = async (retryCount = 0) => {
     try {
-      await prisma.user.findFirst();
-    } catch (e) {
-      if (e.code === 'P2021' || e.message.includes('does not exist')) {
-        console.log('Tables do not exist. Attempting to create them via prisma db push...');
-        // We can't easily run child_process here safely in all environments, 
-        // but we can log that the user needs to run the migrate command.
-        console.error('CRITICAL: Database tables missing. Please run "npm run migrate" in the backend folder of your deployment.');
+      const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
+      const password = process.env.ADMIN_PASSWORD || 'premiatto123';
+      const hash = await bcrypt.hash(password, 10);
+      
+      await prisma.user.upsert({
+        where: { email },
+        update: { password: hash },
+        create: { email, password: hash, name: "Admin", role: "admin" },
+      });
+      console.log(`Admin user ensured: ${email}`);
+    } catch (err) {
+      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 5) {
+        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/5), retrying in 2s...`);
+        setTimeout(() => ensureAdmin(retryCount + 1), 2000);
+      } else {
+        console.error("Database sync/seed error:", err.message);
       }
     }
+  };
 
-    await prisma.user.upsert({
-      where: { email },
-      update: { password: hash },
-      create: { email, password: hash, name: "Admin", role: "admin" },
-    });
-    console.log(`Admin user ensured: ${email}`);
-  } catch (err) {
-    console.error("Database sync/seed error:", err.message);
-  }
+  ensureAdmin();
 });
