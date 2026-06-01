@@ -18,7 +18,11 @@ function AdminLogin() {
     setLoading(true);
     setErr(null);
     try {
-      await login(email, password);
+      if (isRegister) {
+22:         await register(email, password, name);
+23:       } else {
+24:         await login(email, password);
+25:       }
       navigate({ to: "/admin" });
     } catch (e) {
       setErr((e as Error).message);
