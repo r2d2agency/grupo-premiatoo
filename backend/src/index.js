@@ -22,15 +22,10 @@ console.log('Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // No origin (like mobile apps/curl) is always allowed
     if (!origin) return callback(null, true);
-    
-    // Check if origin is in our allowed list
     if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    
-    // For debugging and to avoid hard-blocking during setup, log but allow
     console.warn(`CORS: Origin ${origin} not explicitly allowed but letting it pass for debugging. Allowed:`, allowedOrigins);
     callback(null, true);
   },
@@ -44,14 +39,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-// Request logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
 });
 
-// Temporarily disabled helmet to debug CORS
-// app.use(helmet(...));
 app.use(compression());
 app.use(express.json({ limit: "1mb" }));
 
@@ -72,34 +64,46 @@ function auth(req, res, next) {
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 app.post("/api/auth/login", async (req, res) => {
-  const { email, password } = req.body || {};
-  if (!email || !password) return res.status(400).json({ error: "missing fields" });
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return res.status(401).json({ error: "invalid credentials" });
-  const ok = await bcrypt.compare(password, user.password);
-  if (!ok) return res.status(401).json({ error: "invalid credentials" });
-  const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, JWT_SECRET, {
-    expiresIn: "7d",
-  });
-  res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "missing fields" });
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(401).json({ error: "invalid credentials" });
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok) return res.status(401).json({ error: "invalid credentials" });
+    const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
+  } catch (err) {
+    console.error("Login Error:", err);
+    res.status(500).json({ error: "Internal Server Error", message: err.message });
+  }
 });
 
 app.get("/api/content", async (_req, res) => {
-  const row = await prisma.siteContent.findUnique({ where: { id: 1 } });
-  res.json(row?.data || {});
+  try {
+    const row = await prisma.siteContent.findUnique({ where: { id: 1 } });
+    res.json(row?.data || {});
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching content", message: err.message });
+  }
 });
 
 app.put("/api/content", auth, async (req, res) => {
-  const data = req.body;
-  const row = await prisma.siteContent.upsert({
-    where: { id: 1 },
-    update: { data },
-    create: { id: 1, data },
-  });
-  res.json({ ok: true, updatedAt: row.updatedAt });
+  try {
+    const data = req.body;
+    const row = await prisma.siteContent.upsert({
+      where: { id: 1 },
+      update: { data },
+      create: { id: 1, data },
+    });
+    res.json({ ok: true, updatedAt: row.updatedAt });
+  } catch (err) {
+    res.status(500).json({ error: "Error updating content", message: err.message });
+  }
 });
 
-// Error handling
 app.use((err, req, res, next) => {
   console.error("Unhandled Error:", err);
   res.status(500).json({ error: "Internal Server Error", message: err.message });
@@ -108,7 +112,14 @@ app.use((err, req, res, next) => {
 const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
-  console.log(`Database connected: ${!!process.env.DATABASE_URL}`);
+  
+  // Real database connection check
+  try {
+    await prisma.$connect();
+    console.log("Database connection successful");
+  } catch (e) {
+    console.error("Database connection failed:", e.message);
+  }
   
   // Auto-seed admin if not exists
   const ensureAdmin = async (retryCount = 0) => {
@@ -117,6 +128,7 @@ app.listen(PORT, "0.0.0.0", async () => {
       const password = process.env.ADMIN_PASSWORD || 'premiatto123';
       const hash = await bcrypt.hash(password, 10);
       
+      console.log(`Attempting to ensure admin user (${retryCount + 1}/10)...`);
       await prisma.user.upsert({
         where: { email },
         update: { password: hash },
@@ -125,10 +137,11 @@ app.listen(PORT, "0.0.0.0", async () => {
       console.log(`Admin user ensured: ${email}`);
     } catch (err) {
       if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 10) {
-        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/10), retrying in 3s...`);
-        setTimeout(() => ensureAdmin(retryCount + 1), 3000);
+        console.log(`Database tables not ready yet. Error: ${err.message}. Retrying in 5s...`);
+        setTimeout(() => ensureAdmin(retryCount + 1), 5000);
       } else {
         console.error("Database sync/seed error:", err.message);
+        if (err.stack) console.error(err.stack);
       }
     }
   };
