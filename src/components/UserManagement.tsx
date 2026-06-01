@@ -60,7 +60,10 @@ export function UserManagement() {
     } catch (error) {
       toast.error("Erro ao excluir usuário");
     }
+  };
+
   const handleUpdate = async (e: React.FormEvent) => {
+
     e.preventDefault();
     if (!editingUser) return;
     try {
