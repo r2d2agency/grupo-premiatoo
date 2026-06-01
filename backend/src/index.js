@@ -32,45 +32,30 @@ const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
 console.log('DATABASE_URL:', maskedDbUrl);
 console.log('----------------------');
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.length === 0 || allowedOrigins.includes('*')) {
-      return callback(null, true);
-    }
-
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      console.warn(`CORS: Origin ${origin} not explicitly allowed. Allowed:`, allowedOrigins);
-      // Still allow but warn, to prevent blocking if the env var is slightly off
-      return callback(null, true);
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-// Use explicit CORS headers for all responses to be safe
+// Explicitly handle CORS for all requests
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin && (allowedOrigins.includes(origin) || allowedOrigins.includes('*') || allowedOrigins.length === 0)) {
+  
+  // Logic to determine if the origin is allowed
+  const isAllowed = !origin || 
+                   allowedOrigins.length === 0 || 
+                   allowedOrigins.includes('*') || 
+                   allowedOrigins.includes(origin);
+
+  if (origin && isAllowed) {
     res.setHeader('Access-Control-Allow-Origin', origin);
-  } else if (!origin && allowedOrigins.length > 0 && !allowedOrigins.includes('*')) {
-     // Default for non-browser requests if origins are restricted
-  } else {
+  } else if (!origin && (allowedOrigins.includes('*') || allowedOrigins.length === 0)) {
     res.setHeader('Access-Control-Allow-Origin', '*');
+  } else if (origin) {
+    console.warn(`CORS: Origin ${origin} not allowed. Allowed:`, allowedOrigins);
   }
+
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   
   if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
+    return res.status(200).end();
   }
   next();
 });
