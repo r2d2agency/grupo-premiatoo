@@ -21,11 +21,24 @@ const allowedOrigins = process.env.CORS_ORIGIN
 console.log('Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
-  origin: true, // Reflect context origin for easier debugging
+  origin: function (origin, callback) {
+    // No origin (like mobile apps/curl) is always allowed
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in our allowed list
+    if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // For debugging and to avoid hard-blocking during setup, log but allow
+    console.warn(`CORS: Origin ${origin} not explicitly allowed but letting it pass for debugging. Allowed:`, allowedOrigins);
+    callback(null, true);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
-  optionsSuccessStatus: 200
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 };
 
 app.use(cors(corsOptions));
