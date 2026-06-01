@@ -12,32 +12,55 @@ const app = express();
 
 app.set('trust proxy', 1);
 
+// Helper to mask sensitive information
+const maskString = (str) => {
+  if (!str) return 'undefined';
+  if (str.length < 10) return '***';
+  return str.substring(0, 5) + '...' + str.substring(str.length - 5);
+};
+
+// CORS configuration from environment variable
 const allowedOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()) 
-  : ['*'];
+  : [];
 
+console.log('--- Startup Config ---');
 console.log('Allowed Origins:', allowedOrigins);
+const dbUrl = process.env.DATABASE_URL || '';
+// Mask database password
+const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
+console.log('DATABASE_URL:', maskedDbUrl);
+console.log('----------------------');
 
 const corsOptions = {
   origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+    
+    if (allowedOrigins.length === 0 || allowedOrigins.includes('*')) {
       return callback(null, true);
     }
-    console.warn(`CORS: Origin ${origin} not explicitly allowed.`, origin);
-    callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.warn(`CORS: Origin ${origin} not explicitly allowed. Allowed:`, allowedOrigins);
+      // For now, allow but log a warning to help debugging
+      return callback(null, true);
+    }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 app.use(cors(corsOptions));
+// Handle preflight requests for all routes
 app.options('*', cors(corsOptions));
 
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
   next();
 });
 
@@ -107,16 +130,25 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = Number(process.env.PORT) || 4000;
+
+const logTables = async () => {
+  try {
+    const tables = await prisma.$queryRaw`SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'`;
+    console.log("Current tables in public schema:", tables.map(t => t.tablename).join(', '));
+    return tables.map(t => t.tablename);
+  } catch (e) {
+    console.error("Error listing tables:", e.message);
+    return [];
+  }
+};
+
 app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
   
   try {
     await prisma.$connect();
-    console.log("Database connection successful");
-    
-    // Debug: list all tables
-    const tables = await prisma.$queryRaw`SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'`;
-    console.log("Existing tables in 'public' schema:", tables);
+    console.log("Database connected: true");
+    await logTables();
   } catch (e) {
     console.error("Database connection failed:", e.message);
   }
@@ -127,7 +159,12 @@ app.listen(PORT, "0.0.0.0", async () => {
       const password = process.env.ADMIN_PASSWORD || 'premiatto123';
       const hash = await bcrypt.hash(password, 10);
       
-      console.log(`Attempting to ensure admin user (attempt ${retryCount + 1}/15)...`);
+      const tables = await logTables();
+      if (!tables.includes('User')) {
+        throw new Error("Table 'User' does not exist in the database.");
+      }
+
+      console.log(`Attempting to ensure admin user (attempt ${retryCount + 1}/5)...`);
       await prisma.user.upsert({
         where: { email },
         update: { password: hash },
@@ -135,11 +172,12 @@ app.listen(PORT, "0.0.0.0", async () => {
       });
       console.log(`Admin user ensured: ${email}`);
     } catch (err) {
-      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 15) {
-        console.log(`Table 'User' not found. Retrying in 5s...`);
+      if (retryCount < 5) {
+        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/5), retrying in 5s... ${err.message}`);
         setTimeout(() => ensureAdmin(retryCount + 1), 5000);
       } else {
-        console.error("Database sync/seed error:", err.message);
+        console.error("CRITICAL: Database sync/seed error:", err.message);
+        console.log("Please check if DATABASE_URL is correct and points to a writeable database.");
       }
     }
   };
