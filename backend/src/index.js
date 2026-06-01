@@ -106,6 +106,34 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", message: err.message });
   }
 });
+109: 
+110: app.post("/api/auth/register", async (req, res) => {
+111:   try {
+112:     const { email, password, name } = req.body || {};
+113:     if (!email || !password) return res.status(400).json({ error: "missing fields" });
+114:     
+115:     const existing = await prisma.user.findUnique({ where: { email } });
+116:     if (existing) return res.status(400).json({ error: "user already exists" });
+117: 
+118:     const hashedPassword = await bcrypt.hash(password, 10);
+119:     const user = await prisma.user.create({
+120:       data: {
+121:         email,
+122:         password: hashedPassword,
+123:         name: name || null,
+124:         role: "admin"
+125:       }
+126:     });
+127: 
+128:     const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, JWT_SECRET, {
+129:       expiresIn: "7d",
+130:     });
+131: 
+132:     res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name } });
+133:   } catch (err) {
+134:     console.error("Register Error:", err);
+135:     res.status(500).json({ error: "Internal Server Error", message: err.message });
+136:   }
 
 app.get("/api/content", async (_req, res) => {
   try {

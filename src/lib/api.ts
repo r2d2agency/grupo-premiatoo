@@ -126,7 +126,7 @@ export async function login(email: string, password: string) {
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       mode: "cors",
-      credentials: "omit", // Since we use Bearer token, we don't need cookies
+      credentials: "omit",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
@@ -143,6 +143,32 @@ export async function login(email: string, password: string) {
   } catch (error: any) {
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
       throw new Error("Erro de conexão (CORS/Network). Verifique se o backend está acessível e configurado.");
+    }
+    throw error;
+  }
+}
+
+export async function register(email: string, password: string, name?: string) {
+  try {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      mode: "cors",
+      credentials: "omit",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+    });
+    
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || "Erro ao criar conta");
+    }
+    
+    const data = await res.json();
+    setToken(data.token);
+    return data;
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
+      throw new Error("Erro de conexão (CORS/Network).");
     }
     throw error;
   }
