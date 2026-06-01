@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "npx prisma generate && npx prisma db push --force-reset && npx prisma db seed && node src/index.js",
-    "migrate": "prisma migrate deploy",
+    "start": "node -e \"const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); prisma.$executeRawUnsafe('DROP SCHEMA public CASCADE; CREATE SCHEMA public;').finally(() => prisma.$disconnect());\" && npx prisma db push --force-reset && npx prisma db seed && node src/index.js",
+    "migrate": "echo 'Migrate disabled - using db push'",
     "seed": "node prisma/seed.js",
     "postinstall": "prisma generate"
   },
