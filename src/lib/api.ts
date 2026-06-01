@@ -142,7 +142,7 @@ export async function login(email: string, password: string) {
     return data;
   } catch (error: any) {
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error("Erro de conexão (CORS/Network). Verifique se o backend está acessível e configurado.");
+      throw new Error("Erro de conexão: o backend não respondeu. Verifique se o serviço no EasyPanel está rodando e saudável.");
     }
     throw error;
   }
@@ -168,7 +168,7 @@ export async function register(email: string, password: string, name?: string) {
     return data;
   } catch (error: any) {
     if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error("Erro de conexão (CORS/Network).");
+      throw new Error("Erro de conexão: o backend não respondeu.");
     }
     throw error;
   }
