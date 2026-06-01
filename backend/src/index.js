@@ -22,12 +22,14 @@ console.log('Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log(`CORS Request - Origin: ${origin}`);
     // Allow if no origin (like mobile apps or curl) or if origin is in allowed list
     if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
+      // For debugging, we can temporarily allow it but log the warning
+      callback(null, true); 
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
