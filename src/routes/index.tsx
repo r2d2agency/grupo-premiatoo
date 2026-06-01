@@ -32,16 +32,21 @@ function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <Hero hero={content.hero} />
-      <BrandCards cards={content.brandCards} />
-      <Stats stats={content.stats} />
-      <Garantias items={content.garantias} />
-      <Capital data={content.capital} />
+    <div className="min-h-screen bg-background" style={{ 
+      //@ts-ignore
+      "--brand-primary": content.branding.primaryColor, 
+      "--brand-secondary": content.branding.secondaryColor 
+    }}>
+      {content.modules.header && <Header />}
+      {content.modules.hero && <Hero hero={content.hero} />}
+      {content.modules.brandCards && <BrandCards cards={content.brandCards} />}
+      {content.modules.stats && <Stats stats={content.stats} />}
+      {content.modules.garantias && <Garantias items={content.garantias} />}
+      {content.modules.capital && <Capital data={content.capital} />}
       <Governanca />
       <Parceiros />
-      <Footer />
+      {content.modules.footer && <Footer />}
     </div>
   );
 }
+
