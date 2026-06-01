@@ -19,10 +19,10 @@ const maskString = (str) => {
   return str.substring(0, 5) + '...' + str.substring(str.length - 5);
 };
 
-// CORS configuration from environment variable
-const allowedOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()) 
-  : [];
+// CORS configuration: allow configured domains, or allow all when unset.
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
+  : ['*'];
 
 console.log('--- Startup Config ---');
 console.log('Allowed Origins:', allowedOrigins);
@@ -32,9 +32,23 @@ const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
 console.log('DATABASE_URL:', maskedDbUrl);
 console.log('----------------------');
 
-// CORS completely disabled - allow ALL origins, methods, headers
-app.use(cors());
-app.options('*', cors());
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`Origin not allowed by CORS: ${origin}`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  credentials: false,
+  optionsSuccessStatus: 204,
+  maxAge: 86400,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
