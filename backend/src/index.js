@@ -10,10 +10,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const app = express();
 
-// Trust proxy if behind a reverse proxy (like EasyPanel/Nginx)
 app.set('trust proxy', 1);
 
-// Configure CORS
 const allowedOrigins = process.env.CORS_ORIGIN 
   ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()) 
   : ['*'];
@@ -26,13 +24,12 @@ const corsOptions = {
     if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    console.warn(`CORS: Origin ${origin} not explicitly allowed but letting it pass for debugging. Allowed:`, allowedOrigins);
+    console.warn(`CORS: Origin ${origin} not explicitly allowed.`, origin);
     callback(null, true);
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
-  preflightContinue: false,
   optionsSuccessStatus: 204
 };
 
@@ -113,22 +110,24 @@ const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, "0.0.0.0", async () => {
   console.log(`API running on port ${PORT}`);
   
-  // Real database connection check
   try {
     await prisma.$connect();
     console.log("Database connection successful");
+    
+    // Debug: list all tables
+    const tables = await prisma.$queryRaw`SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'`;
+    console.log("Existing tables in 'public' schema:", tables);
   } catch (e) {
     console.error("Database connection failed:", e.message);
   }
   
-  // Auto-seed admin if not exists
   const ensureAdmin = async (retryCount = 0) => {
     try {
       const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
       const password = process.env.ADMIN_PASSWORD || 'premiatto123';
       const hash = await bcrypt.hash(password, 10);
       
-      console.log(`Attempting to ensure admin user (${retryCount + 1}/10)...`);
+      console.log(`Attempting to ensure admin user (attempt ${retryCount + 1}/15)...`);
       await prisma.user.upsert({
         where: { email },
         update: { password: hash },
@@ -136,12 +135,11 @@ app.listen(PORT, "0.0.0.0", async () => {
       });
       console.log(`Admin user ensured: ${email}`);
     } catch (err) {
-      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 10) {
-        console.log(`Database tables not ready yet. Error: ${err.message}. Retrying in 5s...`);
+      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 15) {
+        console.log(`Table 'User' not found. Retrying in 5s...`);
         setTimeout(() => ensureAdmin(retryCount + 1), 5000);
       } else {
         console.error("Database sync/seed error:", err.message);
-        if (err.stack) console.error(err.stack);
       }
     }
   };
