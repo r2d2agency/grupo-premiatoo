@@ -14,23 +14,26 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Configure CORS
+const allowedOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()) 
+  : ['*'];
+
+console.log('Allowed Origins:', allowedOrigins);
+
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log(`Incoming origin: ${origin}`);
-    const allowedOrigin = process.env.CORS_ORIGIN;
-    // Allow if no origin (curl/mobile) or if it matches or if allowed is *
-    if (!origin || !allowedOrigin || allowedOrigin === '*' || origin === allowedOrigin) {
+    // Allow if no origin (like mobile apps or curl) or if origin is in allowed list
+    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
       callback(null, true);
     } else {
-      console.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigin}`);
-      // Temporarily allow all during debug if needed, but for now let's be strict but informative
-      callback(null, true); // CHANGE: for now, allow all to stop blocking the user
+      console.warn(`CORS blocked for origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
