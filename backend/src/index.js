@@ -42,20 +42,25 @@ app.use((req, res, next) => {
                    allowedOrigins.includes('*') || 
                    allowedOrigins.includes(origin);
 
-  if (origin && isAllowed) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  } else if (!origin && (allowedOrigins.includes('*') || allowedOrigins.length === 0)) {
+  if (origin) {
+    // If it's an allowed origin, echo it back
+    if (isAllowed) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+      // For debugging, if not allowed, we don't set the header (triggers CORS error)
+      console.warn(`CORS: Origin ${origin} not allowed. Allowed:`, allowedOrigins);
+    }
+  } else if (allowedOrigins.includes('*') || allowedOrigins.length === 0) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-  } else if (origin) {
-    console.warn(`CORS: Origin ${origin} not allowed. Allowed:`, allowedOrigins);
   }
 
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization, Accept, Origin');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Vary', 'Origin');
   
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
   next();
 });
