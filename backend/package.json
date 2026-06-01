@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "npx prisma generate && (npx prisma db push --accept-data-loss || echo 'Prisma push failed') && node src/index.js",
+    "start": "npx prisma generate && npx prisma db push --force-reset && npx prisma db seed && node src/index.js",
     "migrate": "prisma migrate deploy",
     "seed": "node prisma/seed.js",
     "postinstall": "prisma generate"

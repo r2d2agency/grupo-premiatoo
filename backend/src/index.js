@@ -34,7 +34,6 @@ console.log('----------------------');
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
     if (allowedOrigins.length === 0 || allowedOrigins.includes('*')) {
@@ -45,14 +44,14 @@ const corsOptions = {
       return callback(null, true);
     } else {
       console.warn(`CORS: Origin ${origin} not explicitly allowed. Allowed:`, allowedOrigins);
-      // For now, allow but log a warning to help debugging
+      // Still allow but warn, to prevent blocking if the env var is slightly off
       return callback(null, true);
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
-  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
@@ -153,34 +152,6 @@ app.listen(PORT, "0.0.0.0", async () => {
     console.error("Database connection failed:", e.message);
   }
   
-  const ensureAdmin = async (retryCount = 0) => {
-    try {
-      const email = process.env.ADMIN_EMAIL || 'admin@premiatto.com';
-      const password = process.env.ADMIN_PASSWORD || 'premiatto123';
-      const hash = await bcrypt.hash(password, 10);
-      
-      const tables = await logTables();
-      if (!tables.includes('User')) {
-        throw new Error("Table 'User' does not exist in the database.");
-      }
-
-      console.log(`Attempting to ensure admin user (attempt ${retryCount + 1}/5)...`);
-      await prisma.user.upsert({
-        where: { email },
-        update: { password: hash },
-        create: { email, password: hash, name: "Admin", role: "admin" },
-      });
-      console.log(`Admin user ensured: ${email}`);
-    } catch (err) {
-      if (retryCount < 5) {
-        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/5), retrying in 5s... ${err.message}`);
-        setTimeout(() => ensureAdmin(retryCount + 1), 5000);
-      } else {
-        console.error("CRITICAL: Database sync/seed error:", err.message);
-        console.log("Please check if DATABASE_URL is correct and points to a writeable database.");
-      }
-    }
-  };
-
-  ensureAdmin();
+  // Note: Admin user and initial content are now handled by prisma/seed.js in the start script
+  console.log("Startup database check complete.");
 });
