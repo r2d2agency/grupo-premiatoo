@@ -1,4 +1,4 @@
-# Backend image — Node 20 alpine, pushes schema + seed + server
+# Backend image — Node 20 alpine
 FROM node:20-alpine
 
 WORKDIR /app
@@ -15,5 +15,4 @@ COPY src ./src
 ENV NODE_ENV=production
 EXPOSE 4000
 
-# Clear schema public, push tables, seed, then start
 CMD ["npm", "start"]
