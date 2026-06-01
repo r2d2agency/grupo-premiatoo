@@ -137,7 +137,11 @@ export async function fetchContent(): Promise<SiteContent> {
     const res = await fetch(`${API_URL}/api/content`, { credentials: "omit" });
     if (!res.ok) throw new Error("bad status");
     const data = await res.json();
-    return { ...defaultContent, ...data };
+    return { ...defaultContent, ...data, 
+      branding: { ...defaultContent.branding, ...data.branding },
+      modules: { ...defaultContent.modules, ...data.modules }
+    };
+
   } catch {
     return defaultContent;
   }
