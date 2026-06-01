@@ -5,10 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "npx prisma generate && npx prisma db push --force-reset && npx prisma db seed && node src/index.js",
+    "start": "npx prisma generate && npx prisma migrate reset --force --skip-seed && npx prisma migrate deploy && npx prisma db seed && node src/index.js",
     "migrate": "prisma migrate deploy",
     "seed": "node prisma/seed.js",
     "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
