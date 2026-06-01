@@ -21,17 +21,7 @@ const allowedOrigins = process.env.CORS_ORIGIN
 console.log('Allowed Origins:', allowedOrigins);
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    console.log(`CORS Request - Origin: ${origin}`);
-    // Allow if no origin (like mobile apps or curl) or if origin is in allowed list
-    if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-      callback(null, true);
-    } else {
-      console.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
-      // For debugging, we can temporarily allow it but log the warning
-      callback(null, true); 
-    }
-  },
+  origin: true, // Reflect context origin for easier debugging
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   credentials: true,
@@ -39,7 +29,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// Handle preflight for all routes
 app.options('*', cors(corsOptions));
 
 // Request logging
@@ -122,9 +111,9 @@ app.listen(PORT, "0.0.0.0", async () => {
       });
       console.log(`Admin user ensured: ${email}`);
     } catch (err) {
-      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 5) {
-        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/5), retrying in 2s...`);
-        setTimeout(() => ensureAdmin(retryCount + 1), 2000);
+      if ((err.code === 'P2021' || err.message.includes('does not exist')) && retryCount < 10) {
+        console.log(`Database tables not ready yet (attempt ${retryCount + 1}/10), retrying in 3s...`);
+        setTimeout(() => ensureAdmin(retryCount + 1), 3000);
       } else {
         console.error("Database sync/seed error:", err.message);
       }
