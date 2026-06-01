@@ -168,6 +168,46 @@ app.delete("/api/users/:id", auth, async (req, res) => {
   }
 });
 
+app.put("/api/users/:id", auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, name, role } = req.body || {};
+    
+    const user = await prisma.user.update({
+      where: { id },
+      data: {
+        email,
+        name,
+        role
+      },
+      select: { id: true, email: true, name: true, role: true, createdAt: true }
+    });
+    
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: "Error updating user", message: err.message });
+  }
+});
+
+app.put("/api/users/:id/password", auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body || {};
+    if (!password) return res.status(400).json({ error: "missing password" });
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await prisma.user.update({
+      where: { id },
+      data: { password: hashedPassword }
+    });
+    
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: "Error updating password", message: err.message });
+  }
+});
+
+
 app.use((err, req, res, next) => {
   console.error("Unhandled Error:", err);
   res.status(500).json({ error: "Internal Server Error", message: err.message });
