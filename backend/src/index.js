@@ -55,8 +55,25 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// Handle preflight requests for all routes
-app.options('*', cors(corsOptions));
+// Use explicit CORS headers for all responses to be safe
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && (allowedOrigins.includes(origin) || allowedOrigins.includes('*') || allowedOrigins.length === 0)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else if (!origin && allowedOrigins.length > 0 && !allowedOrigins.includes('*')) {
+     // Default for non-browser requests if origins are restricted
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
