@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express from "express";
-import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import jwt from "jsonwebtoken";
@@ -19,36 +18,12 @@ const maskString = (str) => {
   return str.substring(0, 5) + '...' + str.substring(str.length - 5);
 };
 
-// CORS configuration: allow configured domains, or allow all when unset.
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
-  : ['*'];
-
 console.log('--- Startup Config ---');
-console.log('Allowed Origins:', allowedOrigins);
 const dbUrl = process.env.DATABASE_URL || '';
 // Mask database password
 const maskedDbUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
 console.log('DATABASE_URL:', maskedDbUrl);
 console.log('----------------------');
-
-const corsOptions = {
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-
-    return callback(new Error(`Origin not allowed by CORS: ${origin}`));
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  credentials: false,
-  optionsSuccessStatus: 204,
-  maxAge: 86400,
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.headers.origin || 'none'}`);
