@@ -39,7 +39,7 @@ function Index() {
     }}>
       {content.modules.header && (
         <Header 
-          logoUrl={content.branding.logoUrl} 
+          content={content} 
           sticky={content.modules.headerSticky} 
         />
       )}
