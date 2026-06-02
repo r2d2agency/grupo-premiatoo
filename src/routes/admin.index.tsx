@@ -425,20 +425,91 @@ function AdminDashboard() {
 
           <TabsContent value="garantias" className="space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle className="text-navy">Cards de Garantias</CardTitle>
-                <CardDescription>Tipos de garantias oferecidas.</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-navy flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-gold" />
+                    Cards de Garantias (Carrossel)
+                  </CardTitle>
+                  <CardDescription>Gerencie as modalidades de garantia exibidas no site.</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newItem = { title: "Nova Garantia", description: "", link: "#", icon: "shield" };
+                    update("garantias", [...content.garantias, newItem]);
+                  }} 
+                  size="sm" 
+                  className="bg-navy hover:bg-navy/90 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nova Garantia
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-2 gap-6">
                   {content.garantias.map((g, i) => (
-                    <div key={i} className="border border-border rounded-md p-4 space-y-3 bg-white">
-                      <Field label="Título" value={g.title} onChange={(v) => {
-                        const next = [...content.garantias]; next[i] = { ...g, title: v }; update("garantias", next);
-                      }} />
-                      <Field label="Ícone (Lucide)" value={g.icon} onChange={(v) => {
-                        const next = [...content.garantias]; next[i] = { ...g, icon: v }; update("garantias", next);
-                      }} />
+                    <div key={i} className="border border-border rounded-lg p-6 space-y-4 bg-white shadow-sm relative group">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          const next = content.garantias.filter((_, idx) => idx !== i);
+                          update("garantias", next);
+                        }}
+                        className="absolute top-4 right-4 text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+
+                      <div className="grid gap-4">
+                        <Field label="Título" value={g.title} onChange={(v) => {
+                          const next = [...content.garantias]; next[i] = { ...g, title: v }; update("garantias", next);
+                        }} />
+                        
+                        <Field label="Descrição" value={g.description || ""} onChange={(v) => {
+                          const next = [...content.garantias]; next[i] = { ...g, description: v }; update("garantias", next);
+                        }} textarea />
+                        
+                        <Field label="Link CTA" value={g.link || ""} onChange={(v) => {
+                          const next = [...content.garantias]; next[i] = { ...g, link: v }; update("garantias", next);
+                        }} placeholder="#" />
+
+                        <div className="space-y-2">
+                          <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Ícone Selecionado: <span className="text-navy font-bold">{g.icon}</span></Label>
+                          <div className="grid grid-cols-5 gap-2 p-3 bg-muted/20 rounded-md">
+                            {[
+                              "scale", "file", "gavel", "globe", "building", 
+                              "file-check", "shield", "briefcase", "landmark", "handshake"
+                            ].map((iconName) => (
+                              <button
+                                key={iconName}
+                                onClick={() => {
+                                  const next = [...content.garantias];
+                                  next[i] = { ...g, icon: iconName };
+                                  update("garantias", next);
+                                }}
+                                className={`p-2 flex items-center justify-center rounded-sm border transition-all ${
+                                  g.icon === iconName 
+                                    ? "bg-navy text-white border-navy" 
+                                    : "bg-white text-navy border-input hover:border-navy/30"
+                                }`}
+                                title={iconName}
+                              >
+                                {iconName === "scale" && <Scale className="w-4 h-4" />}
+                                {iconName === "file" && <FileText className="w-4 h-4" />}
+                                {iconName === "gavel" && <Gavel className="w-4 h-4" />}
+                                {iconName === "globe" && <Globe className="w-4 h-4" />}
+                                {iconName === "building" && <Building className="w-4 h-4" />}
+                                {iconName === "file-check" && <FileCheck2 className="w-4 h-4" />}
+                                {iconName === "shield" && <Shield className="w-4 h-4" />}
+                                {iconName === "briefcase" && <Briefcase className="w-4 h-4" />}
+                                {iconName === "landmark" && <Landmark className="w-4 h-4" />}
+                                {iconName === "handshake" && <Handshake className="w-4 h-4" />}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
