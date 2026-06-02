@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getToken, fetchContent, saveContent, type SiteContent, defaultContent } from "@/lib/api";
+import { getToken, fetchContent, saveContent, type SiteContent, defaultContent, API_URL } from "@/lib/api";
 import { AdminLayout } from "@/components/AdminLayout";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
