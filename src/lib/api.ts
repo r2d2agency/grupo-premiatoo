@@ -27,7 +27,10 @@ export type SiteContent = {
       subtitle: string;
       ctaPrimary: string;
       ctaSecondary: string;
-      image: string;
+      image: string; // fallback
+      imageDesktop?: string;
+      imageTablet?: string;
+      imageMobile?: string;
     }[];
     animation: "fade" | "slide" | "zoom";
     interval: number;
@@ -162,6 +165,7 @@ export async function fetchContent(): Promise<SiteContent> {
           ctaPrimary: data.hero.ctaPrimary || defaultContent.hero.banners[0].ctaPrimary,
           ctaSecondary: data.hero.ctaSecondary || defaultContent.hero.banners[0].ctaSecondary,
           image: data.hero.image || defaultContent.hero.banners[0].image,
+          imageDesktop: data.hero.image || defaultContent.hero.banners[0].image,
         }],
         animation: "fade",
         interval: 5000

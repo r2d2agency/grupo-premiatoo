@@ -216,11 +216,24 @@ function AdminDashboard() {
                             />
                           </div>
                         </div>
-                        <div>
+                        <div className="space-y-4">
                           <ImageUpload
-                            label="Imagem de Fundo"
-                            value={banner.image}
-                            onChange={(v) => updateHeroBanner(banner.id, { image: v })}
+                            label="Desktop (1920x1080)"
+                            type="desktop"
+                            value={banner.imageDesktop || banner.image}
+                            onChange={(v) => updateHeroBanner(banner.id, { imageDesktop: v, image: v })}
+                          />
+                          <ImageUpload
+                            label="Tablet (1024x768)"
+                            type="tablet"
+                            value={banner.imageTablet}
+                            onChange={(v) => updateHeroBanner(banner.id, { imageTablet: v })}
+                          />
+                          <ImageUpload
+                            label="Mobile (768x1024)"
+                            type="mobile"
+                            value={banner.imageMobile}
+                            onChange={(v) => updateHeroBanner(banner.id, { imageMobile: v })}
                           />
                         </div>
                       </div>
