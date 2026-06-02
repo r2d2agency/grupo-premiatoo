@@ -11,6 +11,19 @@ export type SiteContent = {
     secondaryColor: string;
     logoUrl?: string;
   };
+  navigation: {
+    links: {
+      label: string;
+      href: string;
+      target?: "_self" | "_blank";
+    }[];
+    cta: {
+      label: string;
+      href: string;
+      target?: "_self" | "_blank";
+      visible: boolean;
+    };
+  };
   modules: {
     header: boolean;
     headerSticky: boolean;
@@ -60,6 +73,23 @@ export const defaultContent: SiteContent = {
   branding: {
     primaryColor: "#001B3D", // Navy
     secondaryColor: "#C5A059", // Gold/Tan
+  },
+  navigation: {
+    links: [
+      { label: "Institucional", href: "#" },
+      { label: "Garantias", href: "#" },
+      { label: "Premiatto Capital", href: "#" },
+      { label: "Governança", href: "#" },
+      { label: "Conteúdos", href: "#" },
+      { label: "Parceiros", href: "#" },
+      { label: "Contato", href: "#" },
+    ],
+    cta: {
+      label: "SOLICITAR ANÁLISE",
+      href: "#",
+      target: "_self",
+      visible: true,
+    },
   },
   modules: {
     header: true,
@@ -162,6 +192,7 @@ export async function fetchContent(): Promise<SiteContent> {
     const data = await res.json();
     const content = { ...defaultContent, ...data, 
       branding: { ...defaultContent.branding, ...data.branding },
+      navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules }
     };
 
