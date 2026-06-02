@@ -132,6 +132,7 @@ function AdminDashboard() {
         <Tabs defaultValue="hero" className="w-full">
           <TabsList className="bg-navy/5 p-1 h-auto flex flex-wrap gap-1 mb-6">
             <TabsTrigger value="hero" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Hero</TabsTrigger>
+            <TabsTrigger value="brandCards" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Cards de Marca</TabsTrigger>
             <TabsTrigger value="stats" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Estatísticas</TabsTrigger>
             <TabsTrigger value="garantias" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Garantias</TabsTrigger>
             <TabsTrigger value="capital" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Capital</TabsTrigger>
@@ -276,6 +277,119 @@ function AdminDashboard() {
                             type="mobile"
                             value={banner.imageMobile}
                             onChange={(v) => updateHeroBanner(banner.id, { imageMobile: v })}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="brandCards" className="space-y-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-navy flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-gold" />
+                    Cards de Marca (Abaixo da Hero)
+                  </CardTitle>
+                  <CardDescription>Configure os cards que aparecem logo abaixo do banner principal.</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newCard = { 
+                      title: "Novo Card", 
+                      description: "", 
+                      cta: "SAIBA MAIS", 
+                      variant: "light" as const, 
+                      image: "",
+                      logoUrl: ""
+                    };
+                    update("brandCards", [...content.brandCards, newCard]);
+                  }} 
+                  size="sm" 
+                  className="bg-navy hover:bg-navy/90 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Novo Card
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-6">
+                  {content.brandCards.map((card, index) => (
+                    <div key={index} className="border rounded-lg p-6 bg-white shadow-sm space-y-4">
+                      <div className="flex items-center justify-between border-b pb-3 mb-4">
+                        <h3 className="font-semibold text-navy">Card #{index + 1}</h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const next = content.brandCards.filter((_, i) => i !== index);
+                            update("brandCards", next);
+                          }}
+                          className="text-destructive hover:bg-destructive/10"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                          <Field
+                            label="Título"
+                            value={card.title}
+                            onChange={(v) => {
+                              const next = [...content.brandCards];
+                              next[index] = { ...card, title: v };
+                              update("brandCards", next);
+                            }}
+                            textarea
+                          />
+                          <Field
+                            label="Texto do Botão (CTA)"
+                            value={card.cta}
+                            onChange={(v) => {
+                              const next = [...content.brandCards];
+                              next[index] = { ...card, cta: v };
+                              update("brandCards", next);
+                            }}
+                          />
+                          <div className="space-y-1">
+                            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Estilo do Card</Label>
+                            <select
+                              value={card.variant}
+                              onChange={(e) => {
+                                const next = [...content.brandCards];
+                                next[index] = { ...card, variant: e.target.value as any };
+                                update("brandCards", next);
+                              }}
+                              className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                            >
+                              <option value="light">Claro (White)</option>
+                              <option value="dark">Escuro (Navy)</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <ImageUpload
+                            label="Logo do Card (PNG/SVG)"
+                            value={card.logoUrl}
+                            onChange={(v) => {
+                              const next = [...content.brandCards];
+                              next[index] = { ...card, logoUrl: v };
+                              update("brandCards", next);
+                            }}
+                          />
+                          <ImageUpload
+                            label="Imagem de Fundo"
+                            value={card.image}
+                            onChange={(v) => {
+                              const next = [...content.brandCards];
+                              next[index] = { ...card, image: v };
+                              update("brandCards", next);
+                            }}
                           />
                         </div>
                       </div>
