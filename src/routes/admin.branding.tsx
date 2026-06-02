@@ -6,7 +6,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Palette, Save, Upload, Trash } from "lucide-react";
+import { Palette, Save, Trash } from "lucide-react";
+import { ImageUpload } from "@/components/ui/ImageUpload";
 
 export const Route = createFileRoute("/admin/branding")({
   component: AdminBrandingPage,
@@ -131,46 +132,19 @@ function AdminBrandingPage() {
 
                 <div className="flex-1 space-y-4 w-full">
                   <div className="space-y-2">
-                    <label className="text-xs text-slate-500 uppercase font-semibold">Upload de Imagem</label>
-                    <div className="flex gap-2">
-                      <Input 
-                        type="file" 
-                        accept="image/*"
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-
-                          const formData = new FormData();
-                          formData.append("file", file);
-
-                          try {
-                            const res = await fetch(`${API_URL}/api/upload`, {
-                              method: "POST",
-                              headers: {
-                                Authorization: `Bearer ${getToken()}`,
-                              },
-                              body: formData,
-                            });
-                            
-                            if (!res.ok) throw new Error("Upload failed");
-                            
-                            const data = await res.json();
-                            setContent({
-                              ...content,
-                              branding: { ...content.branding, logoUrl: data.url }
-                            });
-                            toast.success("Logo carregado com sucesso!");
-                          } catch (err) {
-                            toast.error("Erro ao fazer upload da imagem");
-                          }
-                        }}
-                      />
-                    </div>
+                    <label className="text-xs text-slate-500 uppercase font-semibold">Upload de Logo</label>
+                    <ImageUpload 
+                      value={content.branding.logoUrl}
+                      onChange={(url) => setContent({
+                        ...content,
+                        branding: { ...content.branding, logoUrl: url }
+                      })}
+                    />
                     <p className="text-[10px] text-slate-400 italic">Recomendado: PNG ou WebP com fundo transparente.</p>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs text-slate-500 uppercase font-semibold">Ou insira uma URL</label>
+                    <label className="text-xs text-slate-500 uppercase font-semibold">Ou insira uma URL manual</label>
                     <div className="flex gap-2">
                       <Input 
                         placeholder="https://..."

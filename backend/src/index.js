@@ -6,6 +6,10 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 
+import { v2 as cloudinary } from "cloudinary";
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
 const prisma = new PrismaClient();
 const app = express();
 
@@ -51,6 +55,33 @@ function auth(req, res, next) {
 }
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+
+// Cloudinary Config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "premiatto",
+    format: async (req, file) => "webp",
+    public_id: (req, file) => {
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      return file.fieldname + "-" + uniqueSuffix;
+    },
+    transformation: [{ quality: "auto:good", fetch_format: "webp" }],
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/upload", auth, upload.single("file"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  res.json({ url: req.file.path || req.file.secure_url });
+});
 
 app.post("/api/auth/login", async (req, res) => {
   try {

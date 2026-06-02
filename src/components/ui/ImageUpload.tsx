@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Button } from "./button";
 import { Upload, X, ImageIcon, Smartphone, Tablet, Monitor } from "lucide-react";
 import { toast } from "sonner";
+import { getToken, API_URL } from "@/lib/api";
 
 interface ImageUploadProps {
   value?: string;
@@ -13,7 +14,7 @@ interface ImageUploadProps {
 /**
  * Compresses and converts an image to WebP format using Canvas API.
  */
-async function processImage(file: File, maxWidth = 1920): Promise<string> {
+async function processImage(file: File, maxWidth = 1920): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -37,8 +38,14 @@ async function processImage(file: File, maxWidth = 1920): Promise<string> {
         ctx?.drawImage(img, 0, 0, width, height);
 
         // Convert to WebP with 0.8 quality
-        const webpBase64 = canvas.toDataURL("image/webp", 0.8);
-        resolve(webpBase64);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+            else reject(new Error("Canvas toBlob failed"));
+          },
+          "image/webp",
+          0.8
+        );
       };
       img.onerror = (err) => reject(err);
     };
@@ -62,22 +69,31 @@ export function ImageUpload({ value, onChange, label, type }: ImageUploadProps) 
       if (type === 'tablet') maxWidth = 1024;
       if (type === 'mobile') maxWidth = 768;
 
-      const webpBase64 = await processImage(file, maxWidth);
+      const webpBlob = await processImage(file, maxWidth);
       
-      // Check size (base64 is ~33% larger than binary)
-      // 1.2MB base64 is roughly 900KB binary
-      if (webpBase64.length > 1.2 * 1024 * 1024) { 
-        toast.error("A imagem processada ainda está muito grande. Tente uma imagem menor.");
-        setIsProcessing(false);
-        return;
+      const formData = new FormData();
+      formData.append("file", webpBlob, "image.webp");
+
+      const res = await fetch(`${API_URL}/api/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Upload failed");
       }
 
-      setPreview(webpBase64);
-      onChange(webpBase64);
-      toast.success("Imagem otimizada (WebP) com sucesso!");
-    } catch (error) {
-      console.error("Image processing error:", error);
-      toast.error("Erro ao processar imagem.");
+      const data = await res.json();
+      setPreview(data.url);
+      onChange(data.url);
+      toast.success("Imagem carregada com sucesso!");
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast.error(error.message || "Erro ao processar/enviar imagem.");
     } finally {
       setIsProcessing(false);
     }
@@ -144,7 +160,7 @@ export function ImageUpload({ value, onChange, label, type }: ImageUploadProps) 
               )}
             </div>
             <div className="text-sm font-medium text-muted-foreground">
-              {isProcessing ? "Otimizando..." : "Clique para subir"}
+              {isProcessing ? "Processando..." : "Clique para subir"}
             </div>
             <div className="text-[10px] text-muted-foreground/60 uppercase">WebP Auto-conversion</div>
           </button>
