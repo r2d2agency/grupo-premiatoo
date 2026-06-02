@@ -87,18 +87,26 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
                 transition={{ delay: 0.6 }}
                 className="mt-10 flex flex-wrap gap-3"
               >
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90"
-                >
-                  {banner.ctaPrimary} <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-3 border border-navy-foreground/40 text-navy-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:bg-navy-foreground/10"
-                >
-                  {banner.ctaSecondary} <ArrowRight className="h-4 w-4" />
-                </a>
+                {banner.ctaPrimary && (
+                  <a
+                    href={banner.ctaPrimaryLink || "#"}
+                    target={banner.ctaPrimaryTarget || "_self"}
+                    rel={banner.ctaPrimaryTarget === "_blank" ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90"
+                  >
+                    {banner.ctaPrimary} <ArrowRight className="h-4 w-4" />
+                  </a>
+                )}
+                {banner.ctaSecondary && (
+                  <a
+                    href={banner.ctaSecondaryLink || "#"}
+                    target={banner.ctaSecondaryTarget || "_self"}
+                    rel={banner.ctaSecondaryTarget === "_blank" ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-3 border border-navy-foreground/40 text-navy-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:bg-navy-foreground/10"
+                  >
+                    {banner.ctaSecondary} <ArrowRight className="h-4 w-4" />
+                  </a>
+                )}
               </motion.div>
             </div>
           </div>

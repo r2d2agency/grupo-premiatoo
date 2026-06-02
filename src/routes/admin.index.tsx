@@ -91,7 +91,11 @@ function AdminDashboard() {
       title: "Novo Título do Banner",
       subtitle: "Descrição curta para este banner.",
       ctaPrimary: "SAIBA MAIS",
+      ctaPrimaryLink: "",
+      ctaPrimaryTarget: "_self",
       ctaSecondary: "CONTATO",
+      ctaSecondaryLink: "",
+      ctaSecondaryTarget: "_self",
       image: "",
     };
     update("hero", {
@@ -204,16 +208,54 @@ function AdminDashboard() {
                             textarea
                           />
                           <div className="grid md:grid-cols-2 gap-4">
-                            <Field
-                              label="CTA Primário"
-                              value={banner.ctaPrimary}
-                              onChange={(v) => updateHeroBanner(banner.id, { ctaPrimary: v })}
-                            />
-                            <Field
-                              label="CTA Secundário"
-                              value={banner.ctaSecondary}
-                              onChange={(v) => updateHeroBanner(banner.id, { ctaSecondary: v })}
-                            />
+                            <div className="space-y-3 p-3 bg-muted/20 rounded-sm">
+                              <Field
+                                label="Texto CTA Primário"
+                                value={banner.ctaPrimary}
+                                onChange={(v) => updateHeroBanner(banner.id, { ctaPrimary: v })}
+                              />
+                              <Field
+                                label="Link CTA Primário"
+                                value={banner.ctaPrimaryLink || ""}
+                                onChange={(v) => updateHeroBanner(banner.id, { ctaPrimaryLink: v })}
+                                placeholder="https://..."
+                              />
+                              <div className="space-y-1">
+                                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Abrir em</Label>
+                                <select
+                                  value={banner.ctaPrimaryTarget || "_self"}
+                                  onChange={(e) => updateHeroBanner(banner.id, { ctaPrimaryTarget: e.target.value })}
+                                  className="w-full border border-input rounded-sm px-2 py-1 text-xs"
+                                >
+                                  <option value="_self">Mesma Aba</option>
+                                  <option value="_blank">Nova Aba</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="space-y-3 p-3 bg-muted/20 rounded-sm">
+                              <Field
+                                label="Texto CTA Secundário"
+                                value={banner.ctaSecondary}
+                                onChange={(v) => updateHeroBanner(banner.id, { ctaSecondary: v })}
+                              />
+                              <Field
+                                label="Link CTA Secundário"
+                                value={banner.ctaSecondaryLink || ""}
+                                onChange={(v) => updateHeroBanner(banner.id, { ctaSecondaryLink: v })}
+                                placeholder="https://..."
+                              />
+                              <div className="space-y-1">
+                                <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Abrir em</Label>
+                                <select
+                                  value={banner.ctaSecondaryTarget || "_self"}
+                                  onChange={(e) => updateHeroBanner(banner.id, { ctaSecondaryTarget: e.target.value })}
+                                  className="w-full border border-input rounded-sm px-2 py-1 text-xs"
+                                >
+                                  <option value="_self">Mesma Aba</option>
+                                  <option value="_blank">Nova Aba</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div className="space-y-4">

@@ -26,7 +26,11 @@ export type SiteContent = {
       title: string;
       subtitle: string;
       ctaPrimary: string;
+      ctaPrimaryLink?: string;
+      ctaPrimaryTarget?: "_self" | "_blank";
       ctaSecondary: string;
+      ctaSecondaryLink?: string;
+      ctaSecondaryTarget?: "_self" | "_blank";
       image: string; // fallback
       imageDesktop?: string;
       imageTablet?: string;
@@ -72,7 +76,11 @@ export const defaultContent: SiteContent = {
         title: "Estrutura, capital e segurança para operações que exigem critério e continuidade.",
         subtitle: "Atuamos na estruturação de garantias e soluções financeiras para empresas que precisam proteger contratos, fortalecer seu caixa e seguir em frente com segurança.",
         ctaPrimary: "SOLICITAR ANÁLISE",
+        ctaPrimaryLink: "#",
+        ctaPrimaryTarget: "_self",
         ctaSecondary: "FALAR COM ESPECIALISTA",
+        ctaSecondaryLink: "#",
+        ctaSecondaryTarget: "_self",
         image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop",
       }
     ],
