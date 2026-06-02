@@ -10,7 +10,7 @@ import {
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake } from "lucide-react";
+import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -588,12 +588,41 @@ function AdminDashboard() {
                   </div>
                 </div>
                 
-                <div className="border-t pt-6">
-                  <ImageUpload
-                    label="Logo do Site"
-                    value={content.branding.logoUrl}
-                    onChange={(v) => update("branding", { ...content.branding, logoUrl: v })}
-                  />
+                <div className="border-t pt-6 space-y-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <ImageIcon className="w-4 h-4 text-gold" />
+                    <Label className="text-[12px] font-bold text-navy uppercase tracking-wider">Logo e Dimensões</Label>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-8 items-end">
+                    <div className="space-y-4">
+                      <ImageUpload
+                        label="Logo do Site"
+                        value={content.branding.logoUrl}
+                        onChange={(v) => update("branding", { ...content.branding, logoUrl: v })}
+                      />
+                    </div>
+                    
+                    <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label className="text-[11px] uppercase tracking-wider">Altura da Logo (px)</Label>
+                        <span className="text-sm font-bold text-navy">{content.branding.logoHeight || 40}px</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <Maximize className="w-4 h-4 text-muted-foreground" />
+                        <input
+                          type="range"
+                          min="20"
+                          max="120"
+                          step="1"
+                          value={content.branding.logoHeight || 40}
+                          onChange={(e) => update("branding", { ...content.branding, logoHeight: Number(e.target.value) })}
+                          className="flex-1 accent-navy"
+                        />
+                      </div>
+                      <p className="text-[10px] text-muted-foreground">Arraste para ajustar o tamanho da logo no cabeçalho.</p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

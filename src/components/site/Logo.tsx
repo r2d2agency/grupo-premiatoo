@@ -1,10 +1,15 @@
-export function Logo({ variant = "light", src }: { variant?: "light" | "dark", src?: string }) {
+export function Logo({ variant = "light", src, height = 40 }: { variant?: "light" | "dark", src?: string, height?: number }) {
   const stroke = variant === "light" ? "currentColor" : "currentColor";
   
   if (src) {
     return (
       <div className="flex items-center">
-        <img src={src} alt="Garantidora Premiatto" className="h-10 w-auto object-contain" />
+        <img 
+          src={src} 
+          alt="Garantidora Premiatto" 
+          style={{ height: `${height}px` }} 
+          className="w-auto object-contain" 
+        />
       </div>
     );
   }
