@@ -13,6 +13,7 @@ export type SiteContent = {
   };
   modules: {
     header: boolean;
+    headerSticky: boolean;
     hero: boolean;
     stats: boolean;
     garantias: boolean;
@@ -62,6 +63,7 @@ export const defaultContent: SiteContent = {
   },
   modules: {
     header: true,
+    headerSticky: true,
     hero: true,
     stats: true,
     garantias: true,

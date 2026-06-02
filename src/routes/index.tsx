@@ -37,7 +37,12 @@ function Index() {
       "--brand-primary": content.branding.primaryColor, 
       "--brand-secondary": content.branding.secondaryColor 
     }}>
-      {content.modules.header && <Header logoUrl={content.branding.logoUrl} />}
+      {content.modules.header && (
+        <Header 
+          logoUrl={content.branding.logoUrl} 
+          sticky={content.modules.headerSticky} 
+        />
+      )}
       {content.modules.hero && <Hero hero={content.hero} />}
       {content.modules.brandCards && <BrandCards cards={content.brandCards} />}
       {content.modules.stats && <Stats stats={content.stats} />}
