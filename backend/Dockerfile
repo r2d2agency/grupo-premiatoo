@@ -8,7 +8,7 @@ RUN apk add --no-cache openssl
 
 COPY package.json ./
 COPY prisma ./prisma
-RUN npm install --omit=dev && npx prisma generate
+RUN npm install --omit=dev --legacy-peer-deps && npx prisma generate
 
 COPY src ./src
 
