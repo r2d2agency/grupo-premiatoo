@@ -57,6 +57,11 @@ function auth(req, res, next) {
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 // Cloudinary Config
+console.log('--- Cloudinary Config ---');
+console.log('CLOUDINARY_CLOUD_NAME:', process.env.CLOUDINARY_CLOUD_NAME || 'missing');
+console.log('CLOUDINARY_API_KEY:', maskString(process.env.CLOUDINARY_API_KEY));
+console.log('CLOUDINARY_API_SECRET:', maskString(process.env.CLOUDINARY_API_SECRET));
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -78,9 +83,19 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/api/upload", auth, upload.single("file"), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
-  res.json({ url: req.file.path || req.file.secure_url });
+app.post("/api/upload", auth, (req, res, next) => {
+  upload.single("file")(req, res, (err) => {
+    if (err) {
+      console.error("Multer/Cloudinary Upload Error:", err);
+      return res.status(500).json({ 
+        error: "Upload failed", 
+        message: err.message,
+        details: err.http_code ? `Cloudinary code: ${err.http_code}` : undefined
+      });
+    }
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+    res.json({ url: req.file.path || req.file.secure_url });
+  });
 });
 
 app.post("/api/auth/login", async (req, res) => {
