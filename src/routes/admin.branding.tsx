@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getToken, fetchContent, saveContent, type SiteContent, defaultContent } from "@/lib/api";
+import { getToken, fetchContent, saveContent, type SiteContent, defaultContent, API_URL } from "@/lib/api";
 import { AdminLayout } from "@/components/AdminLayout";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Palette, Save } from "lucide-react";
+import { Palette, Save, Upload, Trash } from "lucide-react";
 
 export const Route = createFileRoute("/admin/branding")({
   component: AdminBrandingPage,
@@ -109,17 +109,93 @@ function AdminBrandingPage() {
           <CardHeader>
             <CardTitle>Logo & Assets</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">URL do Logo</label>
-              <Input 
-                placeholder="https://..."
-                value={content.branding.logoUrl || ""}
-                onChange={e => setContent({
-                  ...content, 
-                  branding: { ...content.branding, logoUrl: e.target.value }
-                })}
-              />
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <label className="text-sm font-medium">Logo da Marca</label>
+              
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="w-full max-w-[300px] h-[150px] bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden border-2 border-dashed border-slate-200">
+                  {content.branding.logoUrl ? (
+                    <img 
+                      src={content.branding.logoUrl} 
+                      alt="Preview logo" 
+                      className="max-w-full max-h-full object-contain p-4"
+                    />
+                  ) : (
+                    <div className="text-slate-400 flex flex-col items-center">
+                      <Palette className="w-8 h-8 mb-2" />
+                      <span className="text-xs">Sem logo carregado</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex-1 space-y-4 w-full">
+                  <div className="space-y-2">
+                    <label className="text-xs text-slate-500 uppercase font-semibold">Upload de Imagem</label>
+                    <div className="flex gap-2">
+                      <Input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+
+                          const formData = new FormData();
+                          formData.append("file", file);
+
+                          try {
+                            const res = await fetch(`${API_URL}/api/upload`, {
+                              method: "POST",
+                              headers: {
+                                Authorization: `Bearer ${getToken()}`,
+                              },
+                              body: formData,
+                            });
+                            
+                            if (!res.ok) throw new Error("Upload failed");
+                            
+                            const data = await res.json();
+                            setContent({
+                              ...content,
+                              branding: { ...content.branding, logoUrl: data.url }
+                            });
+                            toast.success("Logo carregado com sucesso!");
+                          } catch (err) {
+                            toast.error("Erro ao fazer upload da imagem");
+                          }
+                        }}
+                      />
+                    </div>
+                    <p className="text-[10px] text-slate-400 italic">Recomendado: PNG ou WebP com fundo transparente.</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs text-slate-500 uppercase font-semibold">Ou insira uma URL</label>
+                    <div className="flex gap-2">
+                      <Input 
+                        placeholder="https://..."
+                        value={content.branding.logoUrl || ""}
+                        onChange={e => setContent({
+                          ...content, 
+                          branding: { ...content.branding, logoUrl: e.target.value }
+                        })}
+                      />
+                      {content.branding.logoUrl && (
+                        <Button 
+                          variant="destructive" 
+                          size="icon"
+                          onClick={() => setContent({
+                            ...content,
+                            branding: { ...content.branding, logoUrl: "" }
+                          })}
+                        >
+                          <Trash className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
