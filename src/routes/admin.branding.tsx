@@ -6,7 +6,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Palette, Save, Upload, Trash } from "lucide-react";
+import { Palette, Save, Trash } from "lucide-react";
+import { ImageUpload } from "@/components/ui/ImageUpload";
 
 export const Route = createFileRoute("/admin/branding")({
   component: AdminBrandingPage,
