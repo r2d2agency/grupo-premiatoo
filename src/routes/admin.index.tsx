@@ -86,7 +86,7 @@ function AdminDashboard() {
   }
 
   const addHeroBanner = () => {
-    const newBanner = {
+    const newBanner: SiteContent["hero"]["banners"][number] = {
       id: crypto.randomUUID(),
       title: "Novo Título do Banner",
       subtitle: "Descrição curta para este banner.",
