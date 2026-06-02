@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminBrandingRouteImport } from './routes/admin.branding'
@@ -29,6 +30,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNavigationRoute = AdminNavigationRouteImport.update({
+  id: '/admin/navigation',
+  path: '/admin/navigation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminModulesRoute = AdminModulesRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
+  '/admin/navigation': typeof AdminNavigationRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
+  '/admin/navigation': typeof AdminNavigationRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
+  '/admin/navigation': typeof AdminNavigationRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/admin/branding'
     | '/admin/login'
     | '/admin/modules'
+    | '/admin/navigation'
     | '/admin/users'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/admin/branding'
     | '/admin/login'
     | '/admin/modules'
+    | '/admin/navigation'
     | '/admin/users'
     | '/admin'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/admin/branding'
     | '/admin/login'
     | '/admin/modules'
+    | '/admin/navigation'
     | '/admin/users'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   AdminBrandingRoute: typeof AdminBrandingRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
+  AdminNavigationRoute: typeof AdminNavigationRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -129,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/navigation': {
+      id: '/admin/navigation'
+      path: '/admin/navigation'
+      fullPath: '/admin/navigation'
+      preLoaderRoute: typeof AdminNavigationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/modules': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminBrandingRoute: AdminBrandingRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
+  AdminNavigationRoute: AdminNavigationRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
