@@ -63,7 +63,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
             <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
           </div>
           
-          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center">
+          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10">
             <div className="max-w-xl">
               <motion.h1 
                 initial={{ y: 20, opacity: 0 }}
