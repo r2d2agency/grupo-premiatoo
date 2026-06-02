@@ -50,16 +50,18 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="absolute inset-0"
         >
-          <picture className="w-full h-full">
-            {banner.imageMobile && <source media="(max-width: 767px)" srcSet={banner.imageMobile} />}
-            {banner.imageTablet && <source media="(max-width: 1023px)" srcSet={banner.imageTablet} />}
-            <img
-              src={banner.imageDesktop || banner.image}
-              alt=""
-              className="w-full h-full object-cover opacity-90"
-            />
-          </picture>
-          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
+          <div className="absolute inset-0 z-0">
+            <picture className="w-full h-full">
+              {banner.imageMobile && <source media="(max-width: 767px)" srcSet={banner.imageMobile} />}
+              {banner.imageTablet && <source media="(max-width: 1023px)" srcSet={banner.imageTablet} />}
+              <img
+                src={banner.imageDesktop || banner.image}
+                alt=""
+                className="w-full h-full object-cover opacity-90"
+              />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
+          </div>
           
           <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center">
             <div className="max-w-xl">
