@@ -1,28 +1,25 @@
-Transform the current admin interface into a complete CMS with branding, modular control, and advanced user management.
+Implement responsive images (Desktop, Tablet, Mobile) with automatic WebP conversion and compression for the CMS modules, primarily focusing on the Hero section.
 
-### Backend Changes
-- Add `PUT /api/users/:id` endpoint for profile updates.
-- Add `PUT /api/users/:id/password` endpoint for security updates.
-- Ensure `SiteContent` model supports new `branding` and `modules` configuration fields.
+### User Interface Changes
+- Update `ImageUpload` component to support image compression and WebP conversion client-side before sending to the backend.
+- Enhance the Hero administration in `admin.index.tsx` to allow uploading three versions of each banner image:
+  - Desktop
+  - Tablet
+  - Mobile
+- Update the Hero display component to use the `<picture>` tag or responsive background images for optimized loading on different devices.
 
-### Frontend - Layout & Navigation
-- Implement `AdminSidebar` with a modern CMS look (Navy & Gold brand colors).
-- Create `AdminLayout` to wrap all administrative pages.
-- Update branding across the CMS to use the brand's primary colors.
+### Technical Implementation
+- **Image Compression & Conversion**:
+  - Integrate a client-side library or use the Canvas API to resize and convert images to WebP format.
+  - Apply compression to ensure files remain under the storage limit while maintaining quality.
+- **Schema Updates**:
+  - Modify `SiteContent` type in `lib/api.ts` to include responsive image paths (`imageDesktop`, `imageTablet`, `imageMobile`) instead of a single `image` field for banners.
+- **Frontend Components**:
+  - `Hero.tsx`: Implement responsive rendering logic.
+  - `ImageUpload.tsx`: Add compression logic using `canvas`.
+  - `admin.index.tsx`: Update the UI to show three upload fields for each banner.
 
-### Frontend - Features
-- **User Management**:
-  - Update `UserManagement.tsx` with Edit profile, Change Password, and Role management (Admin, Editor, Viewer).
-  - Add "Enable/Disable" logic (simulated with status or roles for now).
-- **Branding Control**:
-  - Create `/admin/branding` page to allow real-time changes to primary/secondary colors and logo.
-- **Modular Content Control**:
-  - Create `/admin/modules` page with toggles for every site section (Header, Hero, Stats, etc.).
-- **Content Dashboard**:
-  - Refactor `/admin` (index) to focus on content editing within the new modular structure.
-
-### Technical Details
-- Use `lucide-react` for consistent iconography.
-- Leverage `sonner` for user feedback (toasts).
-- Ensure responsive design for the admin dashboard.
-- Update `api.ts` types to reflect the new `SiteContent` structure.
+### Verification Plan
+- Test image upload in the admin panel and verify WebP conversion.
+- Verify that different images are loaded when resizing the browser (Desktop/Tablet/Mobile viewports).
+- Check that the application remains fully responsive across all modules.
