@@ -10,7 +10,7 @@ import { Link2, Save, Plus, Trash2, Eye, EyeOff } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const Route = createFileRoute("/admin/navigation" as any)({
+export const Route = createFileRoute("/admin/navigation")({
   component: AdminNavigationPage,
 });
 
