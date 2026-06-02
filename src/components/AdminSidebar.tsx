@@ -14,6 +14,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Conteúdo", path: "/admin" },
+  { icon: Settings, label: "Menu & Navegação", path: "/admin/navigation" },
   { icon: Users, label: "Usuários", path: "/admin/users" },
   { icon: Palette, label: "Branding", path: "/admin/branding" },
   { icon: Layers, label: "Módulos", path: "/admin/modules" },
