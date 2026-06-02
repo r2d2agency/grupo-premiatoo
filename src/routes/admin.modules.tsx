@@ -68,9 +68,13 @@ function AdminModulesPage() {
               {Object.entries(content.modules).map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between p-4 border rounded-lg bg-white shadow-sm">
                   <div className="space-y-0.5">
-                    <Label className="text-base capitalize">{key}</Label>
+                    <Label className="text-base capitalize">
+                      {key === 'headerSticky' ? 'Menu Fixo (Sticky)' : key}
+                    </Label>
                     <p className="text-sm text-muted-foreground">
-                      Exibir seção de {key} na página inicial.
+                      {key === 'headerSticky' 
+                        ? 'Fixar o menu no topo ao rolar a página.' 
+                        : `Exibir seção de ${key} na página inicial.`}
                     </p>
                   </div>
                   <Switch 
