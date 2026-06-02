@@ -37,7 +37,7 @@ function Index() {
       "--brand-primary": content.branding.primaryColor, 
       "--brand-secondary": content.branding.secondaryColor 
     }}>
-      {content.modules.header && <Header />}
+      {content.modules.header && <Header logoUrl={content.branding.logoUrl} />}
       {content.modules.hero && <Hero hero={content.hero} />}
       {content.modules.brandCards && <BrandCards cards={content.brandCards} />}
       {content.modules.stats && <Stats stats={content.stats} />}
@@ -45,7 +45,7 @@ function Index() {
       {content.modules.capital && <Capital data={content.capital} />}
       <Governanca />
       <Parceiros />
-      {content.modules.footer && <Footer />}
+      {content.modules.footer && <Footer logoUrl={content.branding.logoUrl} />}
     </div>
   );
 }
