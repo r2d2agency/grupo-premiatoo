@@ -1,18 +1,17 @@
-# Backend image — Node 20 alpine
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
-# OpenSSL needed by Prisma on alpine
-RUN apk add --no-cache openssl
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 COPY package.json ./
 COPY prisma ./prisma
-RUN npm install --omit=dev --legacy-peer-deps && npx prisma generate
+RUN npm install --omit=dev && npx prisma generate
 
 COPY src ./src
 
-ENV NODE_ENV=production
-EXPOSE 4000
+# Create uploads directory and set permissions
+RUN mkdir -p /app/uploads && chmod 777 /app/uploads
 
+EXPOSE 4000
 CMD ["npm", "start"]
