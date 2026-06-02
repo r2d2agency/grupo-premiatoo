@@ -59,6 +59,7 @@ export type SiteContent = {
     cta: string;
     variant: "light" | "dark";
     image: string;
+    logoUrl?: string;
   }[];
   stats: { value: string; label: string }[];
   garantias: { title: string; icon: string }[];
@@ -120,23 +121,29 @@ export const defaultContent: SiteContent = {
     interval: 5000,
   },
   brandCards: [
-
-
     {
       title: "Garantias estruturadas para proteger o que sustenta o seu negócio.",
       description: "",
       cta: "CONHECER GARANTIAS",
       variant: "light",
-      image:
-        "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&auto=format&fit=crop",
+      logoUrl: "",
     },
     {
       title: "Soluções financeiras para gerar fluxo, crédito e novas oportunidades de crescimento.",
       description: "",
       cta: "CONHECER SOLUÇÕES DE CAPITAL",
       variant: "dark",
-      image:
-        "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=80&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=80&auto=format&fit=crop",
+      logoUrl: "",
+    },
+    {
+      title: "Nova Solução de Negócios Premiatto.",
+      description: "",
+      cta: "SAIBA MAIS",
+      variant: "light",
+      image: "https://images.unsplash.com/photo-1454165833767-027ffea70288?w=1200&q=80&auto=format&fit=crop",
+      logoUrl: "",
     },
   ],
   stats: [
