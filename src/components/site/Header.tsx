@@ -11,11 +11,11 @@ const nav = [
   { label: "Contato" },
 ];
 
-export function Header() {
+export function Header({ logoUrl }: { logoUrl?: string }) {
   return (
     <header className="absolute top-0 left-0 right-0 z-20 text-navy-foreground">
       <div className="mx-auto max-w-[1280px] px-6 py-5 flex items-center justify-between gap-6">
-        <Logo />
+        <Logo src={logoUrl} />
         <nav className="hidden lg:flex items-center gap-7 text-[13px]">
           {nav.map((n) => (
             <a key={n.label} href="#" className="hover:opacity-80 flex items-center gap-1">

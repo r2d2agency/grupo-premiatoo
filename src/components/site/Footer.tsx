@@ -18,12 +18,12 @@ const cols = [
   { title: "Parceiros", items: ["Seja um Parceiro", "Área do Parceiro"] },
 ];
 
-export function Footer() {
+export function Footer({ logoUrl }: { logoUrl?: string }) {
   return (
     <footer className="bg-navy-deep text-navy-foreground mt-10">
       <div className="mx-auto max-w-[1280px] px-6 py-14 grid lg:grid-cols-[1.2fr_3fr_1.4fr] gap-10">
         <div>
-          <Logo />
+          <Logo src={logoUrl} />
           <p className="text-xs text-navy-foreground/70 mt-5 leading-relaxed max-w-[260px]">
             Estrutura, segurança e experiência para operações que exigem confiança e resultados
             sustentáveis.

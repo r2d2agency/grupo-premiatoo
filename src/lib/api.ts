@@ -21,11 +21,16 @@ export type SiteContent = {
     footer: boolean;
   };
   hero: {
-    title: string;
-    subtitle: string;
-    ctaPrimary: string;
-    ctaSecondary: string;
-    image: string;
+    banners: {
+      id: string;
+      title: string;
+      subtitle: string;
+      ctaPrimary: string;
+      ctaSecondary: string;
+      image: string;
+    }[];
+    animation: "fade" | "slide" | "zoom";
+    interval: number;
   };
   brandCards: {
     title: string;
@@ -58,13 +63,18 @@ export const defaultContent: SiteContent = {
     footer: true,
   },
   hero: {
-    title: "Estrutura, capital e segurança para operações que exigem critério e continuidade.",
-    subtitle:
-      "Atuamos na estruturação de garantias e soluções financeiras para empresas que precisam proteger contratos, fortalecer seu caixa e seguir em frente com segurança.",
-    ctaPrimary: "SOLICITAR ANÁLISE",
-    ctaSecondary: "FALAR COM ESPECIALISTA",
-    image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop",
+    banners: [
+      {
+        id: "1",
+        title: "Estrutura, capital e segurança para operações que exigem critério e continuidade.",
+        subtitle: "Atuamos na estruturação de garantias e soluções financeiras para empresas que precisam proteger contratos, fortalecer seu caixa e seguir em frente com segurança.",
+        ctaPrimary: "SOLICITAR ANÁLISE",
+        ctaSecondary: "FALAR COM ESPECIALISTA",
+        image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop",
+      }
+    ],
+    animation: "fade",
+    interval: 5000,
   },
   brandCards: [
 
@@ -137,10 +147,30 @@ export async function fetchContent(): Promise<SiteContent> {
     const res = await fetch(`${API_URL}/api/content`, { credentials: "omit" });
     if (!res.ok) throw new Error("bad status");
     const data = await res.json();
-    return { ...defaultContent, ...data, 
+    const content = { ...defaultContent, ...data, 
       branding: { ...defaultContent.branding, ...data.branding },
       modules: { ...defaultContent.modules, ...data.modules }
     };
+
+    // Migration for Hero
+    if (data.hero && !data.hero.banners) {
+      content.hero = {
+        banners: [{
+          id: "migrated-1",
+          title: data.hero.title || defaultContent.hero.banners[0].title,
+          subtitle: data.hero.subtitle || defaultContent.hero.banners[0].subtitle,
+          ctaPrimary: data.hero.ctaPrimary || defaultContent.hero.banners[0].ctaPrimary,
+          ctaSecondary: data.hero.ctaSecondary || defaultContent.hero.banners[0].ctaSecondary,
+          image: data.hero.image || defaultContent.hero.banners[0].image,
+        }],
+        animation: "fade",
+        interval: 5000
+      };
+    } else if (data.hero) {
+      content.hero = { ...defaultContent.hero, ...data.hero };
+    }
+
+    return content;
 
   } catch {
     return defaultContent;

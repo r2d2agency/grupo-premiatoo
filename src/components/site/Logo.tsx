@@ -1,5 +1,14 @@
-export function Logo({ variant = "light" }: { variant?: "light" | "dark" }) {
+export function Logo({ variant = "light", src }: { variant?: "light" | "dark", src?: string }) {
   const stroke = variant === "light" ? "currentColor" : "currentColor";
+  
+  if (src) {
+    return (
+      <div className="flex items-center">
+        <img src={src} alt="Garantidora Premiatto" className="h-10 w-auto object-contain" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center gap-3">
       <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
