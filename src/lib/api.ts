@@ -10,6 +10,7 @@ export type SiteContent = {
     primaryColor: string;
     secondaryColor: string;
     logoUrl?: string;
+    logoHeight?: number;
   };
   navigation: {
     links: {
@@ -74,6 +75,7 @@ export const defaultContent: SiteContent = {
   branding: {
     primaryColor: "#001B3D", // Navy
     secondaryColor: "#C5A059", // Gold/Tan
+    logoHeight: 40,
   },
   navigation: {
     links: [

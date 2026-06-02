@@ -33,7 +33,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
   return (
     <header className={`${headerClass} text-navy-foreground`}>
       <div className="mx-auto max-w-[1280px] px-6 flex items-center justify-between gap-6">
-        <Logo src={logoUrl} />
+        <Logo src={logoUrl} height={content.branding.logoHeight} />
         <nav className="hidden lg:flex items-center gap-7 text-[13px]">
           {navLinks.map((n) => (
             <a 
