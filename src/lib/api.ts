@@ -62,7 +62,7 @@ export type SiteContent = {
     logoUrl?: string;
   }[];
   stats: { value: string; label: string }[];
-  garantias: { title: string; icon: string }[];
+  garantias: { title: string; description?: string; link?: string; icon: string }[];
   capital: {
     title: string;
     items: { title: string; description: string; icon: string }[];
@@ -153,12 +153,12 @@ export const defaultContent: SiteContent = {
     { value: "Atuação", label: "em todo o território nacional" },
   ],
   garantias: [
-    { title: "Garantia Judicial", icon: "scale" },
-    { title: "Garantia Contratual", icon: "file" },
-    { title: "Garantia para Licitações", icon: "gavel" },
-    { title: "Garantia Aduaneira", icon: "globe" },
-    { title: "Garantia Imobiliária", icon: "building" },
-    { title: "Garantia de Parcelamento Fiscal", icon: "file-check" },
+    { title: "Garantia Judicial", description: "Substituição de depósitos judiciais e garantia de execuções fiscais.", link: "#", icon: "scale" },
+    { title: "Garantia Contratual", description: "Assegura o cumprimento de obrigações em contratos públicos ou privados.", link: "#", icon: "file" },
+    { title: "Garantia para Licitações", description: "Garante a assinatura do contrato e a manutenção da proposta no certame.", link: "#", icon: "gavel" },
+    { title: "Garantia Aduaneira", description: "Garante o pagamento de tributos em operações de importação e exportação.", link: "#", icon: "globe" },
+    { title: "Garantia Imobiliária", description: "Proteção para empreendimentos, permutas e contratos de construção.", link: "#", icon: "building" },
+    { title: "Garantia de Parcelamento Fiscal", description: "Garante o pagamento de débitos fiscais parcelados junto à União.", link: "#", icon: "file-check" },
   ],
   capital: {
     title: "Soluções financeiras sob medida para impulsionar seu negócio.",
