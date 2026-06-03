@@ -1,6 +1,7 @@
 import { Logo } from "./Logo";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import { SiteContent } from "@/lib/api";
 
 export function Header({ content, sticky = true }: { content: SiteContent; sticky?: boolean }) {
