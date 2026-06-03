@@ -67,7 +67,7 @@ function AdminHeroPage() {
   }
 
   const addHeroBanner = () => {
-    const newBanner = {
+    const newBanner: SiteContent["hero"]["banners"][number] = {
       id: crypto.randomUUID(),
       title: "Novo Título do Banner",
       subtitle: "Descrição curta para este banner.",
@@ -195,7 +195,7 @@ function AdminHeroPage() {
                             <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Abrir em</Label>
                             <select
                               value={banner.ctaPrimaryTarget || "_self"}
-                              onChange={(e) => updateHeroBanner(banner.id, { ctaPrimaryTarget: e.target.value })}
+                              onChange={(e) => updateHeroBanner(banner.id, { ctaPrimaryTarget: e.target.value as "_self" | "_blank" })}
                               className="w-full border border-input rounded-sm px-2 py-1 text-xs"
                             >
                               <option value="_self">Mesma Aba</option>
@@ -219,7 +219,7 @@ function AdminHeroPage() {
                             <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Abrir em</Label>
                             <select
                               value={banner.ctaSecondaryTarget || "_self"}
-                              onChange={(e) => updateHeroBanner(banner.id, { ctaSecondaryTarget: e.target.value })}
+                              onChange={(e) => updateHeroBanner(banner.id, { ctaSecondaryTarget: e.target.value as "_self" | "_blank" })}
                               className="w-full border border-input rounded-sm px-2 py-1 text-xs"
                             >
                               <option value="_self">Mesma Aba</option>
