@@ -1,6 +1,7 @@
 import { Logo } from "./Logo";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import { SiteContent } from "@/lib/api";
 
 export function Header({ content, sticky = true }: { content: SiteContent; sticky?: boolean }) {
@@ -34,15 +35,15 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
         <Logo src={logoUrl} height={content.branding.logoHeight} />
         <nav className="hidden lg:flex items-center gap-7 text-[13px]">
           {navLinks.map((n) => (
-            <a 
+            <Link 
               key={n.label} 
-              href={n.href} 
-              target={n.target}
-              className="hover:opacity-80 flex items-center gap-1"
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
+              className="hover:opacity-80 flex items-center gap-1 cursor-pointer"
             >
               {n.label}
               {n.label === "Garantias" && <ChevronDown className="h-3.5 w-3.5" />}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="flex items-center gap-4">
@@ -68,15 +69,15 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
       {mobileMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 bg-navy border-t border-white/10 p-6 flex flex-col gap-6 animate-in fade-in slide-in-from-top-4">
           {navLinks.map((n) => (
-            <a 
+            <Link 
               key={n.label} 
-              href={n.href} 
-              target={n.target}
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
               className="text-white hover:text-gold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {n.label}
-            </a>
+            </Link>
           ))}
           {cta.visible && (
             <a

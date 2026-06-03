@@ -29,7 +29,7 @@ export function NewsArea({ news = [] }: NewsAreaProps) {
   return (
     <section className="py-12 bg-background overflow-hidden">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="space-y-2">
             <span className="text-brand-blue font-semibold tracking-[0.2em] text-[11px] uppercase">
               FIQUE POR DENTRO
@@ -38,6 +38,12 @@ export function NewsArea({ news = [] }: NewsAreaProps) {
               Últimas Notícias
             </h2>
           </div>
+          <Link 
+            to="/news"
+            className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase hover:gap-3 transition-all border-b border-brand-blue pb-1"
+          >
+            VER TODAS AS NOTÍCIAS <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
         <Carousel
