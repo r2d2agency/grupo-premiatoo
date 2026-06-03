@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Logo } from "@/components/site/Logo";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/institucional")({
   head: () => ({
@@ -35,28 +36,45 @@ function InstitucionalPage() {
     }}>
       <Header content={content} />
 
-      {/* SEÇÃO 01 — HERO */}
-      <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+      {/* SEÇÃO 01 — HERO (Ajustada para o tamanho da home) */}
+      <section className="relative bg-navy text-navy-foreground h-auto min-h-[550px] md:h-[600px] lg:h-[700px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src={data.hero.image} 
             alt="Hero" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-90"
           />
-          <div className="absolute inset-0 bg-[#041A3B]/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
         </div>
         
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6 w-full">
-          <div className="max-w-3xl text-white">
-            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl lg:text-7xl leading-[1.1] mb-10 animate-in fade-in slide-in-from-left-8 duration-1000">
+        <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-24 pb-16 md:pt-0 md:pb-0">
+          <div className="max-w-xl w-full">
+            <motion.h1 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-display text-4xl lg:text-5xl leading-[1.1]"
+            >
               {data.hero.title}
-            </h1>
-            <p className="text-lg md:text-2xl text-white/90 font-light leading-relaxed mb-12 max-w-2xl animate-in fade-in slide-in-from-left-8 duration-1000 delay-200">
+            </motion.h1>
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-6 text-sm leading-relaxed text-navy-foreground/80 max-w-md"
+            >
               {data.hero.subtitle}
-            </p>
-            <button className="border border-white/40 bg-white/10 backdrop-blur-sm text-white px-10 py-5 rounded-sm font-medium hover:bg-white hover:text-[#041A3B] transition-all duration-500 animate-in fade-in slide-in-from-left-8 duration-1000 delay-400 uppercase tracking-widest text-xs">
-              {data.hero.ctaLabel}
-            </button>
+            </motion.p>
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-12 md:mt-10"
+            >
+              <button className="inline-flex items-center justify-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-4 md:py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90 w-full sm:w-auto uppercase">
+                {data.hero.ctaLabel} <ArrowRight className="h-4 w-4" />
+              </button>
+            </motion.div>
           </div>
         </div>
       </section>
