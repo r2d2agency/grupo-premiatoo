@@ -5,6 +5,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Calendar, ArrowLeft, Newspaper, ChevronRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/news/$newsId")({
   component: NewsDetail,
@@ -42,11 +43,17 @@ function NewsDetail() {
     }}>
       <Header content={content} sticky={true} />
       
-      <main className="pt-32 pb-24">
+      <PageHero 
+        title="Notícias" 
+        subtitle={newsItem.title}
+        backgroundImage={newsItem.image}
+      />
+      
+      <main className="py-16 md:py-24">
         <div className="max-w-[1280px] mx-auto px-6">
           <Link 
             to="/" 
-            className="inline-flex items-center gap-2 text-sm text-brand-blue font-semibold mb-8 hover:gap-3 transition-all"
+            className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue mb-12 hover:gap-3 transition-all"
           >
             <ArrowLeft className="w-4 h-4" /> VOLTAR PARA O INÍCIO
           </Link>
@@ -75,11 +82,11 @@ function NewsDetail() {
                 />
               </div>
 
-              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-navy prose-p:text-slate-700 prose-p:leading-relaxed prose-p:text-lg">
+              <div className="text-slate-700 leading-relaxed text-lg space-y-6 font-normal whitespace-pre-line">
                 {newsItem.content ? (
-                  <div dangerouslySetInnerHTML={{ __html: newsItem.content }} />
+                  newsItem.content
                 ) : (
-                  <p>{newsItem.description}</p>
+                  newsItem.description
                 )}
               </div>
             </article>
