@@ -10,7 +10,7 @@ import {
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize } from "lucide-react";
+import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize, Type } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -568,13 +568,50 @@ function AdminDashboard() {
                       value={content.governanca.title} 
                       onChange={(v) => update("governanca", { ...content.governanca, title: v })} 
                       textarea 
+                      placeholder="Use <b>texto</b> para negrito e <i>texto</i> para itálico"
                     />
+                    <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label className="text-[11px] uppercase tracking-wider flex items-center gap-2">
+                          <Type className="w-3 h-3" /> Tamanho do Título (px)
+                        </Label>
+                        <span className="text-sm font-bold text-navy">{content.governanca.titleSize || 30}px</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="16"
+                        max="60"
+                        step="1"
+                        value={content.governanca.titleSize || 30}
+                        onChange={(e) => update("governanca", { ...content.governanca, titleSize: Number(e.target.value) })}
+                        className="w-full accent-navy"
+                      />
+                    </div>
+
                     <Field 
                       label="Descrição" 
                       value={content.governanca.description} 
                       onChange={(v) => update("governanca", { ...content.governanca, description: v })} 
                       textarea 
+                      placeholder="Use <b>texto</b> para negrito e <i>texto</i> para itálico"
                     />
+                    <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label className="text-[11px] uppercase tracking-wider flex items-center gap-2">
+                          <Type className="w-3 h-3" /> Tamanho da Descrição (px)
+                        </Label>
+                        <span className="text-sm font-bold text-navy">{content.governanca.descriptionSize || 14}px</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="10"
+                        max="24"
+                        step="1"
+                        value={content.governanca.descriptionSize || 14}
+                        onChange={(e) => update("governanca", { ...content.governanca, descriptionSize: Number(e.target.value) })}
+                        className="w-full accent-navy"
+                      />
+                    </div>
                   </div>
                   <div className="space-y-4">
                     <ImageUpload
