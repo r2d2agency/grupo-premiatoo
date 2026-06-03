@@ -15,6 +15,7 @@ import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -136,6 +137,7 @@ function AdminDashboard() {
             <TabsTrigger value="stats" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Estatísticas</TabsTrigger>
             <TabsTrigger value="garantias" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Garantias</TabsTrigger>
             <TabsTrigger value="capital" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Capital</TabsTrigger>
+            <TabsTrigger value="governanca" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Governança</TabsTrigger>
             <TabsTrigger value="branding" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Branding</TabsTrigger>
           </TabsList>
 
@@ -539,6 +541,89 @@ function AdminDashboard() {
                       }} />
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="governanca" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-navy flex items-center gap-2">
+                  <Scale className="w-5 h-5 text-gold" />
+                  Governança & Compromisso
+                </CardTitle>
+                <CardDescription>Edite a seção de governança e compromisso.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <Field 
+                      label="Crachá (Badge)" 
+                      value={content.governanca.badge} 
+                      onChange={(v) => update("governanca", { ...content.governanca, badge: v })} 
+                    />
+                    <Field 
+                      label="Título" 
+                      value={content.governanca.title} 
+                      onChange={(v) => update("governanca", { ...content.governanca, title: v })} 
+                      textarea 
+                    />
+                    <Field 
+                      label="Descrição" 
+                      value={content.governanca.description} 
+                      onChange={(v) => update("governanca", { ...content.governanca, description: v })} 
+                      textarea 
+                    />
+                  </div>
+                  <div className="space-y-4">
+                    <ImageUpload
+                      label="Imagem Lateral"
+                      value={content.governanca.image}
+                      onChange={(v) => update("governanca", { ...content.governanca, image: v })}
+                    />
+                  </div>
+                </div>
+
+                <div className="border-t pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Itens de Check (Lista)</Label>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => {
+                        const next = [...content.governanca.items, "Novo item"];
+                        update("governanca", { ...content.governanca, items: next });
+                      }}
+                    >
+                      <Plus className="w-4 h-4 mr-2" /> Adicionar Item
+                    </Button>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {content.governanca.items.map((item, idx) => (
+                      <div key={idx} className="flex gap-2">
+                        <Input 
+                          value={item} 
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            const next = [...content.governanca.items];
+                            next[idx] = e.target.value;
+                            update("governanca", { ...content.governanca, items: next });
+                          }} 
+                        />
+                        <Button 
+                          size="icon" 
+                          variant="ghost" 
+                          className="text-destructive"
+                          onClick={() => {
+                            const next = content.governanca.items.filter((_, i) => i !== idx);
+                            update("governanca", { ...content.governanca, items: next });
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
