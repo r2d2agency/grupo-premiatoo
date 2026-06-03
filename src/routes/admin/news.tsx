@@ -89,6 +89,9 @@ function AdminNewsPage() {
                   image: "", 
                   link: "#", 
                   publishDate: new Date().toISOString().split('T')[0],
+                  category: "Geral",
+                  segment: "Mercado",
+                  tags: [],
                   active: true 
                 };
                 update("news", [...(content.news || []), newItem]);
