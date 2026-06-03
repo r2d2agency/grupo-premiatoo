@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchContent, defaultContent, type SiteContent } from "@/lib/api";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 import { ChevronRight, ArrowRight, Shield, CheckCircle2, User, Landmark, Scale, ShieldCheck, FileSearch, History, Users, Award } from "lucide-react";
 
