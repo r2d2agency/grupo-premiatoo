@@ -137,6 +137,7 @@ export type SiteContent = {
     metaTags: { name: string; content: string }[];
     canonicalUrl?: string;
     scripts?: { placement: "head" | "body"; content: string }[];
+  };
   institucional: {
     hero: {
       title: string;
