@@ -52,10 +52,10 @@ function NewsDetail() {
       <main className="py-16 md:py-24">
         <div className="max-w-[1280px] mx-auto px-6">
           <Link 
-            to="/" 
+            to="/news" 
             className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue mb-12 hover:gap-3 transition-all"
           >
-            <ArrowLeft className="w-4 h-4" /> VOLTAR PARA O INÍCIO
+            <ArrowLeft className="w-4 h-4" /> VOLTAR PARA NOTÍCIAS
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
