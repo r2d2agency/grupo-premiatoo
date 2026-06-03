@@ -40,7 +40,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
   const currentVariant = variants[hero.animation || "fade"];
 
   return (
-    <section className="relative bg-navy text-navy-foreground h-[550px] md:h-[600px] lg:h-[700px] overflow-hidden">
+    <section className="relative bg-navy text-navy-foreground h-auto min-h-[550px] md:h-[600px] lg:h-[700px] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={banner.id + current}
@@ -48,7 +48,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
           animate={currentVariant.animate}
           exit={currentVariant.exit}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="absolute inset-0"
+          className="relative md:absolute inset-0"
         >
           <div className="absolute inset-0 z-0">
             <picture className="w-full h-full">
@@ -63,7 +63,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
             <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
           </div>
           
-          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-16 md:pt-0">
+          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-24 pb-16 md:pt-0 md:pb-0">
             <div className="max-w-xl w-full">
               <motion.h1 
                 initial={{ y: 20, opacity: 0 }}
@@ -115,7 +115,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
 
       {banners.length > 1 && (
         <>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {banners.map((_, i) => (
               <button
                 key={i}
