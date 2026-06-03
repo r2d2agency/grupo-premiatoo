@@ -124,8 +124,29 @@ export const defaultContent: SiteContent = {
     capital: true,
     governanca: true,
     brandCards: true,
+    news: true,
     footer: true,
   },
+  news: [
+    {
+      id: "1",
+      title: "Premiatto Capital expande operações de antecipação de recebíveis",
+      description: "Novas estruturas permitem maior agilidade e taxas competitivas para empresas do setor industrial e de serviços.",
+      image: "https://images.unsplash.com/photo-1454165833767-027ffea70288?w=800&q=80",
+      link: "#",
+      publishDate: new Date().toISOString(),
+      active: true
+    },
+    {
+      id: "2",
+      title: "A importância da governança em operações estruturadas",
+      description: "Como a transparência e o compliance garantem a sustentabilidade de negócios complexos no mercado brasileiro.",
+      image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80",
+      link: "#",
+      publishDate: new Date().toISOString(),
+      active: true
+    }
+  ],
   hero: {
     banners: [
       {
