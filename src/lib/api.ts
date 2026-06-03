@@ -140,10 +140,18 @@ export type SiteContent = {
   };
   institucional: {
     hero: {
-      title: string;
-      subtitle: string;
-      ctaLabel: string;
-      image: string;
+      banners: {
+        id: string;
+        title: string;
+        subtitle: string;
+        ctaLabel: string;
+        image: string;
+        imageDesktop?: string;
+        imageTablet?: string;
+        imageMobile?: string;
+      }[];
+      animation: "fade" | "slide" | "zoom";
+      interval: number;
     };
     historia: {
       title: string;
