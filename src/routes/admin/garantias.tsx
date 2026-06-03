@@ -5,6 +5,7 @@ import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Save, Plus, Trash2, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake } from "lucide-react";
+import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
@@ -171,23 +172,15 @@ function AdminGarantiasPage() {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Imagem de Capa (Opcional)</Label>
-                        <input
-                          type="text"
-                          value={g.image || ""}
-                          onChange={(e) => {
-                            const next = [...content.garantias]; next[i] = { ...g, image: e.target.value }; update("garantias", next);
-                          }}
-                          placeholder="https://images.unsplash.com/..."
-                          className="w-full border border-input rounded-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-navy/20"
-                        />
-                        {g.image && (
-                          <div className="mt-2 aspect-video rounded-md overflow-hidden border">
-                            <img src={g.image} alt="Preview" className="w-full h-full object-cover" />
-                          </div>
-                        )}
-                      </div>
+                      <ImageUpload
+                        label="Imagem de Capa (Opcional)"
+                        value={g.image || ""}
+                        onChange={(v) => {
+                          const next = [...content.garantias]; 
+                          next[i] = { ...g, image: v }; 
+                          update("garantias", next);
+                        }}
+                      />
 
                       <div className="space-y-2">
                         <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Ícone Selecionado: <span className="text-navy font-bold">{g.icon}</span></Label>
