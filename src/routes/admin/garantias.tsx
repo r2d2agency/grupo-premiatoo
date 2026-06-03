@@ -83,7 +83,15 @@ function AdminGarantiasPage() {
                 </div>
                 <Button 
                   onClick={() => {
-                    const newItem = { title: "Nova Garantia", description: "", link: "#", icon: "shield" };
+                    const newItem = { 
+                      id: crypto.randomUUID(), 
+                      title: "Nova Garantia", 
+                      description: "", 
+                      content: "",
+                      image: "",
+                      link: "#", 
+                      icon: "shield" 
+                    };
                     update("garantias", [...content.garantias, newItem]);
                   }} 
                   size="sm" 
@@ -143,18 +151,43 @@ function AdminGarantiasPage() {
                     <Trash2 className="w-4 h-4" />
                   </Button>
 
-                  <div className="grid gap-4">
-                    <Field label="Título" value={g.title} onChange={(v: string) => {
-                      const next = [...content.garantias]; next[i] = { ...g, title: v }; update("garantias", next);
-                    }} />
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <Field label="Título" value={g.title} onChange={(v: string) => {
+                        const next = [...content.garantias]; next[i] = { ...g, title: v }; update("garantias", next);
+                      }} />
+                      
+                      <Field label="Descrição Curta (Card)" value={g.description || ""} onChange={(v: string) => {
+                        const next = [...content.garantias]; next[i] = { ...g, description: v }; update("garantias", next);
+                      }} textarea />
+                      
+                      <Field label="Link Interno / URL" value={g.link || ""} onChange={(v: string) => {
+                        const next = [...content.garantias]; next[i] = { ...g, link: v }; update("garantias", next);
+                      }} placeholder="/garantias/exemplo" />
+
+                      <Field label="Conteúdo Detalhado" value={g.content || ""} onChange={(v: string) => {
+                        const next = [...content.garantias]; next[i] = { ...g, content: v }; update("garantias", next);
+                      }} textarea placeholder="Conteúdo que aparecerá na página interna da garantia..." />
+                    </div>
                     
-                    <Field label="Descrição" value={g.description || ""} onChange={(v: string) => {
-                      const next = [...content.garantias]; next[i] = { ...g, description: v }; update("garantias", next);
-                    }} textarea />
-                    
-                    <Field label="Link CTA" value={g.link || ""} onChange={(v: string) => {
-                      const next = [...content.garantias]; next[i] = { ...g, link: v }; update("garantias", next);
-                    }} placeholder="#" />
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Imagem de Capa (Opcional)</Label>
+                        <input
+                          type="text"
+                          value={g.image || ""}
+                          onChange={(e) => {
+                            const next = [...content.garantias]; next[i] = { ...g, image: e.target.value }; update("garantias", next);
+                          }}
+                          placeholder="https://images.unsplash.com/..."
+                          className="w-full border border-input rounded-sm px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-navy/20"
+                        />
+                        {g.image && (
+                          <div className="mt-2 aspect-video rounded-md overflow-hidden border">
+                            <img src={g.image} alt="Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
 
                     <div className="space-y-2">
                       <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Ícone Selecionado: <span className="text-navy font-bold">{g.icon}</span></Label>
