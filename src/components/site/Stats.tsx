@@ -6,7 +6,7 @@ const icons = [ShieldCheck, Building2, Users, Map];
 export function Stats({ stats }: { stats: SiteContent["stats"] }) {
   return (
     <section className="bg-background py-16">
-      <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-[1280px] px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((s, i) => {
           const Icon = icons[i] || ShieldCheck;
           return (

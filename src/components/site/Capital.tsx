@@ -29,7 +29,7 @@ export function Capital({ data }: { data: SiteContent["capital"] }) {
                 VER TODAS AS SOLUÇÕES DE CAPITAL <ArrowRight className="h-4 w-4" />
               </a>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {data.items.map((it) => {
                 const Icon = iconMap[it.icon] || DollarSign;
                 return (

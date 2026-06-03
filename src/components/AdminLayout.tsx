@@ -5,7 +5,7 @@ export function AdminLayout({ children, title }: { children: ReactNode; title?: 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <AdminSidebar />
-      <div className="flex-1 ml-64">
+      <div className="flex-1 lg:ml-64 w-full">
         <header className="bg-white border-b px-8 py-4 flex items-center justify-between sticky top-0 z-40">
           <h2 className="text-xl font-semibold text-navy">{title || "Painel de Controle"}</h2>
           <div className="flex items-center gap-4">
