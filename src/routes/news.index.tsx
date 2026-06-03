@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { fetchContent, defaultContent, type SiteContent } from "@/lib/api";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PageHero } from "@/components/site/PageHero";
 import { Link } from "@tanstack/react-router";
-import { Calendar, ChevronRight, Newspaper } from "lucide-react";
+import { Calendar, ChevronRight, Newspaper, Search, Filter, Tag } from "lucide-react";
 
 export const Route = createFileRoute("/news/")({
   component: NewsIndex,
