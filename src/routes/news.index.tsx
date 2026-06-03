@@ -36,90 +36,108 @@ function NewsIndex() {
         subtitle="Fique por dentro das novidades do mercado e da Premiatto."
       />
 
-      <main className="py-16 md:py-24">
+      <main className="py-20 md:py-32 bg-slate-50/50">
         <div className="max-w-[1280px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Main Area */}
-            <div className="lg:col-span-8 space-y-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            {/* Main Content Area */}
+            <div className="lg:col-span-8 space-y-20">
               {featuredNews && (
                 <Link 
                   to="/news/$newsId" 
                   params={{ newsId: featuredNews.id }}
-                  className="group block space-y-6"
+                  className="group block relative"
                 >
-                  <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden shadow-xl">
+                  <div className="relative aspect-[21/10] w-full rounded-3xl overflow-hidden shadow-2xl bg-navy/5">
                     <img 
                       src={featuredNews.image} 
                       alt={featuredNews.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-brand-blue text-[11px] font-bold tracking-widest uppercase">
-                      <Calendar className="w-4 h-4" />
-                      {featuredNews.publishDate ? new Date(featuredNews.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-display text-navy group-hover:text-brand-blue transition-colors">
-                      {featuredNews.title}
-                    </h2>
-                    <p className="text-lg text-slate-600 line-clamp-3">
-                      {featuredNews.description}
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-brand-blue font-bold text-xs tracking-widest uppercase">
-                      Ler matéria completa <ChevronRight className="w-4 h-4" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                    
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="inline-block px-4 py-1.5 bg-brand-blue/90 backdrop-blur-md text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-6">
+                        Destaque
+                      </div>
+                      <h2 className="text-3xl md:text-5xl font-display text-white leading-tight mb-4 drop-shadow-lg">
+                        {featuredNews.title}
+                      </h2>
+                      <div className="flex items-center gap-4 text-white/80 text-[11px] font-bold tracking-widest uppercase">
+                        <Calendar className="w-4 h-4 text-gold" />
+                        {featuredNews.publishDate ? new Date(featuredNews.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
+                        <span className="w-8 h-[1px] bg-gold/50 ml-2" />
+                        <span className="group-hover:text-white transition-colors">Ler agora</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
               )}
 
-              {/* 3 columns below featured */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-slate-100">
-                {secondaryNews.map((item) => (
-                  <Link 
-                    key={item.id}
-                    to="/news/$newsId"
-                    params={{ newsId: item.id }}
-                    className="group space-y-4"
-                  >
-                    <div className="aspect-video w-full rounded-xl overflow-hidden shadow-md">
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-[10px] text-brand-blue font-bold uppercase tracking-wider">
-                        {item.publishDate ? new Date(item.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
+              {/* Grid de Notícias Secundárias */}
+              <div className="space-y-12">
+                <div className="flex items-center gap-4">
+                  <h3 className="text-sm font-bold tracking-[0.3em] text-navy/40 uppercase">Explorar mais</h3>
+                  <div className="h-[1px] flex-1 bg-slate-200" />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                  {secondaryNews.map((item) => (
+                    <Link 
+                      key={item.id}
+                      to="/news/$newsId"
+                      params={{ newsId: item.id }}
+                      className="group flex flex-col h-full"
+                    >
+                      <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-lg mb-6 bg-slate-100">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
                       </div>
-                      <h3 className="font-display text-navy text-lg leading-tight group-hover:text-brand-blue transition-colors line-clamp-2">
-                        {item.title}
-                      </h3>
-                    </div>
-                  </Link>
-                ))}
+                      <div className="flex-1 space-y-3">
+                        <div className="text-[10px] text-brand-blue font-bold uppercase tracking-[0.15em]">
+                          {item.publishDate ? new Date(item.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
+                        </div>
+                        <h3 className="font-display text-navy text-xl leading-snug group-hover:text-brand-blue transition-colors line-clamp-3">
+                          {item.title}
+                        </h3>
+                        <p className="text-slate-500 text-sm line-clamp-2 font-light leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                      <div className="mt-6 flex items-center gap-2 text-[10px] font-bold text-navy/40 uppercase tracking-widest group-hover:text-brand-blue group-hover:translate-x-1 transition-all">
+                        Ver detalhes <ChevronRight className="w-3 h-3" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
 
-              {/* List of remaining news if any */}
+              {/* Lista compacta para o restante */}
               {remainingNews.length > 0 && (
-                <div className="space-y-8 pt-12 border-t border-slate-100">
-                   <h3 className="text-2xl font-display text-navy">Mais notícias</h3>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="pt-20 border-t border-slate-200/60 space-y-10">
+                   <div className="flex items-center gap-4">
+                     <h3 className="text-sm font-bold tracking-[0.3em] text-navy/40 uppercase">Arquivo</h3>
+                     <div className="h-[1px] flex-1 bg-slate-200" />
+                   </div>
+                   
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                       {remainingNews.map((item) => (
                          <Link 
                             key={item.id}
                             to="/news/$newsId"
                             params={{ newsId: item.id }}
-                            className="group flex gap-4"
+                            className="group flex items-start gap-6 pb-8 border-b border-slate-100 last:border-0"
                           >
-                            <div className="w-24 h-24 shrink-0 rounded-lg overflow-hidden">
-                               <img src={item.image} className="w-full h-full object-cover" />
+                            <div className="w-20 h-20 shrink-0 rounded-xl overflow-hidden shadow-md">
+                               <img src={item.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                             </div>
-                            <div className="space-y-1">
-                               <div className="text-[9px] text-brand-blue font-bold uppercase">
+                            <div className="space-y-2">
+                               <div className="text-[9px] text-brand-blue font-bold uppercase tracking-widest">
                                   {item.publishDate ? new Date(item.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
                                </div>
-                               <h4 className="text-sm font-semibold text-navy group-hover:text-brand-blue transition-colors line-clamp-2">
+                               <h4 className="text-base font-display text-navy group-hover:text-brand-blue transition-colors line-clamp-2 leading-tight">
                                   {item.title}
                                </h4>
                             </div>
@@ -130,32 +148,61 @@ function NewsIndex() {
               )}
             </div>
 
-            {/* Sidebar (News Menu) */}
-            <aside className="lg:col-span-4 space-y-10">
-              <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 sticky top-24">
-                <h3 className="text-xl font-display text-navy mb-6 flex items-center gap-2">
-                  <Newspaper className="w-5 h-5 text-brand-blue" />
-                  Menu de Notícias
-                </h3>
-                <div className="space-y-6">
-                  {activeNews.map((item) => (
+            {/* Sidebar Lateral Sofisticada */}
+            <aside className="lg:col-span-4">
+              <div className="sticky top-32 space-y-12">
+                {/* News Index / Categories */}
+                <div className="bg-navy rounded-[2rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                  <div className="relative z-10 space-y-8">
+                    <div className="space-y-2">
+                      <h3 className="text-2xl font-display leading-tight">Conteúdos<br/><span className="text-gold">Premiatto</span></h3>
+                      <div className="h-1 w-12 bg-gold/50 rounded-full" />
+                    </div>
+                    
+                    <nav className="space-y-1">
+                      {activeNews.slice(0, 8).map((item, idx) => (
+                        <Link 
+                          key={item.id}
+                          to="/news/$newsId"
+                          params={{ newsId: item.id }}
+                          className="flex items-center gap-4 py-3 border-b border-white/5 last:border-0 group"
+                        >
+                          <span className="text-[10px] font-mono text-white/30 group-hover:text-gold transition-colors">0{idx + 1}</span>
+                          <span className="text-sm font-light text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all line-clamp-1">
+                            {item.title}
+                          </span>
+                        </Link>
+                      ))}
+                    </nav>
+
                     <Link 
-                      key={item.id}
-                      to="/news/$newsId"
-                      params={{ newsId: item.id }}
-                      className="group block space-y-2"
+                      to="/"
+                      className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-gold uppercase hover:gap-3 transition-all pt-4"
                     >
-                      <div className="text-[10px] text-brand-blue font-bold uppercase tracking-wider">
-                        {item.publishDate ? new Date(item.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
-                      </div>
-                      <h4 className="text-sm font-semibold text-navy group-hover:text-brand-blue transition-colors line-clamp-2">
-                        {item.title}
-                      </h4>
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-brand-blue transition-colors">
-                        Ver detalhes <ChevronRight className="w-3 h-3" />
-                      </div>
+                      Voltar ao Início <ChevronRight className="w-4 h-4" />
                     </Link>
-                  ))}
+                  </div>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full -mr-16 -mt-16 blur-3xl" />
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-brand-blue/20 rounded-full -ml-12 -mb-12 blur-2xl" />
+                </div>
+
+                {/* CTA Card */}
+                <div className="bg-white rounded-[2rem] p-10 border border-slate-100 shadow-xl space-y-6 text-center">
+                  <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-brand-blue">
+                    <Newspaper className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-xl font-display text-navy">Precisa de análise especializada?</h4>
+                  <p className="text-slate-500 text-sm font-light leading-relaxed">
+                    Nossa equipe técnica está à disposição para estruturar a melhor solução para sua empresa.
+                  </p>
+                  <a 
+                    href={content.navigation.cta.href}
+                    className="inline-block w-full bg-brand-blue text-white py-4 rounded-xl font-bold text-[11px] tracking-[0.2em] hover:bg-navy transition-all shadow-lg shadow-brand-blue/20"
+                  >
+                    SOLICITAR ANÁLISE
+                  </a>
                 </div>
               </div>
             </aside>
