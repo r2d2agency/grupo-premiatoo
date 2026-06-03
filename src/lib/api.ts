@@ -128,6 +128,16 @@ export type SiteContent = {
     };
     copyright: string;
   };
+  seo: {
+    globalTitle: string;
+    globalDescription: string;
+    googleAnalyticsId?: string;
+    googleTagManagerId?: string;
+    facebookPixelId?: string;
+    metaTags: { name: string; content: string }[];
+    canonicalUrl?: string;
+    scripts?: { placement: "head" | "body"; content: string }[];
+  };
 };
 
 
@@ -362,6 +372,16 @@ export const defaultContent: SiteContent = {
     },
     copyright: "© 2024 Garantidora Premiatto. Todos os direitos reservados.",
   },
+  seo: {
+    globalTitle: "Garantidora Premiatto – Garantias e Soluções Financeiras",
+    globalDescription: "Estrutura, capital e segurança para operações que exigem critério e continuidade. Especialistas em garantias e soluções de capital.",
+    googleAnalyticsId: "",
+    googleTagManagerId: "",
+    facebookPixelId: "",
+    metaTags: [],
+    canonicalUrl: "https://garantidorapremiatto.com.br",
+    scripts: []
+  },
 };
 
 export async function fetchContent(): Promise<SiteContent> {
@@ -372,7 +392,8 @@ export async function fetchContent(): Promise<SiteContent> {
     const content = { ...defaultContent, ...data, 
       branding: { ...defaultContent.branding, ...data.branding },
       navigation: { ...defaultContent.navigation, ...data.navigation },
-      modules: { ...defaultContent.modules, ...data.modules }
+      modules: { ...defaultContent.modules, ...data.modules },
+      seo: { ...defaultContent.seo, ...data.seo }
     };
 
     // Migration for Hero

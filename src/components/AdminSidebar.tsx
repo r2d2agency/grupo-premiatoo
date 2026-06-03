@@ -35,6 +35,7 @@ const siteHomeItems = [
   { icon: Handshake, label: "Parceiros", path: "/admin/parceiros" },
   { icon: Settings, label: "Rodapé", path: "/admin/footer" },
   { icon: Settings, label: "Navegação", path: "/admin/navigation" },
+  { icon: Globe, label: "SEO & Marketing", path: "/admin/seo" },
 ];
 
 const menuItems = [

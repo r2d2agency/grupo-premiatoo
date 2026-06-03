@@ -7,6 +7,10 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { fetchContent, defaultContent, type SiteContent } from "@/lib/api";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
 
@@ -113,10 +117,87 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [content, setContent] = useState<SiteContent>(defaultContent);
+
+  useEffect(() => {
+    fetchContent().then(setContent);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <HelmetProvider>
+        <div className="min-h-screen font-sans antialiased">
+          <Helmet>
+            <title>{content.seo?.globalTitle || "Premiatto"}</title>
+            <meta name="description" content={content.seo?.globalDescription || ""} />
+            {content.seo?.canonicalUrl && <link rel="canonical" href={content.seo.canonicalUrl} />}
+            
+            {/* Google Analytics */}
+            {content.seo?.googleAnalyticsId && (
+              <script async src={`https://www.googletagmanager.com/gtag/js?id=${content.seo.googleAnalyticsId}`} />
+            )}
+            {content.seo?.googleAnalyticsId && (
+              <script>
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${content.seo.googleAnalyticsId}');
+                `}
+              </script>
+            )}
+
+            {/* Google Tag Manager (Head) */}
+            {content.seo?.googleTagManagerId && (
+              <script>
+                {`
+                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','${content.seo.googleTagManagerId}');
+                `}
+              </script>
+            )}
+
+            {/* Facebook Pixel */}
+            {content.seo?.facebookPixelId && (
+              <script>
+                {`
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '${content.seo.facebookPixelId}');
+                  fbq('track', 'PageView');
+                `}
+              </script>
+            )}
+
+            {/* Custom Scripts Head */}
+            {content.seo?.scripts?.filter(s => s.placement === "head").map((s, i) => (
+              <script key={i}>{s.content}</script>
+            ))}
+          </Helmet>
+
+          {/* Google Tag Manager (Body/Noscript) */}
+          {content.seo?.googleTagManagerId && (
+            <noscript>
+              <iframe 
+                src={`https://www.googletagmanager.com/ns.html?id=${content.seo.googleTagManagerId}`}
+                height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}
+              />
+            </noscript>
+          )}
+
+          <Outlet />
+          <Toaster />
+        </div>
+      </HelmetProvider>
     </QueryClientProvider>
   );
 }
