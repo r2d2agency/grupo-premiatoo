@@ -183,12 +183,19 @@ function NewsIndex() {
                       params={{ newsId: item.id }}
                       className="group flex flex-col h-full"
                     >
-                      <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-lg mb-6 bg-slate-100">
+                      <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-lg mb-6 bg-slate-100 relative group-hover:shadow-2xl transition-all duration-500">
                         <img 
                           src={item.image} 
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                           {item.category && (
+                             <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-brand-blue text-[8px] font-bold tracking-widest uppercase rounded-lg">
+                               {item.category}
+                             </span>
+                           )}
+                        </div>
                       </div>
                       <div className="flex-1 space-y-3">
                         <div className="text-[10px] text-brand-blue font-bold uppercase tracking-[0.15em]">
