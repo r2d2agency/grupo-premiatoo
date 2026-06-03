@@ -32,6 +32,7 @@ export type SiteContent = {
     stats: boolean;
     garantias: boolean;
     capital: boolean;
+    governanca: boolean;
     brandCards: boolean;
     footer: boolean;
   };
@@ -108,6 +109,7 @@ export const defaultContent: SiteContent = {
     stats: true,
     garantias: true,
     capital: true,
+    governanca: true,
     brandCards: true,
     footer: true,
   },

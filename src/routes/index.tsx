@@ -48,7 +48,7 @@ function Index() {
       {content.modules.stats && <Stats stats={content.stats} />}
       {content.modules.garantias && <Garantias items={content.garantias} />}
       {content.modules.capital && <Capital data={content.capital} />}
-      <Governanca />
+      {content.modules.governanca && <Governanca data={content.governanca} />}
       <Parceiros />
       {content.modules.footer && <Footer logoUrl={content.branding.logoUrl} />}
     </div>
