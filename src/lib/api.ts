@@ -51,6 +51,7 @@ export type SiteContent = {
     description: string;
     image: string;
     link?: string;
+    content?: string;
     publishDate?: string;
     expiryDate?: string;
     active: boolean;

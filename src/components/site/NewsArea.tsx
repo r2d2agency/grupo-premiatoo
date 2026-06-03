@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import type { SiteContent } from "@/lib/api";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -49,7 +50,11 @@ export function NewsArea({ news = [] }: NewsAreaProps) {
           <CarouselContent className="-ml-6">
             {activeNews.map((item, index) => (
               <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/2">
-                <div className="group cursor-pointer h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100">
+                <Link 
+                  to="/news/$newsId" 
+                  params={{ newsId: item.id }}
+                  className="group cursor-pointer h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100 block"
+                >
                   <div className="relative overflow-hidden aspect-[16/9]">
                     <img
                       src={item.image || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80"}
@@ -76,15 +81,12 @@ export function NewsArea({ news = [] }: NewsAreaProps) {
                     </p>
 
                     <div className="pt-2">
-                      <a
-                        href={item.link || "#"}
-                        className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group-hover:gap-3 transition-all"
-                      >
+                      <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group-hover:gap-3 transition-all">
                         LER MATÉRIA COMPLETA <ArrowRight className="w-4 h-4" />
-                      </a>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
