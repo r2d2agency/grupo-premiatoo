@@ -35,8 +35,16 @@ export type SiteContent = {
     governanca: boolean;
     brandCards: boolean;
     news: boolean;
+    parceiros: boolean;
     footer: boolean;
   };
+  parceiros: {
+    tag: string;
+    title: string;
+    cta: string;
+    image: string;
+    link: string;
+  }[];
   news: {
     id: string;
     title: string;
@@ -142,6 +150,7 @@ export const defaultContent: SiteContent = {
     governanca: true,
     brandCards: true,
     news: true,
+    parceiros: true,
     footer: true,
   },
   news: [
@@ -163,6 +172,22 @@ export const defaultContent: SiteContent = {
       publishDate: new Date().toISOString(),
       active: true
     }
+  ],
+  parceiros: [
+    {
+      tag: "PARCEIROS E AGENTES",
+      title: "Atue com uma estrutura sólida e conquiste novas oportunidades.",
+      cta: "QUERO SER PARCEIRO",
+      image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&q=80&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      tag: "PREMIATTO CAPITAL",
+      title: "Soluções de capital para empresas que não podem parar.",
+      cta: "CONHECER PREMIATTO CAPITAL",
+      image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=900&q=80&auto=format&fit=crop",
+      link: "#",
+    },
   ],
   hero: {
     banners: [

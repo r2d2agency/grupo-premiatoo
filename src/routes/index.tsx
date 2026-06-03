@@ -51,7 +51,7 @@ function Index() {
       {content.modules.capital && <Capital data={content.capital} />}
       {content.modules.governanca && <Governanca data={content.governanca} />}
       {content.modules.news && <NewsArea news={content.news} />}
-      <Parceiros />
+      {content.modules.parceiros && <Parceiros items={content.parceiros} />}
       {content.modules.footer && <Footer content={content} />}
     </div>
   );
