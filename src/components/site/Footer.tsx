@@ -58,11 +58,12 @@ export function Footer({ logoUrl }: { logoUrl?: string }) {
         </div>
       </div>
       <div className="border-t border-navy-foreground/10">
-        <div className="mx-auto max-w-[1280px] px-6 py-5 flex flex-wrap justify-between text-[11px] text-navy-foreground/60">
+        <div className="mx-auto max-w-[1280px] px-6 py-5 flex flex-wrap justify-between items-center text-[11px] text-navy-foreground/60">
           <div>© 2024 Garantidora Premiatto. Todos os direitos reservados.</div>
           <div className="flex gap-5">
             <a href="#">Política de Privacidade</a>
             <a href="#">Termos de Uso</a>
+            <span className="opacity-40">TNS R2D2</span>
           </div>
         </div>
       </div>
