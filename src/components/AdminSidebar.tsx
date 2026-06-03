@@ -41,6 +41,7 @@ const siteHomeItems = [
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Painel Geral", path: "/admin" },
+  { icon: Building2, label: "Página Institucional", path: "/admin/institucional" },
   { 
     icon: Home, 
     label: "Página Home", 
