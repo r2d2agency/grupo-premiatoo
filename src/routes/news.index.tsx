@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { fetchContent, defaultContent, type SiteContent } from "@/lib/api";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { PageHero } from "@/components/site/PageHero";
 import { Link } from "@tanstack/react-router";
-import { Calendar, ChevronRight, Newspaper } from "lucide-react";
+import { Calendar, ChevronRight, Newspaper, Search, Filter, Tag } from "lucide-react";
 
 export const Route = createFileRoute("/news/")({
   component: NewsIndex,
@@ -13,12 +13,39 @@ export const Route = createFileRoute("/news/")({
 
 function NewsIndex() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedSegment, setSelectedSegment] = useState("Todos");
 
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
 
-  const activeNews = content.news.filter((n) => n.active);
+  const activeNews = useMemo(() => {
+    return content.news.filter((n) => {
+      const matchesActive = n.active;
+      const matchesSearch = search === "" || 
+        n.title.toLowerCase().includes(search.toLowerCase()) || 
+        n.description.toLowerCase().includes(search.toLowerCase()) ||
+        (n.tags || []).some(t => t.toLowerCase().includes(search.toLowerCase()));
+      
+      const matchesCategory = selectedCategory === "Todas" || n.category === selectedCategory;
+      const matchesSegment = selectedSegment === "Todos" || n.segment === selectedSegment;
+      
+      return matchesActive && matchesSearch && matchesCategory && matchesSegment;
+    });
+  }, [content.news, search, selectedCategory, selectedSegment]);
+
+  const categories = useMemo(() => {
+    const cats = new Set(content.news.filter(n => n.active && n.category).map(n => n.category as string));
+    return ["Todas", ...Array.from(cats)];
+  }, [content.news]);
+
+  const segments = useMemo(() => {
+    const segs = new Set(content.news.filter(n => n.active && n.segment).map(n => n.segment as string));
+    return ["Todos", ...Array.from(segs)];
+  }, [content.news]);
+
   const featuredNews = activeNews[0];
   const secondaryNews = activeNews.slice(1, 4);
   const remainingNews = activeNews.slice(4);
@@ -38,6 +65,65 @@ function NewsIndex() {
 
       <main className="py-20 md:py-32 bg-slate-50/50">
         <div className="max-w-[1280px] mx-auto px-6">
+          {/* Filters Area */}
+          <div className="mb-16 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              {/* Search */}
+              <div className="md:col-span-6 relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy/30 group-focus-within:text-brand-blue transition-colors" />
+                <input 
+                  type="text" 
+                  placeholder="Pesquisar por título, descrição ou tags..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy placeholder:text-navy/20"
+                />
+              </div>
+
+              {/* Category Filter */}
+              <div className="md:col-span-3 relative">
+                <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/30" />
+                <select 
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full pl-10 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy appearance-none cursor-pointer"
+                >
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat === "Todas" ? "Todas as Categorias" : cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Segment Filter */}
+              <div className="md:col-span-3 relative">
+                <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/30" />
+                <select 
+                  value={selectedSegment}
+                  onChange={(e) => setSelectedSegment(e.target.value)}
+                  className="w-full pl-10 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy appearance-none cursor-pointer"
+                >
+                  {segments.map(seg => (
+                    <option key={seg} value={seg}>{seg === "Todos" ? "Todos os Segmentos" : seg}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {activeNews.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-[2rem] border border-dashed border-slate-200">
+                <Search className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                <h3 className="text-xl font-display text-navy mb-2">Nenhum resultado encontrado</h3>
+                <p className="text-slate-400 font-light">Tente ajustar seus termos de pesquisa ou filtros.</p>
+                <button 
+                  onClick={() => { setSearch(""); setSelectedCategory("Todas"); setSelectedSegment("Todos"); }}
+                  className="mt-6 text-brand-blue font-bold text-[10px] tracking-widest uppercase hover:underline"
+                >
+                  Limpar todos os filtros
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             {/* Main Content Area */}
             <div className="lg:col-span-8 space-y-20">
@@ -56,8 +142,17 @@ function NewsIndex() {
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
                     
                     <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                      <div className="inline-block px-4 py-1.5 bg-brand-blue/90 backdrop-blur-md text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-6">
-                        Destaque
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {featuredNews.category && (
+                          <span className="px-3 py-1 bg-brand-blue/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                            {featuredNews.category}
+                          </span>
+                        )}
+                        {featuredNews.segment && (
+                          <span className="px-3 py-1 bg-gold/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                            {featuredNews.segment}
+                          </span>
+                        )}
                       </div>
                       <h2 className="text-3xl md:text-5xl font-display text-white leading-tight mb-4 drop-shadow-lg">
                         {featuredNews.title}
@@ -88,12 +183,19 @@ function NewsIndex() {
                       params={{ newsId: item.id }}
                       className="group flex flex-col h-full"
                     >
-                      <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-lg mb-6 bg-slate-100">
+                      <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-lg mb-6 bg-slate-100 relative group-hover:shadow-2xl transition-all duration-500">
                         <img 
                           src={item.image} 
                           alt={item.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                           {item.category && (
+                             <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-brand-blue text-[8px] font-bold tracking-widest uppercase rounded-lg">
+                               {item.category}
+                             </span>
+                           )}
+                        </div>
                       </div>
                       <div className="flex-1 space-y-3">
                         <div className="text-[10px] text-brand-blue font-bold uppercase tracking-[0.15em]">

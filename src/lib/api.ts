@@ -54,6 +54,9 @@ export type SiteContent = {
     content?: string;
     publishDate?: string;
     expiryDate?: string;
+    category?: string;
+    segment?: string;
+    tags?: string[];
     active: boolean;
   }[];
   hero: {
