@@ -30,10 +30,10 @@ const menuItems = [
   { icon: Scale, label: "Governança", path: "/admin/governanca" },
   { icon: Newspaper, label: "Notícias", path: "/admin/news" },
   { icon: Handshake, label: "Parceiros", path: "/admin/parceiros" },
-  { icon: Settings, label: "Menu & Navegação", path: "/admin/navigation" },
   { icon: Palette, label: "Branding", path: "/admin/branding" },
   { icon: Layers, label: "Módulos", path: "/admin/modules" },
   { icon: Settings, label: "Rodapé", path: "/admin/footer" },
+  { icon: Settings, label: "Navegação", path: "/admin/navigation" },
   { icon: Users, label: "Usuários", path: "/admin/users" },
 ];
 
@@ -47,7 +47,7 @@ export function AdminSidebar() {
   };
 
   return (
-    <div className="w-64 bg-navy text-white h-screen flex flex-col fixed left-0 top-0 z-50">
+    <div className="hidden lg:flex w-64 bg-[#001B3D] text-white h-screen flex-col fixed left-0 top-0 z-50">
       <div className="p-6">
         <h1 className="text-xl font-display font-bold tracking-tight">Premiatto <span className="text-gold">CMS</span></h1>
       </div>
@@ -62,7 +62,8 @@ export function AdminSidebar() {
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm",
                 isActive 
-                  ? "bg-gold text-navy font-medium" 
+                  ? "bg-[#C5A059] text-[#001B3D] font-medium" 
+
                   : "text-white/70 hover:bg-white/10 hover:text-white"
               )}
             >

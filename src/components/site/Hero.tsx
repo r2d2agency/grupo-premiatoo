@@ -40,7 +40,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
   const currentVariant = variants[hero.animation || "fade"];
 
   return (
-    <section className="relative bg-navy text-navy-foreground h-[600px] lg:h-[700px] overflow-hidden">
+    <section className="relative bg-navy text-navy-foreground h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={banner.id + current}

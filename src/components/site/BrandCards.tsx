@@ -5,7 +5,7 @@ import type { SiteContent } from "@/lib/api";
 export function BrandCards({ cards }: { cards: SiteContent["brandCards"] }) {
   return (
     <section className="bg-background">
-      <div className="mx-auto max-w-[1280px] px-6 -mt-10 grid md:grid-cols-3 gap-6 relative z-10">
+      <div className="mx-auto max-w-[1280px] px-6 mt-[-40px] md:mt-[-60px] lg:mt-[-80px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
         {cards.map((c, i) => {
           const dark = c.variant === "dark";
           return (
