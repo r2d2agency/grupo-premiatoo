@@ -72,24 +72,60 @@ function AdminGarantiasPage() {
       <div className="space-y-6 pb-24">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <CardTitle className="text-navy flex items-center gap-2">
-                <Shield className="w-5 h-5 text-gold" />
-                Cards de Garantias (Carrossel)
-              </CardTitle>
-              <CardDescription>Gerencie as modalidades de garantia exibidas no site.</CardDescription>
+            <div className="space-y-4 w-full">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-navy flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-gold" />
+                    Cards de Garantias (Carrossel)
+                  </CardTitle>
+                  <CardDescription>Gerencie as modalidades de garantia exibidas no site.</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newItem = { title: "Nova Garantia", description: "", link: "#", icon: "shield" };
+                    update("garantias", [...content.garantias, newItem]);
+                  }} 
+                  size="sm" 
+                  className="bg-navy hover:bg-navy/90 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nova Garantia
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
+                <div className="space-y-2">
+                  <Label className="text-[11px] uppercase tracking-wider">Itens por Linha (Desktop)</Label>
+                  <select
+                    value={content.garantias[0]?.columns || 4}
+                    onChange={(e) => {
+                      const next = content.garantias.map(item => ({ ...item, columns: Number(e.target.value) }));
+                      update("garantias", next);
+                    }}
+                    className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                  >
+                    <option value={3}>3 Itens</option>
+                    <option value={4}>4 Itens</option>
+                    <option value={5}>5 Itens</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[11px] uppercase tracking-wider">Estilo do Layout</Label>
+                  <select
+                    value={content.garantias[0]?.layout || "card"}
+                    onChange={(e) => {
+                      const next = content.garantias.map(item => ({ ...item, layout: e.target.value as any }));
+                      update("garantias", next);
+                    }}
+                    className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                  >
+                    <option value="card">Card Moderno (Grande)</option>
+                    <option value="minimal">Minimalista (Compacto)</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <Button 
-              onClick={() => {
-                const newItem = { title: "Nova Garantia", description: "", link: "#", icon: "shield" };
-                update("garantias", [...content.garantias, newItem]);
-              }} 
-              size="sm" 
-              className="bg-navy hover:bg-navy/90 text-white"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Nova Garantia
-            </Button>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
