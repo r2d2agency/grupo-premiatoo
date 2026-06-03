@@ -137,6 +137,55 @@ export type SiteContent = {
     metaTags: { name: string; content: string }[];
     canonicalUrl?: string;
     scripts?: { placement: "head" | "body"; content: string }[];
+  institucional: {
+    hero: {
+      title: string;
+      subtitle: string;
+      ctaLabel: string;
+      image: string;
+    };
+    historia: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    hoje: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    orientacao: {
+      title: string;
+      proposito: { title: string; text: string };
+      visao: { title: string; text: string };
+      principios: { title: string; items: string[] };
+    };
+    pensamento: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    organizacional: {
+      text: string;
+      items: { label: string; children?: { label: string }[] }[];
+    };
+    lideranca: {
+      name: string;
+      role: string;
+      bio: string;
+      photo: string;
+      positions: string[];
+    };
+    diferenciais: string[];
+    manifesto: {
+      text: string;
+    };
+    ctaFinal: {
+      title: string;
+      text: string;
+      ctaLabel: string;
+      image: string;
+    };
   };
 };
 
