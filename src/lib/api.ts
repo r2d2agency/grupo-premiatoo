@@ -89,6 +89,23 @@ export type SiteContent = {
     image: string;
     items: string[];
   };
+  footer: {
+    text: string;
+    columns: {
+      title: string;
+      items: { label: string; href: string }[];
+    }[];
+    social: {
+      linkedin?: string;
+      instagram?: string;
+    };
+    contact: {
+      phone: string;
+      email: string;
+      address: string;
+    };
+    copyright: string;
+  };
 };
 
 
@@ -248,6 +265,63 @@ export const defaultContent: SiteContent = {
       "Gestão de risco",
       "Acompanhamento especializado",
     ],
+  },
+  footer: {
+    text: "Estrutura, segurança e experiência para operações que exigem confiança e resultados sustentáveis.",
+    columns: [
+      {
+        title: "Institucional",
+        items: [
+          { label: "Sobre a Garantidora", href: "#" },
+          { label: "Governança", href: "#" },
+          { label: "Políticas", href: "#" },
+          { label: "Trabalhe Conosco", href: "#" },
+        ],
+      },
+      {
+        title: "Garantias",
+        items: [
+          { label: "Garantia Judicial", href: "#" },
+          { label: "Garantia Contratual", href: "#" },
+          { label: "Garantia para Licitações", href: "#" },
+          { label: "Todas as Garantias", href: "#" },
+        ],
+      },
+      {
+        title: "Premiatto Capital",
+        items: [
+          { label: "Soluções de Capital", href: "#" },
+          { label: "Antecipação de Recebíveis", href: "#" },
+          { label: "Capital de Giro", href: "#" },
+          { label: "Todas as Soluções", href: "#" },
+        ],
+      },
+      {
+        title: "Conteúdos",
+        items: [
+          { label: "Blog", href: "#" },
+          { label: "Materiais", href: "#" },
+          { label: "Notícias", href: "#" },
+        ],
+      },
+      {
+        title: "Parceiros",
+        items: [
+          { label: "Seja um Parceiro", href: "#" },
+          { label: "Área do Parceiro", href: "#" },
+        ],
+      },
+    ],
+    social: {
+      linkedin: "#",
+      instagram: "#",
+    },
+    contact: {
+      phone: "+55 11 3030-6200",
+      email: "contato@garantidorapremiatto.com.br",
+      address: "Av. Brigadeiro Faria Lima, 3477 – 18º andar\nItaim Bibi, São Paulo – SP 04538-133",
+    },
+    copyright: "© 2024 Garantidora Premiatto. Todos os direitos reservados.",
   },
 };
 
