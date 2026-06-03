@@ -26,7 +26,6 @@ export function Parceiros({ items }: { items: { tag: string; title: string; cta:
                   {b.cta} <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
-              </div>
             </div>
           </div>
         ))}
