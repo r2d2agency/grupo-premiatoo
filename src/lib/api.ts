@@ -29,6 +29,7 @@ export type SiteContent = {
     header: boolean;
     headerSticky: boolean;
     hero: boolean;
+    institucional: boolean;
     stats: boolean;
     garantias: boolean;
     capital: boolean;
