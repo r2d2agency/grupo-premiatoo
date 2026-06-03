@@ -10,7 +10,7 @@ import {
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize, Type, Newspaper, Link, Eye, EyeOff, LayoutPanelBottom } from "lucide-react";
+import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize, Type, Newspaper, Link, Eye, EyeOff, Layout } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -907,6 +907,170 @@ function AdminDashboard() {
                       </div>
                       <p className="text-[10px] text-muted-foreground">Arraste para ajustar o tamanho da logo no cabeçalho.</p>
                     </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="footer" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-navy flex items-center gap-2">
+                  <Layout className="w-5 h-5 text-gold" />
+                  Configurações do Rodapé
+                </CardTitle>
+                <CardDescription>Gerencie o conteúdo do rodapé, redes sociais e contatos.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <Field
+                      label="Texto Institucional (Logo)"
+                      value={content.footer.text}
+                      onChange={(v) => update("footer", { ...content.footer, text: v })}
+                      textarea
+                    />
+                    <Field
+                      label="Copyright"
+                      value={content.footer.copyright}
+                      onChange={(v) => update("footer", { ...content.footer, copyright: v })}
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <Field
+                        label="LinkedIn (URL)"
+                        value={content.footer.social.linkedin || ""}
+                        onChange={(v) => update("footer", { ...content.footer, social: { ...content.footer.social, linkedin: v } })}
+                      />
+                      <Field
+                        label="Instagram (URL)"
+                        value={content.footer.social.instagram || ""}
+                        onChange={(v) => update("footer", { ...content.footer, social: { ...content.footer.social, instagram: v } })}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <Field
+                      label="Telefone"
+                      value={content.footer.contact.phone}
+                      onChange={(v) => update("footer", { ...content.footer, contact: { ...content.footer.contact, phone: v } })}
+                    />
+                    <Field
+                      label="E-mail"
+                      value={content.footer.contact.email}
+                      onChange={(v) => update("footer", { ...content.footer, contact: { ...content.footer.contact, email: v } })}
+                    />
+                    <Field
+                      label="Endereço"
+                      value={content.footer.contact.address}
+                      onChange={(v) => update("footer", { ...content.footer, contact: { ...content.footer.contact, address: v } })}
+                      textarea
+                    />
+                  </div>
+                </div>
+
+                <div className="border-t pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-navy">Colunas de Links</h3>
+                    <Button 
+                      size="sm" 
+                      onClick={() => {
+                        const newCol = { title: "Nova Coluna", items: [{ label: "Link", href: "#" }] };
+                        update("footer", { ...content.footer, columns: [...content.footer.columns, newCol] });
+                      }}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Nova Coluna
+                    </Button>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {content.footer.columns.map((col, cIdx) => (
+                      <div key={cIdx} className="border rounded-md p-4 bg-muted/20 space-y-4 relative group">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-white border shadow-sm opacity-0 group-hover:opacity-100 transition-opacity text-destructive"
+                          onClick={() => {
+                            const next = content.footer.columns.filter((_, i) => i !== cIdx);
+                            update("footer", { ...content.footer, columns: next });
+                          }}
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                        <Field
+                          label="Título da Coluna"
+                          value={col.title}
+                          onChange={(v) => {
+                            const next = [...content.footer.columns];
+                            next[cIdx] = { ...col, title: v };
+                            update("footer", { ...content.footer, columns: next });
+                          }}
+                        />
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">Links</Label>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 text-[10px]"
+                              onClick={() => {
+                                const next = [...content.footer.columns];
+                                next[cIdx] = { ...col, items: [...col.items, { label: "Novo Link", href: "#" }] };
+                                update("footer", { ...content.footer, columns: next });
+                              }}
+                            >
+                              <Plus className="w-3 h-3 mr-1" /> Add
+                            </Button>
+                          </div>
+                          {col.items.map((item, iIdx) => (
+                            <div key={iIdx} className="flex gap-2 items-end">
+                              <div className="flex-1">
+                                <Input
+                                  value={item.label}
+                                  placeholder="Rótulo"
+                                  className="h-8 text-xs"
+                                  onChange={(e) => {
+                                    const nextItems = [...col.items];
+                                    nextItems[iIdx] = { ...item, label: e.target.value };
+                                    const nextCols = [...content.footer.columns];
+                                    nextCols[cIdx] = { ...col, items: nextItems };
+                                    update("footer", { ...content.footer, columns: nextCols });
+                                  }}
+                                />
+                              </div>
+                              <div className="flex-1">
+                                <Input
+                                  value={item.href}
+                                  placeholder="Link (#)"
+                                  className="h-8 text-xs"
+                                  onChange={(e) => {
+                                    const nextItems = [...col.items];
+                                    nextItems[iIdx] = { ...item, href: e.target.value };
+                                    const nextCols = [...content.footer.columns];
+                                    nextCols[cIdx] = { ...col, items: nextItems };
+                                    update("footer", { ...content.footer, columns: nextCols });
+                                  }}
+                                />
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-destructive"
+                                onClick={() => {
+                                  const nextItems = col.items.filter((_, i) => i !== iIdx);
+                                  const nextCols = [...content.footer.columns];
+                                  nextCols[cIdx] = { ...col, items: nextItems };
+                                  update("footer", { ...content.footer, columns: nextCols });
+                                }}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </CardContent>
