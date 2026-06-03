@@ -13,12 +13,39 @@ export const Route = createFileRoute("/news/")({
 
 function NewsIndex() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedSegment, setSelectedSegment] = useState("Todos");
 
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
 
-  const activeNews = content.news.filter((n) => n.active);
+  const activeNews = useMemo(() => {
+    return content.news.filter((n) => {
+      const matchesActive = n.active;
+      const matchesSearch = search === "" || 
+        n.title.toLowerCase().includes(search.toLowerCase()) || 
+        n.description.toLowerCase().includes(search.toLowerCase()) ||
+        (n.tags || []).some(t => t.toLowerCase().includes(search.toLowerCase()));
+      
+      const matchesCategory = selectedCategory === "Todas" || n.category === selectedCategory;
+      const matchesSegment = selectedSegment === "Todos" || n.segment === selectedSegment;
+      
+      return matchesActive && matchesSearch && matchesCategory && matchesSegment;
+    });
+  }, [content.news, search, selectedCategory, selectedSegment]);
+
+  const categories = useMemo(() => {
+    const cats = new Set(content.news.filter(n => n.active && n.category).map(n => n.category as string));
+    return ["Todas", ...Array.from(cats)];
+  }, [content.news]);
+
+  const segments = useMemo(() => {
+    const segs = new Set(content.news.filter(n => n.active && n.segment).map(n => n.segment as string));
+    return ["Todos", ...Array.from(segs)];
+  }, [content.news]);
+
   const featuredNews = activeNews[0];
   const secondaryNews = activeNews.slice(1, 4);
   const remainingNews = activeNews.slice(4);
