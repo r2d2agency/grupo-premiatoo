@@ -4,8 +4,8 @@ import { fetchContent, defaultContent, type SiteContent } from "@/lib/api";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Logo } from "@/components/site/Logo";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Route = createFileRoute("/institucional")({
   head: () => ({
@@ -22,9 +22,44 @@ export const Route = createFileRoute("/institucional")({
 
 function InstitucionalPage() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [current, setCurrent] = useState(0);
+
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
+
+  const hero = content.institucional.hero;
+  const banners = hero.banners || [];
+  
+  useEffect(() => {
+    if (banners.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % banners.length);
+    }, hero.interval || 5000);
+    return () => clearInterval(timer);
+  }, [banners.length, hero.interval]);
+
+  const banner = banners[current] || (banners.length > 0 ? banners[0] : null);
+
+  const variants = {
+    fade: {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      exit: { opacity: 0 },
+    },
+    slide: {
+      initial: { x: "100%", opacity: 0 },
+      animate: { x: 0, opacity: 1 },
+      exit: { x: "-100%", opacity: 0 },
+    },
+    zoom: {
+      initial: { scale: 1.2, opacity: 0 },
+      animate: { scale: 1, opacity: 1 },
+      exit: { scale: 0.8, opacity: 0 },
+    },
+  };
+
+  const currentVariant = variants[hero.animation || "fade"];
 
   const data = content.institucional;
 
@@ -36,47 +71,92 @@ function InstitucionalPage() {
     }}>
       <Header content={content} />
 
-      {/* SEÇÃO 01 — HERO (Ajustada para o tamanho da home) */}
+      {/* SEÇÃO 01 — HERO (Ajustada para suportar múltiplos banners como na Home) */}
       <section className="relative bg-navy text-navy-foreground h-auto min-h-[550px] md:h-[600px] lg:h-[700px] overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={data.hero.image} 
-            alt="Hero" 
-            className="w-full h-full object-cover opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
-        </div>
-        
-        <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-24 pb-16 md:pt-0 md:pb-0">
-          <div className="max-w-xl w-full">
-            <motion.h1 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="font-display text-4xl lg:text-5xl leading-[1.1]"
+        <AnimatePresence mode="wait">
+          {banner && (
+            <motion.div
+              key={banner.id + current}
+              initial={currentVariant.initial}
+              animate={currentVariant.animate}
+              exit={currentVariant.exit}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="relative md:absolute inset-0"
             >
-              {data.hero.title}
-            </motion.h1>
-            <motion.p 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-6 text-sm leading-relaxed text-navy-foreground/80 max-w-md"
-            >
-              {data.hero.subtitle}
-            </motion.p>
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-12 md:mt-10"
-            >
-              <button className="inline-flex items-center justify-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-4 md:py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90 w-full sm:w-auto uppercase">
-                {data.hero.ctaLabel} <ArrowRight className="h-4 w-4" />
-              </button>
+              <div className="absolute inset-0 z-0">
+                <picture className="w-full h-full">
+                  {banner.imageMobile && <source media="(max-width: 767px)" srcSet={banner.imageMobile} />}
+                  {banner.imageTablet && <source media="(max-width: 1023px)" srcSet={banner.imageTablet} />}
+                  <img
+                    src={banner.imageDesktop || banner.image}
+                    alt=""
+                    className="w-full h-full object-cover opacity-90"
+                  />
+                </picture>
+                <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
+              </div>
+              
+              <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-24 pb-16 md:pt-0 md:pb-0">
+                <div className="max-w-xl w-full text-white">
+                  <motion.h1 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="font-display text-4xl lg:text-5xl leading-[1.1]"
+                  >
+                    {banner.title}
+                  </motion.h1>
+                  <motion.p 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="mt-6 text-sm leading-relaxed text-white/80 max-w-md font-light"
+                  >
+                    {banner.subtitle}
+                  </motion.p>
+                  <motion.div 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="mt-12 md:mt-10"
+                  >
+                    <button className="inline-flex items-center justify-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-4 md:py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90 w-full sm:w-auto uppercase">
+                      {banner.ctaLabel} <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </motion.div>
+                </div>
+              </div>
             </motion.div>
-          </div>
-        </div>
+          )}
+        </AnimatePresence>
+
+        {banners.length > 1 && (
+          <>
+            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              {banners.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`w-12 h-1 transition-all ${
+                    i === current ? "bg-[#C5A059]" : "bg-white/30"
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() => setCurrent((prev) => (prev - 1 + banners.length) % banners.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20 hidden lg:block"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button
+              onClick={() => setCurrent((prev) => (prev + 1) % banners.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-white/50 hover:text-white transition-colors z-20 hidden lg:block"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          </>
+        )}
       </section>
 
       {/* SEÇÃO 02 — NOSSA HISTÓRIA */}
