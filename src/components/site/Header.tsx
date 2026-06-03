@@ -34,15 +34,15 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
         <Logo src={logoUrl} height={content.branding.logoHeight} />
         <nav className="hidden lg:flex items-center gap-7 text-[13px]">
           {navLinks.map((n) => (
-            <a 
+            <Link 
               key={n.label} 
-              href={n.href} 
-              target={n.target}
-              className="hover:opacity-80 flex items-center gap-1"
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
+              className="hover:opacity-80 flex items-center gap-1 cursor-pointer"
             >
               {n.label}
               {n.label === "Garantias" && <ChevronDown className="h-3.5 w-3.5" />}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="flex items-center gap-4">
