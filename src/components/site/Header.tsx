@@ -24,11 +24,9 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sticky]);
 
-  const headerClass = sticky
-    ? `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-navy shadow-lg py-3" : "bg-transparent py-5"
-      }`
-    : "absolute top-0 left-0 right-0 z-20 py-5";
+  const headerClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    isScrolled ? "bg-navy shadow-lg py-3" : "bg-transparent py-5"
+  }`;
 
   return (
     <header className={`${headerClass} text-navy-foreground`}>
