@@ -68,6 +68,13 @@ export type SiteContent = {
     title: string;
     items: { title: string; description: string; icon: string }[];
   };
+  governanca: {
+    badge: string;
+    title: string;
+    description: string;
+    image: string;
+    items: string[];
+  };
 };
 
 
@@ -190,6 +197,18 @@ export const defaultContent: SiteContent = {
         description: "Estratégia financeira de acordo com sua realidade.",
         icon: "users",
       },
+    ],
+  },
+  governanca: {
+    badge: "NOSSO COMPROMISSO",
+    title: "Governança, análise e responsabilidade em cada operação.",
+    description: "Cada operação passa por um rigoroso processo de análise técnica, governança e gestão de risco para garantir segurança, transparência e continuidade.",
+    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=80&auto=format&fit=crop",
+    items: [
+      "Análise técnica criteriosa",
+      "Governança e compliance",
+      "Gestão de risco",
+      "Acompanhamento especializado",
     ],
   },
 };
