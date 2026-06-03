@@ -34,7 +34,7 @@ function AdminModulesPage() {
       ...content,
       modules: {
         ...content.modules,
-        [key]: !content.modules[key]
+        [key]: !content.modules[key as keyof SiteContent['modules']]
       }
     });
   };

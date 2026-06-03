@@ -8,6 +8,7 @@ import { Stats } from "@/components/site/Stats";
 import { Garantias } from "@/components/site/Garantias";
 import { Capital } from "@/components/site/Capital";
 import { Governanca } from "@/components/site/Governanca";
+import { NewsArea } from "@/components/site/NewsArea";
 import { Parceiros } from "@/components/site/Parceiros";
 import { Footer } from "@/components/site/Footer";
 
@@ -49,6 +50,7 @@ function Index() {
       {content.modules.garantias && <Garantias items={content.garantias} />}
       {content.modules.capital && <Capital data={content.capital} />}
       {content.modules.governanca && <Governanca data={content.governanca} />}
+      {content.modules.news && <NewsArea news={content.news} />}
       <Parceiros />
       {content.modules.footer && <Footer logoUrl={content.branding.logoUrl} />}
     </div>

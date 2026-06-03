@@ -10,7 +10,7 @@ import {
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize, Type } from "lucide-react";
+import { Save, Plus, Trash2, Layout, Image as ImageIcon, Sparkles, Shield, Scale, FileText, Gavel, Globe, Building, FileCheck2, Briefcase, Landmark, Handshake, Maximize, Type, Newspaper, Link, Eye, EyeOff } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -138,6 +138,7 @@ function AdminDashboard() {
             <TabsTrigger value="garantias" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Garantias</TabsTrigger>
             <TabsTrigger value="capital" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Capital</TabsTrigger>
             <TabsTrigger value="governanca" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Governança</TabsTrigger>
+            <TabsTrigger value="news" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Notícias</TabsTrigger>
             <TabsTrigger value="branding" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Branding</TabsTrigger>
           </TabsList>
 
@@ -661,6 +662,167 @@ function AdminDashboard() {
                       </div>
                     ))}
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="news" className="space-y-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-navy flex items-center gap-2">
+                    <Newspaper className="w-5 h-5 text-gold" />
+                    Gestão de Notícias
+                  </CardTitle>
+                  <CardDescription>Publique e gerencie as notícias do site.</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newItem: SiteContent["news"][number] = { 
+                      id: crypto.randomUUID(),
+                      title: "Nova Notícia", 
+                      description: "", 
+                      image: "", 
+                      link: "#", 
+                      publishDate: new Date().toISOString().split('T')[0],
+                      active: true 
+                    };
+                    update("news", [...(content.news || []), newItem]);
+                  }} 
+                  size="sm" 
+                  className="bg-navy hover:bg-navy/90 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nova Notícia
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-6">
+                  {(content.news || []).map((item, index) => (
+                    <div key={item.id} className="border rounded-lg p-6 bg-white shadow-sm space-y-4 relative group">
+                      <div className="flex items-center justify-between border-b pb-3 mb-4">
+                        <div className="flex items-center gap-3">
+                          <h3 className="font-semibold text-navy">Notícia #{index + 1}</h3>
+                          {!item.active && <span className="bg-muted text-muted-foreground text-[10px] px-2 py-0.5 rounded-full">Rascunho</span>}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              const next = [...content.news];
+                              next[index] = { ...item, active: !item.active };
+                              update("news", next);
+                            }}
+                            className={item.active ? "text-green-600" : "text-muted-foreground"}
+                          >
+                            {item.active ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              const next = content.news.filter((_, i) => i !== index);
+                              update("news", next);
+                            }}
+                            className="text-destructive hover:bg-destructive/10"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-[1fr_300px] gap-8">
+                        <div className="space-y-4">
+                          <Field
+                            label="Título"
+                            value={item.title}
+                            onChange={(v) => {
+                              const next = [...content.news];
+                              next[index] = { ...item, title: v };
+                              update("news", next);
+                            }}
+                            textarea
+                          />
+                          <Field
+                            label="Resumo / Descrição"
+                            value={item.description}
+                            onChange={(v) => {
+                              const next = [...content.news];
+                              next[index] = { ...item, description: v };
+                              update("news", next);
+                            }}
+                            textarea
+                          />
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <Field
+                              label="Link da Notícia"
+                              value={item.link || ""}
+                              onChange={(v) => {
+                                const next = [...content.news];
+                                next[index] = { ...item, link: v };
+                                update("news", next);
+                              }}
+                              placeholder="#"
+                            />
+                            <div className="space-y-1">
+                              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Data de Publicação</Label>
+                              <Input
+                                type="date"
+                                value={item.publishDate?.split('T')[0] || ""}
+                                onChange={(e) => {
+                                  const next = [...content.news];
+                                  next[index] = { ...item, publishDate: e.target.value };
+                                  update("news", next);
+                                }}
+                                className="h-9"
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-1">
+                            <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Data de Expiração (Opcional)</Label>
+                            <Input
+                              type="date"
+                              value={item.expiryDate?.split('T')[0] || ""}
+                              onChange={(e) => {
+                                const next = [...content.news];
+                                next[index] = { ...item, expiryDate: e.target.value };
+                                update("news", next);
+                              }}
+                              className="h-9"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <ImageUpload
+                            label="Imagem de Capa"
+                            value={item.image}
+                            onChange={(v) => {
+                              const next = [...content.news];
+                              next[index] = { ...item, image: v };
+                              update("news", next);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {(!content.news || content.news.length === 0) && (
+                    <div className="text-center py-12 border-2 border-dashed rounded-lg bg-muted/20">
+                      <Newspaper className="w-8 h-8 text-muted-foreground mx-auto mb-3 opacity-50" />
+                      <p className="text-muted-foreground">Nenhuma notícia cadastrada.</p>
+                      <Button 
+                        variant="link" 
+                        onClick={() => {
+                          const newItem = { id: crypto.randomUUID(), title: "Nova Notícia", description: "", image: "", link: "#", publishDate: new Date().toISOString().split('T')[0], active: true };
+                          update("news", [newItem]);
+                        }}
+                      >
+                        Criar primeira notícia
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
