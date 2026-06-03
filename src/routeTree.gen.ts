@@ -12,10 +12,19 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminStatsRouteImport } from './routes/admin/stats'
+import { Route as AdminParceirosRouteImport } from './routes/admin/parceiros'
+import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminHeroRouteImport } from './routes/admin/hero'
+import { Route as AdminGovernancaRouteImport } from './routes/admin/governanca'
+import { Route as AdminGarantiasRouteImport } from './routes/admin/garantias'
+import { Route as AdminFooterRouteImport } from './routes/admin/footer'
+import { Route as AdminCapitalRouteImport } from './routes/admin/capital'
 import { Route as AdminBrandingRouteImport } from './routes/admin.branding'
+import { Route as AdminBrandCardsRouteImport } from './routes/admin/brand-cards'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,6 +39,21 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminStatsRoute = AdminStatsRouteImport.update({
+  id: '/admin/stats',
+  path: '/admin/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminParceirosRoute = AdminParceirosRouteImport.update({
+  id: '/admin/parceiros',
+  path: '/admin/parceiros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNewsRoute = AdminNewsRouteImport.update({
+  id: '/admin/news',
+  path: '/admin/news',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminNavigationRoute = AdminNavigationRouteImport.update({
@@ -47,37 +71,94 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminHeroRoute = AdminHeroRouteImport.update({
+  id: '/admin/hero',
+  path: '/admin/hero',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGovernancaRoute = AdminGovernancaRouteImport.update({
+  id: '/admin/governanca',
+  path: '/admin/governanca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGarantiasRoute = AdminGarantiasRouteImport.update({
+  id: '/admin/garantias',
+  path: '/admin/garantias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminFooterRoute = AdminFooterRouteImport.update({
+  id: '/admin/footer',
+  path: '/admin/footer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCapitalRoute = AdminCapitalRouteImport.update({
+  id: '/admin/capital',
+  path: '/admin/capital',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminBrandingRoute = AdminBrandingRouteImport.update({
   id: '/admin/branding',
   path: '/admin/branding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminBrandCardsRoute = AdminBrandCardsRouteImport.update({
+  id: '/admin/brand-cards',
+  path: '/admin/brand-cards',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
+  '/admin/capital': typeof AdminCapitalRoute
+  '/admin/footer': typeof AdminFooterRoute
+  '/admin/garantias': typeof AdminGarantiasRoute
+  '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/hero': typeof AdminHeroRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
+  '/admin/capital': typeof AdminCapitalRoute
+  '/admin/footer': typeof AdminFooterRoute
+  '/admin/garantias': typeof AdminGarantiasRoute
+  '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/hero': typeof AdminHeroRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
+  '/admin/capital': typeof AdminCapitalRoute
+  '/admin/footer': typeof AdminFooterRoute
+  '/admin/garantias': typeof AdminGarantiasRoute
+  '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/hero': typeof AdminHeroRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
+  '/admin/news': typeof AdminNewsRoute
+  '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -85,38 +166,74 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin/brand-cards'
     | '/admin/branding'
+    | '/admin/capital'
+    | '/admin/footer'
+    | '/admin/garantias'
+    | '/admin/governanca'
+    | '/admin/hero'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
+    | '/admin/news'
+    | '/admin/parceiros'
+    | '/admin/stats'
     | '/admin/users'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/brand-cards'
     | '/admin/branding'
+    | '/admin/capital'
+    | '/admin/footer'
+    | '/admin/garantias'
+    | '/admin/governanca'
+    | '/admin/hero'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
+    | '/admin/news'
+    | '/admin/parceiros'
+    | '/admin/stats'
     | '/admin/users'
     | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin/brand-cards'
     | '/admin/branding'
+    | '/admin/capital'
+    | '/admin/footer'
+    | '/admin/garantias'
+    | '/admin/governanca'
+    | '/admin/hero'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
+    | '/admin/news'
+    | '/admin/parceiros'
+    | '/admin/stats'
     | '/admin/users'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminBrandCardsRoute: typeof AdminBrandCardsRoute
   AdminBrandingRoute: typeof AdminBrandingRoute
+  AdminCapitalRoute: typeof AdminCapitalRoute
+  AdminFooterRoute: typeof AdminFooterRoute
+  AdminGarantiasRoute: typeof AdminGarantiasRoute
+  AdminGovernancaRoute: typeof AdminGovernancaRoute
+  AdminHeroRoute: typeof AdminHeroRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
+  AdminNewsRoute: typeof AdminNewsRoute
+  AdminParceirosRoute: typeof AdminParceirosRoute
+  AdminStatsRoute: typeof AdminStatsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -144,6 +261,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/stats': {
+      id: '/admin/stats'
+      path: '/admin/stats'
+      fullPath: '/admin/stats'
+      preLoaderRoute: typeof AdminStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/parceiros': {
+      id: '/admin/parceiros'
+      path: '/admin/parceiros'
+      fullPath: '/admin/parceiros'
+      preLoaderRoute: typeof AdminParceirosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/news': {
+      id: '/admin/news'
+      path: '/admin/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AdminNewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/navigation': {
       id: '/admin/navigation'
       path: '/admin/navigation'
@@ -165,6 +303,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/hero': {
+      id: '/admin/hero'
+      path: '/admin/hero'
+      fullPath: '/admin/hero'
+      preLoaderRoute: typeof AdminHeroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/governanca': {
+      id: '/admin/governanca'
+      path: '/admin/governanca'
+      fullPath: '/admin/governanca'
+      preLoaderRoute: typeof AdminGovernancaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/garantias': {
+      id: '/admin/garantias'
+      path: '/admin/garantias'
+      fullPath: '/admin/garantias'
+      preLoaderRoute: typeof AdminGarantiasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/footer': {
+      id: '/admin/footer'
+      path: '/admin/footer'
+      fullPath: '/admin/footer'
+      preLoaderRoute: typeof AdminFooterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/capital': {
+      id: '/admin/capital'
+      path: '/admin/capital'
+      fullPath: '/admin/capital'
+      preLoaderRoute: typeof AdminCapitalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/branding': {
       id: '/admin/branding'
       path: '/admin/branding'
@@ -172,15 +345,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBrandingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/brand-cards': {
+      id: '/admin/brand-cards'
+      path: '/admin/brand-cards'
+      fullPath: '/admin/brand-cards'
+      preLoaderRoute: typeof AdminBrandCardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminBrandCardsRoute: AdminBrandCardsRoute,
   AdminBrandingRoute: AdminBrandingRoute,
+  AdminCapitalRoute: AdminCapitalRoute,
+  AdminFooterRoute: AdminFooterRoute,
+  AdminGarantiasRoute: AdminGarantiasRoute,
+  AdminGovernancaRoute: AdminGovernancaRoute,
+  AdminHeroRoute: AdminHeroRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
   AdminNavigationRoute: AdminNavigationRoute,
+  AdminNewsRoute: AdminNewsRoute,
+  AdminParceirosRoute: AdminParceirosRoute,
+  AdminStatsRoute: AdminStatsRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
