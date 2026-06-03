@@ -63,6 +63,23 @@ function InstitucionalPage() {
 
   const data = content.institucional;
 
+  if (!content.modules.institucional) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <h2 className="text-2xl font-serif text-navy mb-4">Módulo Institucional Desativado</h2>
+          <p className="text-muted-foreground mb-8">Esta página não está disponível no momento.</p>
+          <button 
+            onClick={() => window.location.href = "/"}
+            className="bg-navy text-white px-6 py-2 rounded-sm"
+          >
+            Voltar para Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F7FA]" style={{ 
       //@ts-ignore
