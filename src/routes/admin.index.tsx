@@ -16,7 +16,8 @@ import {
   Palette,
   Layers,
   Users,
-  ChevronRight
+  ChevronRight,
+  Building2
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin/")({
@@ -37,6 +38,7 @@ const quickActions = [
   { icon: Layers, label: "Módulos", path: "/admin/modules", desc: "Ativar/desativar seções" },
   { icon: Settings, label: "Rodapé", path: "/admin/footer", desc: "Informações de contato e links" },
   { icon: Users, label: "Usuários", path: "/admin/users", desc: "Gerenciar acessos administrativos" },
+  { icon: Building2, label: "Institucional", path: "/admin/institucional", desc: "Página institucional premium" },
 ];
 
 function AdminDashboard() {

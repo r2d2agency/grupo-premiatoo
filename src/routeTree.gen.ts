@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as InstitucionalRouteImport } from './routes/institucional'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as GarantiasIndexRouteImport } from './routes/garantias.index'
@@ -23,6 +24,7 @@ import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
 import { Route as AdminGovernancaRouteImport } from './routes/admin/governanca'
 import { Route as AdminGarantiasRouteImport } from './routes/admin/garantias'
@@ -31,6 +33,11 @@ import { Route as AdminCapitalRouteImport } from './routes/admin/capital'
 import { Route as AdminBrandingRouteImport } from './routes/admin.branding'
 import { Route as AdminBrandCardsRouteImport } from './routes/admin/brand-cards'
 
+const InstitucionalRoute = InstitucionalRouteImport.update({
+  id: '/institucional',
+  path: '/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -101,6 +108,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminInstitucionalRoute = AdminInstitucionalRouteImport.update({
+  id: '/admin/institucional',
+  path: '/admin/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminHeroRoute = AdminHeroRouteImport.update({
   id: '/admin/hero',
   path: '/admin/hero',
@@ -139,6 +151,7 @@ const AdminBrandCardsRoute = AdminBrandCardsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -146,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -162,6 +176,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -169,6 +184,7 @@ export interface FileRoutesByTo {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -186,6 +202,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -193,6 +210,7 @@ export interface FileRoutesById {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -211,6 +229,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -218,6 +237,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -234,6 +254,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -241,6 +262,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -257,6 +279,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -264,6 +287,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -281,6 +305,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  InstitucionalRoute: typeof InstitucionalRoute
   AdminBrandCardsRoute: typeof AdminBrandCardsRoute
   AdminBrandingRoute: typeof AdminBrandingRoute
   AdminCapitalRoute: typeof AdminCapitalRoute
@@ -288,6 +313,7 @@ export interface RootRouteChildren {
   AdminGarantiasRoute: typeof AdminGarantiasRoute
   AdminGovernancaRoute: typeof AdminGovernancaRoute
   AdminHeroRoute: typeof AdminHeroRoute
+  AdminInstitucionalRoute: typeof AdminInstitucionalRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
@@ -305,6 +331,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/institucional': {
+      id: '/institucional'
+      path: '/institucional'
+      fullPath: '/institucional'
+      preLoaderRoute: typeof InstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -403,6 +436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/institucional': {
+      id: '/admin/institucional'
+      path: '/admin/institucional'
+      fullPath: '/admin/institucional'
+      preLoaderRoute: typeof AdminInstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/hero': {
       id: '/admin/hero'
       path: '/admin/hero'
@@ -457,6 +497,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  InstitucionalRoute: InstitucionalRoute,
   AdminBrandCardsRoute: AdminBrandCardsRoute,
   AdminBrandingRoute: AdminBrandingRoute,
   AdminCapitalRoute: AdminCapitalRoute,
@@ -464,6 +505,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminGarantiasRoute: AdminGarantiasRoute,
   AdminGovernancaRoute: AdminGovernancaRoute,
   AdminHeroRoute: AdminHeroRoute,
+  AdminInstitucionalRoute: AdminInstitucionalRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
   AdminNavigationRoute: AdminNavigationRoute,

@@ -18,7 +18,8 @@ import {
   Maximize,
   ChevronDown,
   ChevronRight,
-  Home
+  Home,
+  Building2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { clearToken } from "@/lib/api";
@@ -40,6 +41,7 @@ const siteHomeItems = [
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Painel Geral", path: "/admin" },
+  { icon: Building2, label: "Página Institucional", path: "/admin/institucional" },
   { 
     icon: Home, 
     label: "Página Home", 

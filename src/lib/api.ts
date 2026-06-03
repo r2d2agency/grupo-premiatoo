@@ -138,10 +138,150 @@ export type SiteContent = {
     canonicalUrl?: string;
     scripts?: { placement: "head" | "body"; content: string }[];
   };
+  institucional: {
+    hero: {
+      title: string;
+      subtitle: string;
+      ctaLabel: string;
+      image: string;
+    };
+    historia: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    hoje: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    orientacao: {
+      title: string;
+      proposito: { title: string; text: string };
+      visao: { title: string; text: string };
+      principios: { title: string; items: string[] };
+    };
+    pensamento: {
+      title: string;
+      text: string;
+      image: string;
+    };
+    organizacional: {
+      text: string;
+      items: { label: string; children?: { label: string }[] }[];
+    };
+    lideranca: {
+      name: string;
+      role: string;
+      bio: string;
+      photo: string;
+      positions: string[];
+    };
+    diferenciais: string[];
+    manifesto: {
+      text: string;
+    };
+    ctaFinal: {
+      title: string;
+      text: string;
+      ctaLabel: string;
+      image: string;
+    };
+  };
 };
 
 
 export const defaultContent: SiteContent = {
+  institucional: {
+    hero: {
+      title: "Uma instituição construída sobre governança, responsabilidade e visão de longo prazo.",
+      subtitle: "O Premiatto nasceu com o propósito de estruturar operações sustentáveis, apoiadas por critérios técnicos, análise rigorosa e compromisso com relações empresariais duradouras.",
+      ctaLabel: "Conheça nossa trajetória",
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
+    },
+    historia: {
+      title: "Nossa História",
+      text: "Fundado em 2021, o Premiatto surgiu a partir da experiência acumulada ao longo de décadas nos mercados financeiro, segurador e tributário.\\n\\nDesde sua criação, a instituição tem como objetivo construir estruturas sólidas sustentadas por governança, segurança jurídica e responsabilidade técnica.\\n\\nMais do que acompanhar operações, buscamos participar da construção de relações empresariais sustentáveis e de longo prazo.",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
+    },
+    hoje: {
+      title: "Uma estrutura construída para gerar confiança.",
+      text: "Nossa atuação é baseada em processos estruturados, análise criteriosa e acompanhamento contínuo. Contamos com uma equipe de especialistas dedicados a entender a complexidade de cada negócio.",
+      image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&q=80",
+    },
+    orientacao: {
+      title: "O que nos orienta",
+      proposito: {
+        title: "Nosso Propósito",
+        text: "Estruturar operações com responsabilidade, segurança e rigor técnico.",
+      },
+      visao: {
+        title: "Nossa Visão",
+        text: "Ser reconhecida como uma instituição de referência pela qualidade de suas análises e pela confiança construída ao longo do tempo.",
+      },
+      principios: {
+        title: "Nossos Princípios",
+        items: [
+          "Governança",
+          "Responsabilidade",
+          "Transparência",
+          "Compromisso",
+          "Continuidade",
+          "Relacionamentos de longo prazo",
+        ],
+      },
+    },
+    pensamento: {
+      title: "Cada operação é tratada como um projeto individual.",
+      text: "Não acreditamos em soluções genéricas. Acreditamos que cada empresa possui uma realidade própria e exige uma análise compatível com seus objetivos, riscos e necessidades.",
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&q=80",
+    },
+    organizacional: {
+      text: "A integração entre áreas especializadas permite decisões mais consistentes e alinhadas aos critérios institucionais do Premiatto.",
+      items: [
+        {
+          label: "Presidência",
+          children: [
+            { label: "Comercial" },
+            { label: "Compliance" },
+            { label: "Jurídico" },
+            { label: "Financeiro" },
+            { label: "Gestão" },
+          ],
+        },
+      ],
+    },
+    lideranca: {
+      name: "Rogério Melo",
+      role: "Presidente e CEO",
+      bio: "Profissional com mais de 30 anos de atuação nos mercados financeiro, segurador, tributário e de estruturação empresarial. Atuação baseada em governança, responsabilidade técnica e visão estratégica de longo prazo.",
+      photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80",
+      positions: [
+        "Vice-Presidente da COFIN",
+        "Conselheiro da UBOTS",
+        "Atuação junto ao mercado bancário nacional",
+        "Participação em projetos para entidades financeiras e bancárias",
+      ],
+    },
+    diferenciais: [
+      "Governança",
+      "Compliance",
+      "Análise Técnica",
+      "Segurança Jurídica",
+      "Transparência",
+      "Acompanhamento Contínuo",
+    ],
+    manifesto: {
+      text: "Não acreditamos em decisões apressadas. Acreditamos em análise. Acreditamos em responsabilidade. Acreditamos que relações empresariais sólidas são construídas sobre confiança, governança e compromisso. Estruturas sustentáveis não surgem por acaso. Elas são construídas.",
+    },
+    ctaFinal: {
+      title: "Vamos conversar.",
+      text: "Conheça a estrutura institucional do Premiatto e descubra como podemos apoiar sua empresa.",
+      ctaLabel: "Solicitar análise",
+      image: "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=1600&q=80",
+    },
+  },
+
   branding: {
     primaryColor: "#001B3D", // Navy
     secondaryColor: "#C5A059", // Gold/Tan
@@ -149,7 +289,7 @@ export const defaultContent: SiteContent = {
   },
   navigation: {
     links: [
-      { label: "Institucional", href: "#" },
+      { label: "Institucional", href: "/institucional" },
       { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
       { label: "Governança", href: "#" },
