@@ -40,7 +40,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
   const currentVariant = variants[hero.animation || "fade"];
 
   return (
-    <section className="relative bg-navy text-navy-foreground h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
+    <section className="relative bg-navy text-navy-foreground h-[550px] md:h-[600px] lg:h-[700px] overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={banner.id + current}
@@ -63,8 +63,8 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
             <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-transparent" />
           </div>
           
-          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10">
-            <div className="max-w-xl">
+          <div className="relative mx-auto max-w-[1280px] px-6 h-full flex items-center z-10 pt-16 md:pt-0">
+            <div className="max-w-xl w-full">
               <motion.h1 
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -85,14 +85,14 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="mt-10 flex flex-wrap gap-3"
+                className="mt-12 md:mt-10 flex flex-col sm:flex-row gap-4 sm:gap-3"
               >
                 {banner.ctaPrimary && (
                   <a
                     href={banner.ctaPrimaryLink || "#"}
                     target={banner.ctaPrimaryTarget || "_self"}
                     rel={banner.ctaPrimaryTarget === "_blank" ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90"
+                    className="inline-flex items-center justify-center gap-3 bg-brand-blue text-brand-blue-foreground px-6 py-4 md:py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:opacity-90 w-full sm:w-auto"
                   >
                     {banner.ctaPrimary} <ArrowRight className="h-4 w-4" />
                   </a>
@@ -102,7 +102,7 @@ export function Hero({ hero }: { hero: SiteContent["hero"] }) {
                     href={banner.ctaSecondaryLink || "#"}
                     target={banner.ctaSecondaryTarget || "_self"}
                     rel={banner.ctaSecondaryTarget === "_blank" ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-3 border border-navy-foreground/40 text-navy-foreground px-6 py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:bg-navy-foreground/10"
+                    className="inline-flex items-center justify-center gap-3 border border-navy-foreground/40 text-navy-foreground px-6 py-4 md:py-3.5 text-[12px] font-semibold tracking-wider rounded-sm hover:bg-navy-foreground/10 w-full sm:w-auto"
                   >
                     {banner.ctaSecondary} <ArrowRight className="h-4 w-4" />
                   </a>
