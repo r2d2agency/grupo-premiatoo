@@ -139,6 +139,7 @@ function AdminDashboard() {
             <TabsTrigger value="capital" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Capital</TabsTrigger>
             <TabsTrigger value="governanca" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Governança</TabsTrigger>
             <TabsTrigger value="news" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Notícias</TabsTrigger>
+            <TabsTrigger value="parceiros" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Cards de Parceiros</TabsTrigger>
             <TabsTrigger value="branding" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Branding</TabsTrigger>
             <TabsTrigger value="footer" className="data-[state=active]:bg-navy data-[state=active]:text-white px-4 py-2 text-xs uppercase tracking-widest font-semibold">Rodapé</TabsTrigger>
           </TabsList>
@@ -1072,6 +1073,102 @@ function AdminDashboard() {
                       </div>
                     ))}
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="parceiros" className="space-y-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-navy flex items-center gap-2">
+                    <Handshake className="w-5 h-5 text-gold" />
+                    Cards de Parceiros / Capital
+                  </CardTitle>
+                  <CardDescription>Configure os dois cards informativos abaixo da área de notícias.</CardDescription>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newItem = { tag: "TAG", title: "Novo Card", cta: "SAIBA MAIS", image: "", link: "#" };
+                    update("parceiros", [...content.parceiros, newItem]);
+                  }} 
+                  size="sm" 
+                  disabled={content.parceiros.length >= 2}
+                  className="bg-navy hover:bg-navy/90 text-white"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Novo Card
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {content.parceiros.map((item, index) => (
+                    <div key={index} className="border rounded-lg p-6 bg-white shadow-sm space-y-4 relative">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="absolute top-4 right-4 text-destructive hover:bg-destructive/10"
+                        onClick={() => {
+                          const next = content.parceiros.filter((_, i) => i !== index);
+                          update("parceiros", next);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                      
+                      <div className="space-y-4">
+                        <Field
+                          label="Tag (ex: PARCEIROS)"
+                          value={item.tag}
+                          onChange={(v) => {
+                            const next = [...content.parceiros];
+                            next[index] = { ...item, tag: v };
+                            update("parceiros", next);
+                          }}
+                        />
+                        <Field
+                          label="Título"
+                          value={item.title}
+                          textarea
+                          onChange={(v) => {
+                            const next = [...content.parceiros];
+                            next[index] = { ...item, title: v };
+                            update("parceiros", next);
+                          }}
+                        />
+                        <div className="grid grid-cols-2 gap-4">
+                          <Field
+                            label="Texto do CTA"
+                            value={item.cta}
+                            onChange={(v) => {
+                              const next = [...content.parceiros];
+                              next[index] = { ...item, cta: v };
+                              update("parceiros", next);
+                            }}
+                          />
+                          <Field
+                            label="Link do CTA"
+                            value={item.link}
+                            onChange={(v) => {
+                              const next = [...content.parceiros];
+                              next[index] = { ...item, link: v };
+                              update("parceiros", next);
+                            }}
+                          />
+                        </div>
+                        <ImageUpload
+                          label="Imagem"
+                          value={item.image}
+                          onChange={(v) => {
+                            const next = [...content.parceiros];
+                            next[index] = { ...item, image: v };
+                            update("parceiros", next);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
