@@ -43,7 +43,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
   }, [sticky]);
 
   const headerClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-    isScrolled || activeMegaMenu ? "bg-navy shadow-lg py-3" : isInstitucional ? "bg-navy/80 backdrop-blur-md py-4" : "bg-transparent py-5"
+    isScrolled || activeMegaMenu ? "bg-navy shadow-lg py-3" : isInstitucional ? "bg-[#041A3B]/40 backdrop-blur-md py-4" : "bg-transparent py-5"
   }`;
 
   return (
@@ -59,9 +59,9 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
               onMouseLeave={() => n.label === "Garantias" && setActiveMegaMenu(null)}
             >
               <Link 
-                to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href)} 
+                to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
                 hash={n.href.startsWith("#") && n.label !== "Institucional" ? n.href.replace("#", "") : undefined}
-                className="hover:opacity-80 flex items-center gap-1 cursor-pointer transition-opacity"
+                className="hover:opacity-80 flex items-center gap-1 cursor-pointer transition-opacity text-white"
               >
                 {n.label}
                 {n.label === "Garantias" && <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${activeMegaMenu === "Garantias" ? "rotate-180" : ""}`} />}
@@ -136,7 +136,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
           {navLinks.map((n) => (
             <Link 
               key={n.label} 
-              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href)} 
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
               hash={n.href.startsWith("#") && n.label !== "Institucional" ? n.href.replace("#", "") : undefined}
               className="text-white hover:text-gold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
