@@ -72,7 +72,9 @@ export type SiteContent = {
   governanca: {
     badge: string;
     title: string;
+    titleSize?: number;
     description: string;
+    descriptionSize?: number;
     image: string;
     items: string[];
   };
@@ -204,7 +206,9 @@ export const defaultContent: SiteContent = {
   governanca: {
     badge: "NOSSO COMPROMISSO",
     title: "Governança, análise e responsabilidade em cada operação.",
+    titleSize: 30,
     description: "Cada operação passa por um rigoroso processo de análise técnica, governança e gestão de risco para garantir segurança, transparência e continuidade.",
+    descriptionSize: 14,
     image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&q=80&auto=format&fit=crop",
     items: [
       "Análise técnica criteriosa",
