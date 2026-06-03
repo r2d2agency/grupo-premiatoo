@@ -1,5 +1,6 @@
 import { ShieldCheck, Building2, Users, Map } from "lucide-react";
 import type { SiteContent } from "@/lib/api";
+import { Counter } from "@/components/ui/Counter";
 
 const icons = [ShieldCheck, Building2, Users, Map];
 
@@ -15,7 +16,9 @@ export function Stats({ stats }: { stats: SiteContent["stats"] }) {
                 <Icon className="h-9 w-9 stroke-[1.3]" />
               </div>
               <div>
-                <div className="font-display text-2xl text-navy">{s.value}</div>
+                <div className="font-display text-2xl text-navy">
+                  <Counter value={s.value} />
+                </div>
                 <div className="text-xs text-muted-foreground leading-tight max-w-[150px]">
                   {s.label}
                 </div>
