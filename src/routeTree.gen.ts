@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
+import { Route as GarantiasIndexRouteImport } from './routes/garantias.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as NewsNewsIdRouteImport } from './routes/news.$newsId'
 import { Route as GarantiasGarantiaIdRouteImport } from './routes/garantias.$garantiaId'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const NewsIndexRoute = NewsIndexRouteImport.update({
   id: '/news/',
   path: '/news/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GarantiasIndexRoute = GarantiasIndexRouteImport.update({
+  id: '/garantias/',
+  path: '/garantias/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/garantias/': typeof GarantiasIndexRoute
   '/news/': typeof NewsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin': typeof AdminIndexRoute
+  '/garantias': typeof GarantiasIndexRoute
   '/news': typeof NewsIndexRoute
 }
 export interface FileRoutesById {
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/garantias/': typeof GarantiasIndexRoute
   '/news/': typeof NewsIndexRoute
 }
 export interface FileRouteTypes {
@@ -220,6 +229,7 @@ export interface FileRouteTypes {
     | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin/'
+    | '/garantias/'
     | '/news/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin'
+    | '/garantias'
     | '/news'
   id:
     | '__root__'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin/'
+    | '/garantias/'
     | '/news/'
   fileRoutesById: FileRoutesById
 }
@@ -287,6 +299,7 @@ export interface RootRouteChildren {
   GarantiasGarantiaIdRoute: typeof GarantiasGarantiaIdRoute
   NewsNewsIdRoute: typeof NewsNewsIdRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  GarantiasIndexRoute: typeof GarantiasIndexRoute
   NewsIndexRoute: typeof NewsIndexRoute
 }
 
@@ -304,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/news/'
       preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/garantias/': {
+      id: '/garantias/'
+      path: '/garantias'
+      fullPath: '/garantias/'
+      preLoaderRoute: typeof GarantiasIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -455,18 +475,9 @@ const rootRouteChildren: RootRouteChildren = {
   GarantiasGarantiaIdRoute: GarantiasGarantiaIdRoute,
   NewsNewsIdRoute: NewsNewsIdRoute,
   AdminIndexRoute: AdminIndexRoute,
+  GarantiasIndexRoute: GarantiasIndexRoute,
   NewsIndexRoute: NewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

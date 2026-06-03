@@ -150,7 +150,7 @@ export const defaultContent: SiteContent = {
   navigation: {
     links: [
       { label: "Institucional", href: "#" },
-      { label: "Garantias", href: "#" },
+      { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
       { label: "Governança", href: "#" },
       { label: "Conteúdos", href: "#" },

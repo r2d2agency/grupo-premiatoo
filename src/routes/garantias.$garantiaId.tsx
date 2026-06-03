@@ -163,7 +163,7 @@ function GarantiaDetail() {
                 
                 <div className="mt-8 pt-8 border-t border-slate-200">
                   <Link 
-                    to="/"
+                    to="/garantias"
                     className="flex items-center justify-center gap-2 w-full py-4 text-[11px] font-bold tracking-widest text-navy border border-navy/10 rounded-xl hover:bg-navy hover:text-white transition-all"
                   >
                     VER TODAS AS SOLUÇÕES

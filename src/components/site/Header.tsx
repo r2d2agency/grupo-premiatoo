@@ -37,7 +37,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
           {navLinks.map((n) => (
             <Link 
               key={n.label} 
-              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href.startsWith("#") ? "/" : n.href)} 
               hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
               className="hover:opacity-80 flex items-center gap-1 cursor-pointer"
             >
@@ -71,7 +71,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
           {navLinks.map((n) => (
             <Link 
               key={n.label} 
-              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href.startsWith("#") ? "/" : n.href)} 
               hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
               className="text-white hover:text-gold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
