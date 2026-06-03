@@ -3,6 +3,7 @@ import type { SiteContent } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   scale: Scale,
@@ -111,9 +112,13 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                       <p className="text-[12px] text-muted-foreground leading-snug line-clamp-3 mb-4 flex-grow">
                         {g.description}
                       </p>
-                      <a href={g.link || "#"} className="text-[10px] font-bold tracking-widest text-brand-blue uppercase flex items-center gap-1 group/link">
+                      <Link 
+                        to="/garantias/$garantiaId" 
+                        params={{ garantiaId: g.id || g.title.toLowerCase().replace(/\s+/g, '-') }} 
+                        className="text-[10px] font-bold tracking-widest text-brand-blue uppercase flex items-center gap-1 group/link"
+                      >
                         VER DETALHES <ArrowRight className="h-3 w-3 transition-transform group-hover/link:translate-x-1" />
-                      </a>
+                      </Link>
                     </div>
                   ) : (
                     <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
@@ -130,13 +135,14 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                       </p>
                       
                       <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
-                        <a
-                          href={g.link || "#"}
+                        <Link
+                          to="/garantias/$garantiaId"
+                          params={{ garantiaId: g.id || g.title.toLowerCase().replace(/\s+/g, '-') }}
                           className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group/link"
                         >
                           SAIBA MAIS 
                           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   )}

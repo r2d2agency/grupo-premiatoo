@@ -85,8 +85,11 @@ export type SiteContent = {
   }[];
   stats: { value: string; label: string }[];
   garantias: { 
+    id: string;
     title: string; 
     description?: string; 
+    content?: string;
+    image?: string;
     link?: string; 
     icon: string;
     columns?: number;
@@ -248,12 +251,12 @@ export const defaultContent: SiteContent = {
     { value: "Atuação", label: "em todo o território nacional" },
   ],
   garantias: [
-    { title: "Garantia Judicial", description: "Substituição de depósitos judiciais e garantia de execuções fiscais.", link: "#", icon: "scale" },
-    { title: "Garantia Contratual", description: "Assegura o cumprimento de obrigações em contratos públicos ou privados.", link: "#", icon: "file" },
-    { title: "Garantia para Licitações", description: "Garante a assinatura do contrato e a manutenção da proposta no certame.", link: "#", icon: "gavel" },
-    { title: "Garantia Aduaneira", description: "Garante o pagamento de tributos em operações de importação e exportação.", link: "#", icon: "globe" },
-    { title: "Garantia Imobiliária", description: "Proteção para empreendimentos, permutas e contratos de construção.", link: "#", icon: "building" },
-    { title: "Garantia de Parcelamento Fiscal", description: "Garante o pagamento de débitos fiscais parcelados junto à União.", link: "#", icon: "file-check" },
+    { id: "1", title: "Garantia Judicial", description: "Substituição de depósitos judiciais e garantia de execuções fiscais.", link: "/garantias/1", icon: "scale" },
+    { id: "2", title: "Garantia Contratual", description: "Assegura o cumprimento de obrigações em contratos públicos ou privados.", link: "/garantias/2", icon: "file" },
+    { id: "3", title: "Garantia para Licitações", description: "Garante a assinatura do contrato e a manutenção da proposta no certame.", link: "/garantias/3", icon: "gavel" },
+    { id: "4", title: "Garantia Aduaneira", description: "Garante o pagamento de tributos em operações de importação e exportação.", link: "/garantias/4", icon: "globe" },
+    { id: "5", title: "Garantia Imobiliária", description: "Proteção para empreendimentos, permutas e contratos de construção.", link: "/garantias/5", icon: "building" },
+    { id: "6", title: "Garantia de Parcelamento Fiscal", description: "Garante o pagamento de débitos fiscais parcelados junto à União.", link: "/garantias/6", icon: "file-check" },
   ],
   capital: {
     title: "Soluções financeiras sob medida para impulsionar seu negócio.",
