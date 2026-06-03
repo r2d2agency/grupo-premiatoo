@@ -69,15 +69,15 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
       {mobileMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 bg-navy border-t border-white/10 p-6 flex flex-col gap-6 animate-in fade-in slide-in-from-top-4">
           {navLinks.map((n) => (
-            <a 
+            <Link 
               key={n.label} 
-              href={n.href} 
-              target={n.target}
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : (n.href.startsWith("#") ? "/" : n.href)} 
+              hash={n.href.startsWith("#") ? n.href.replace("#", "") : undefined}
               className="text-white hover:text-gold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {n.label}
-            </a>
+            </Link>
           ))}
           {cta.visible && (
             <a
