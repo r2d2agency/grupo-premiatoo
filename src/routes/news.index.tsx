@@ -65,6 +65,65 @@ function NewsIndex() {
 
       <main className="py-20 md:py-32 bg-slate-50/50">
         <div className="max-w-[1280px] mx-auto px-6">
+          {/* Filters Area */}
+          <div className="mb-16 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              {/* Search */}
+              <div className="md:col-span-6 relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy/30 group-focus-within:text-brand-blue transition-colors" />
+                <input 
+                  type="text" 
+                  placeholder="Pesquisar por título, descrição ou tags..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy placeholder:text-navy/20"
+                />
+              </div>
+
+              {/* Category Filter */}
+              <div className="md:col-span-3 relative">
+                <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/30" />
+                <select 
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full pl-10 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy appearance-none cursor-pointer"
+                >
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat === "Todas" ? "Todas as Categorias" : cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Segment Filter */}
+              <div className="md:col-span-3 relative">
+                <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-navy/30" />
+                <select 
+                  value={selectedSegment}
+                  onChange={(e) => setSelectedSegment(e.target.value)}
+                  className="w-full pl-10 pr-4 py-4 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue outline-none transition-all font-light text-navy appearance-none cursor-pointer"
+                >
+                  {segments.map(seg => (
+                    <option key={seg} value={seg}>{seg === "Todos" ? "Todos os Segmentos" : seg}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {activeNews.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-[2rem] border border-dashed border-slate-200">
+                <Search className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                <h3 className="text-xl font-display text-navy mb-2">Nenhum resultado encontrado</h3>
+                <p className="text-slate-400 font-light">Tente ajustar seus termos de pesquisa ou filtros.</p>
+                <button 
+                  onClick={() => { setSearch(""); setSelectedCategory("Todas"); setSelectedSegment("Todos"); }}
+                  className="mt-6 text-brand-blue font-bold text-[10px] tracking-widest uppercase hover:underline"
+                >
+                  Limpar todos os filtros
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             {/* Main Content Area */}
             <div className="lg:col-span-8 space-y-20">
