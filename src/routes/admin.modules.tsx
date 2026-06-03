@@ -69,11 +69,13 @@ function AdminModulesPage() {
                 <div key={key} className="flex items-center justify-between p-4 border rounded-lg bg-white shadow-sm">
                   <div className="space-y-0.5">
                     <Label className="text-base capitalize">
-                      {key === 'headerSticky' ? 'Menu Fixo (Sticky)' : key}
+                      {key === 'headerSticky' ? 'Menu Fixo (Sticky)' : key === 'institucional' ? 'Página Institucional' : key}
                     </Label>
                     <p className="text-sm text-muted-foreground">
                       {key === 'headerSticky' 
                         ? 'Fixar o menu no topo ao rolar a página.' 
+                        : key === 'institucional'
+                        ? 'Habilitar a rota /institucional e seus blocos.'
                         : `Exibir seção de ${key} na página inicial.`}
                     </p>
                   </div>
