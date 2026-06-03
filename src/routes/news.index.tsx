@@ -142,8 +142,17 @@ function NewsIndex() {
                     <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
                     
                     <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                      <div className="inline-block px-4 py-1.5 bg-brand-blue/90 backdrop-blur-md text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-6">
-                        Destaque
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {featuredNews.category && (
+                          <span className="px-3 py-1 bg-brand-blue/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                            {featuredNews.category}
+                          </span>
+                        )}
+                        {featuredNews.segment && (
+                          <span className="px-3 py-1 bg-gold/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                            {featuredNews.segment}
+                          </span>
+                        )}
                       </div>
                       <h2 className="text-3xl md:text-5xl font-display text-white leading-tight mb-4 drop-shadow-lg">
                         {featuredNews.title}
