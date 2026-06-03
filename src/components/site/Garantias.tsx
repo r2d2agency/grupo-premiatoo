@@ -1,5 +1,6 @@
 import { Scale, FileText, Gavel, Globe, Building, FileCheck2, ArrowRight, Shield, Briefcase, Landmark, Handshake, ChevronLeft, ChevronRight } from "lucide-react";
 import type { SiteContent } from "@/lib/api";
+import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
@@ -17,13 +18,17 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export function Garantias({ items }: { items: SiteContent["garantias"] }) {
+  const columnsCount = items[0]?.columns || 4;
+  const layoutStyle = items[0]?.layout || "card";
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: false,
     slidesToScroll: 1,
     breakpoints: {
       "(min-width: 768px)": { slidesToScroll: 2 },
-      "(min-width: 1024px)": { slidesToScroll: 3 },
+      "(min-width: 1024px)": { slidesToScroll: Math.max(1, columnsCount - 1) },
+      "(min-width: 1280px)": { slidesToScroll: columnsCount },
     },
   });
 
@@ -85,31 +90,56 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
               return (
-                <div key={idx} className="embla__slide flex-[0_0_85%] md:flex-[0_0_40%] lg:flex-[0_0_24%] min-w-0">
-                  <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
-                    {/* Subtle glass effect background element */}
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-blue/10 transition-colors duration-500" />
-                    
-                    <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-500 border border-navy/5 shadow-sm">
-                      <Icon className="h-6 w-6 text-brand-blue stroke-[1.5]" />
-                    </div>
-                    
-                    <h3 className="text-lg font-display text-navy mb-3 font-bold leading-tight group-hover:text-brand-blue transition-colors duration-300">{g.title}</h3>
-                    
-                    <p className="text-muted-foreground text-[13px] leading-relaxed mb-6 flex-grow">
-                      {g.description || "Solução personalizada de garantia para as necessidades da sua empresa."}
-                    </p>
-                    
-                    <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
-                      <a
-                        href={g.link || "#"}
-                        className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group/link"
-                      >
-                        SAIBA MAIS 
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                <div 
+                  key={idx} 
+                  className={cn(
+                    "embla__slide min-w-0 transition-all duration-300",
+                    columnsCount === 3 ? "flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-[0_0_31%]" :
+                    columnsCount === 4 ? "flex-[0_0_85%] md:flex-[0_0_40%] lg:flex-[0_0_23%]" :
+                    columnsCount === 5 ? "flex-[0_0_85%] md:flex-[0_0_30%] lg:flex-[0_0_18.5%]" :
+                    "flex-[0_0_85%] md:flex-[0_0_40%] lg:flex-[0_0_23%]"
+                  )}
+                >
+                  {layoutStyle === "minimal" ? (
+                    <div className="bg-white/50 backdrop-blur-sm rounded-lg p-5 h-full flex flex-col border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 rounded bg-brand-blue/10 flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-sm font-bold text-navy leading-tight">{g.title}</h3>
+                      </div>
+                      <p className="text-[12px] text-muted-foreground leading-snug line-clamp-3 mb-4 flex-grow">
+                        {g.description}
+                      </p>
+                      <a href={g.link || "#"} className="text-[10px] font-bold tracking-widest text-brand-blue uppercase flex items-center gap-1 group/link">
+                        VER DETALHES <ArrowRight className="h-3 w-3 transition-transform group-hover/link:translate-x-1" />
                       </a>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-blue/10 transition-colors duration-500" />
+                      
+                      <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-navy/5 shadow-sm">
+                        <Icon className="h-6 w-6 text-brand-blue stroke-[1.5]" />
+                      </div>
+                      
+                      <h3 className="text-lg font-display text-navy mb-3 font-bold leading-tight group-hover:text-brand-blue transition-colors duration-300">{g.title}</h3>
+                      
+                      <p className="text-muted-foreground text-[13px] leading-relaxed mb-6 flex-grow">
+                        {g.description || "Solução personalizada de garantia para as necessidades da sua empresa."}
+                      </p>
+                      
+                      <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
+                        <a
+                          href={g.link || "#"}
+                          className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group/link"
+                        >
+                          SAIBA MAIS 
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}

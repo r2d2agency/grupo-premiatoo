@@ -83,7 +83,14 @@ export type SiteContent = {
     logoUrl?: string;
   }[];
   stats: { value: string; label: string }[];
-  garantias: { title: string; description?: string; link?: string; icon: string }[];
+  garantias: { 
+    title: string; 
+    description?: string; 
+    link?: string; 
+    icon: string;
+    columns?: number;
+    layout?: "card" | "minimal";
+  }[];
   capital: {
     title: string;
     items: { title: string; description: string; icon: string }[];
