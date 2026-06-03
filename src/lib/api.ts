@@ -34,8 +34,19 @@ export type SiteContent = {
     capital: boolean;
     governanca: boolean;
     brandCards: boolean;
+    news: boolean;
     footer: boolean;
   };
+  news: {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    link?: string;
+    publishDate?: string;
+    expiryDate?: string;
+    active: boolean;
+  }[];
   hero: {
     banners: {
       id: string;
