@@ -184,8 +184,40 @@ function AdminNewsPage() {
                           placeholder="#"
                         />
                       </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <Field
+                          label="Categoria"
+                          value={item.category || ""}
+                          onChange={(v: string) => {
+                            const next = [...content.news];
+                            next[index] = { ...item, category: v };
+                            update("news", next);
+                          }}
+                          placeholder="Ex: Mercado, Empresa, Tutorial"
+                        />
+                        <Field
+                          label="Segmento"
+                          value={item.segment || ""}
+                          onChange={(v: string) => {
+                            const next = [...content.news];
+                            next[index] = { ...item, segment: v };
+                            update("news", next);
+                          }}
+                          placeholder="Ex: Garantias, Capital, Judicial"
+                        />
+                      </div>
                       <Field
-                        label="Conteúdo Completo (HTML)"
+                        label="Tags (separadas por vírgula)"
+                        value={(item.tags || []).join(", ")}
+                        onChange={(v: string) => {
+                          const next = [...content.news];
+                          next[index] = { ...item, tags: v.split(",").map(t => t.trim()).filter(Boolean) };
+                          update("news", next);
+                        }}
+                        placeholder="tag1, tag2, tag3"
+                      />
+                      <Field
+                        label="Conteúdo Completo"
                         value={item.content || ""}
                         onChange={(v: string) => {
                           const next = [...content.news];
