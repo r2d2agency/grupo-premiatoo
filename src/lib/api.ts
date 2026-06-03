@@ -29,6 +29,7 @@ export type SiteContent = {
     header: boolean;
     headerSticky: boolean;
     hero: boolean;
+    institucional: boolean;
     stats: boolean;
     garantias: boolean;
     capital: boolean;
@@ -140,10 +141,18 @@ export type SiteContent = {
   };
   institucional: {
     hero: {
-      title: string;
-      subtitle: string;
-      ctaLabel: string;
-      image: string;
+      banners: {
+        id: string;
+        title: string;
+        subtitle: string;
+        ctaLabel: string;
+        image: string;
+        imageDesktop?: string;
+        imageTablet?: string;
+        imageMobile?: string;
+      }[];
+      animation: "fade" | "slide" | "zoom";
+      interval: number;
     };
     historia: {
       title: string;
@@ -194,10 +203,17 @@ export type SiteContent = {
 export const defaultContent: SiteContent = {
   institucional: {
     hero: {
-      title: "Uma instituição construída sobre governança, responsabilidade e visão de longo prazo.",
-      subtitle: "O Premiatto nasceu com o propósito de estruturar operações sustentáveis, apoiadas por critérios técnicos, análise rigorosa e compromisso com relações empresariais duradouras.",
-      ctaLabel: "Conheça nossa trajetória",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
+      banners: [
+        {
+          id: "inst-1",
+          title: "Uma instituição construída sobre governança, responsabilidade e visão de longo prazo.",
+          subtitle: "O Premiatto nasceu com o propósito de estruturar operações sustentáveis, apoiadas por critérios técnicos, análise rigorosa e compromisso com relações empresariais duradouras.",
+          ctaLabel: "Conheça nossa trajetória",
+          image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80",
+        },
+      ],
+      animation: "fade",
+      interval: 5000,
     },
     historia: {
       title: "Nossa História",
@@ -308,6 +324,7 @@ export const defaultContent: SiteContent = {
     header: true,
     headerSticky: true,
     hero: true,
+    institucional: true,
     stats: true,
     garantias: true,
     capital: true,

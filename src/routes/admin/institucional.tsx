@@ -4,7 +4,7 @@ import { defaultContent, fetchContent, getToken, saveContent, type SiteContent }
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Building2, History, Target, Users, Layout } from "lucide-react";
+import { Save, Building2, History, Target, Users, Layout, Plus, Trash2 } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -69,6 +69,40 @@ function AdminInstitucionalPage() {
     }
   }
 
+  const addHeroBanner = () => {
+    const newBanner = {
+      id: crypto.randomUUID(),
+      title: "Novo Título",
+      subtitle: "Nova Descrição",
+      ctaLabel: "SAIBA MAIS",
+      image: "",
+    };
+    updateInst("hero", {
+      ...content.institucional.hero,
+      banners: [...content.institucional.hero.banners, newBanner],
+    });
+  };
+
+  const removeHeroBanner = (id: string) => {
+    if (content.institucional.hero.banners.length <= 1) {
+      toast.error("Deve haver pelo menos um banner.");
+      return;
+    }
+    updateInst("hero", {
+      ...content.institucional.hero,
+      banners: content.institucional.hero.banners.filter((b) => b.id !== id),
+    });
+  };
+
+  const updateHeroBanner = (id: string, fields: any) => {
+    updateInst("hero", {
+      ...content.institucional.hero,
+      banners: content.institucional.hero.banners.map((b) =>
+        b.id === id ? { ...b, ...fields } : b
+      ),
+    });
+  };
+
   if (loading) return null;
 
   const inst = content.institucional;
@@ -79,20 +113,68 @@ function AdminInstitucionalPage() {
         
         {/* HERO */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-navy flex items-center gap-2">
-              <Layout className="w-5 h-5 text-gold" />
-              Seção 01 — Hero
-            </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-navy flex items-center gap-2">
+                <Layout className="w-5 h-5 text-gold" />
+                Seção 01 — Hero Banners
+              </CardTitle>
+              <CardDescription>Configure múltiplos banners para a página institucional.</CardDescription>
+            </div>
+            <Button onClick={addHeroBanner} size="sm" className="bg-navy hover:bg-navy/90 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              Novo Banner
+            </Button>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid lg:grid-cols-[1fr_300px] gap-8">
-              <div className="space-y-4">
-                <Field label="Título" value={inst.hero.title} onChange={(v:any) => updateInst("hero", {...inst.hero, title:v})} textarea />
-                <Field label="Subtítulo" value={inst.hero.subtitle} onChange={(v:any) => updateInst("hero", {...inst.hero, subtitle:v})} textarea />
-                <Field label="Texto do Botão" value={inst.hero.ctaLabel} onChange={(v:any) => updateInst("hero", {...inst.hero, ctaLabel:v})} />
+          <CardContent className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-6 p-4 bg-muted/30 rounded-lg">
+              <div className="space-y-2">
+                <Label className="text-[11px] uppercase tracking-wider">Tipo de Animação</Label>
+                <select
+                  value={inst.hero.animation}
+                  onChange={(e) => updateInst("hero", { ...inst.hero, animation: e.target.value as any })}
+                  className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                >
+                  <option value="fade">Esmaecer (Fade)</option>
+                  <option value="slide">Deslizar (Slide)</option>
+                  <option value="zoom">Zoom</option>
+                </select>
               </div>
-              <ImageUpload label="Imagem de Fundo" value={inst.hero.image} onChange={(v:any) => updateInst("hero", {...inst.hero, image:v})} />
+              <div className="space-y-2">
+                <Label className="text-[11px] uppercase tracking-wider">Intervalo (ms)</Label>
+                <input
+                  type="number"
+                  value={inst.hero.interval}
+                  onChange={(e) => updateInst("hero", { ...inst.hero, interval: Number(e.target.value) })}
+                  className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {inst.hero.banners.map((banner, index) => (
+                <div key={banner.id} className="border rounded-lg p-6 bg-white shadow-sm space-y-4 relative">
+                  <div className="flex items-center justify-between border-b pb-3 mb-4">
+                    <h3 className="font-semibold text-navy">Banner #{index + 1}</h3>
+                    <Button variant="ghost" size="sm" onClick={() => removeHeroBanner(banner.id)} className="text-destructive hover:bg-destructive/10">
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  
+                  <div className="grid lg:grid-cols-[1fr_300px] gap-8">
+                    <div className="space-y-4">
+                      <Field label="Título" value={banner.title} onChange={(v: string) => updateHeroBanner(banner.id, { title: v })} textarea />
+                      <Field label="Subtítulo" value={banner.subtitle} onChange={(v: string) => updateHeroBanner(banner.id, { subtitle: v })} textarea />
+                      <Field label="Texto do Botão" value={banner.ctaLabel} onChange={(v: string) => updateHeroBanner(banner.id, { ctaLabel: v })} />
+                    </div>
+                    <div className="space-y-4">
+                      <ImageUpload label="Desktop (1920x1080)" value={banner.imageDesktop || banner.image} onChange={(v) => updateHeroBanner(banner.id, { imageDesktop: v, image: v })} />
+                      <ImageUpload label="Tablet (1024x768)" value={banner.imageTablet} onChange={(v) => updateHeroBanner(banner.id, { imageTablet: v })} />
+                      <ImageUpload label="Mobile (768x1024)" value={banner.imageMobile} onChange={(v) => updateHeroBanner(banner.id, { imageMobile: v })} />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
