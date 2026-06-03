@@ -15,6 +15,7 @@ import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminDashboard,
@@ -603,7 +604,7 @@ function AdminDashboard() {
                       <div key={idx} className="flex gap-2">
                         <Input 
                           value={item} 
-                          onChange={(e) => {
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const next = [...content.governanca.items];
                             next[idx] = e.target.value;
                             update("governanca", { ...content.governanca, items: next });
