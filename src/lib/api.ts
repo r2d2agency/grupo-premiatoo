@@ -289,7 +289,7 @@ export const defaultContent: SiteContent = {
   },
   navigation: {
     links: [
-      { label: "Institucional", href: "#" },
+      { label: "Institucional", href: "/institucional" },
       { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
       { label: "Governança", href: "#" },
