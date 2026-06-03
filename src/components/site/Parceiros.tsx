@@ -7,9 +7,12 @@ export function Parceiros({ items }: { items: { tag: string; title: string; cta:
     <section className="bg-background py-6">
       <div className="mx-auto max-w-[1280px] px-6 grid md:grid-cols-2 gap-6">
         {items.map((b, i) => (
-          <div key={i} className="relative overflow-hidden rounded-sm bg-surface min-h-[200px]">
-            <div className="grid grid-cols-2">
-              <div className="p-8 flex flex-col justify-between">
+          <div key={i} className="relative overflow-hidden rounded-sm bg-surface min-h-[300px] md:min-h-[200px]">
+            <div className="flex flex-col md:grid md:grid-cols-2 h-full">
+              <div className="h-[200px] md:h-full order-first md:order-last">
+                <img src={b.image} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-8 flex flex-col justify-between h-full">
                 <div>
                   <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">
                     {b.tag}
@@ -23,8 +26,6 @@ export function Parceiros({ items }: { items: { tag: string; title: string; cta:
                   {b.cta} <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
-              <div className="h-full">
-                <img src={b.image} alt="" className="w-full h-full object-cover min-h-[200px]" />
               </div>
             </div>
           </div>
