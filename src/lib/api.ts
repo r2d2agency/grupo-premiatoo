@@ -324,6 +324,7 @@ export const defaultContent: SiteContent = {
     header: true,
     headerSticky: true,
     hero: true,
+    institucional: true,
     stats: true,
     garantias: true,
     capital: true,
