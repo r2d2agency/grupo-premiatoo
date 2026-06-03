@@ -24,6 +24,7 @@ import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
 import { Route as AdminGovernancaRouteImport } from './routes/admin/governanca'
 import { Route as AdminGarantiasRouteImport } from './routes/admin/garantias'
@@ -107,6 +108,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminInstitucionalRoute = AdminInstitucionalRouteImport.update({
+  id: '/admin/institucional',
+  path: '/admin/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminHeroRoute = AdminHeroRouteImport.update({
   id: '/admin/hero',
   path: '/admin/hero',
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
   '/admin/hero': typeof AdminHeroRoute
+  '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -276,6 +287,7 @@ export interface FileRouteTypes {
     | '/admin/garantias'
     | '/admin/governanca'
     | '/admin/hero'
+    | '/admin/institucional'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   AdminGarantiasRoute: typeof AdminGarantiasRoute
   AdminGovernancaRoute: typeof AdminGovernancaRoute
   AdminHeroRoute: typeof AdminHeroRoute
+  AdminInstitucionalRoute: typeof AdminInstitucionalRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
@@ -423,6 +436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/institucional': {
+      id: '/admin/institucional'
+      path: '/admin/institucional'
+      fullPath: '/admin/institucional'
+      preLoaderRoute: typeof AdminInstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/hero': {
       id: '/admin/hero'
       path: '/admin/hero'
@@ -485,6 +505,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminGarantiasRoute: AdminGarantiasRoute,
   AdminGovernancaRoute: AdminGovernancaRoute,
   AdminHeroRoute: AdminHeroRoute,
+  AdminInstitucionalRoute: AdminInstitucionalRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
   AdminNavigationRoute: AdminNavigationRoute,
@@ -502,3 +523,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
