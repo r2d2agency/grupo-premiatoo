@@ -3,6 +3,7 @@ import type { SiteContent } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   scale: Scale,

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as NewsNewsIdRouteImport } from './routes/news.$newsId'
+import { Route as GarantiasGarantiaIdRouteImport } from './routes/garantias.$garantiaId'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminStatsRouteImport } from './routes/admin/stats'
 import { Route as AdminParceirosRouteImport } from './routes/admin/parceiros'
@@ -40,6 +41,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const NewsNewsIdRoute = NewsNewsIdRouteImport.update({
   id: '/news/$newsId',
   path: '/news/$newsId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GarantiasGarantiaIdRoute = GarantiasGarantiaIdRouteImport.update({
+  id: '/garantias/$garantiaId',
+  path: '/garantias/$garantiaId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
   '/news/$newsId': typeof NewsNewsIdRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/stats'
     | '/admin/users'
+    | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/stats'
     | '/admin/users'
+    | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin'
   id:
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/stats'
     | '/admin/users'
+    | '/garantias/$garantiaId'
     | '/news/$newsId'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -247,6 +259,7 @@ export interface RootRouteChildren {
   AdminParceirosRoute: typeof AdminParceirosRoute
   AdminStatsRoute: typeof AdminStatsRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  GarantiasGarantiaIdRoute: typeof GarantiasGarantiaIdRoute
   NewsNewsIdRoute: typeof NewsNewsIdRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       path: '/news/$newsId'
       fullPath: '/news/$newsId'
       preLoaderRoute: typeof NewsNewsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/garantias/$garantiaId': {
+      id: '/garantias/$garantiaId'
+      path: '/garantias/$garantiaId'
+      fullPath: '/garantias/$garantiaId'
+      preLoaderRoute: typeof GarantiasGarantiaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/users': {
@@ -391,19 +411,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminParceirosRoute: AdminParceirosRoute,
   AdminStatsRoute: AdminStatsRoute,
   AdminUsersRoute: AdminUsersRoute,
+  GarantiasGarantiaIdRoute: GarantiasGarantiaIdRoute,
   NewsNewsIdRoute: NewsNewsIdRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
