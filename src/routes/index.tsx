@@ -52,7 +52,7 @@ function Index() {
       {content.modules.governanca && <Governanca data={content.governanca} />}
       {content.modules.news && <NewsArea news={content.news} />}
       <Parceiros />
-      {content.modules.footer && <Footer logoUrl={content.branding.logoUrl} />}
+      {content.modules.footer && <Footer content={content} />}
     </div>
   );
 }
