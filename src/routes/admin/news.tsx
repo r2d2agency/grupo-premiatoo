@@ -85,6 +85,7 @@ function AdminNewsPage() {
                   id: crypto.randomUUID(),
                   title: "Nova Notícia", 
                   description: "", 
+                  content: "",
                   image: "", 
                   link: "#", 
                   publishDate: new Date().toISOString().split('T')[0],
@@ -180,6 +181,17 @@ function AdminNewsPage() {
                           placeholder="#"
                         />
                       </div>
+                      <Field
+                        label="Conteúdo Completo (HTML)"
+                        value={item.content || ""}
+                        onChange={(v: string) => {
+                          const next = [...content.news];
+                          next[index] = { ...item, content: v };
+                          update("news", next);
+                        }}
+                        textarea
+                        placeholder="Escreva a matéria completa aqui..."
+                      />
                     </div>
                     <div className="space-y-4">
                       <ImageUpload
