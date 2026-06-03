@@ -85,25 +85,30 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
               return (
-                <div key={idx} className="embla__slide flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-[0_0_30%] min-w-0">
-                  <div className="bg-white rounded-xl p-8 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/20 transition-all duration-300 group">
-                    <div className="w-14 h-14 rounded-lg bg-surface flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="h-7 w-7 text-brand-blue stroke-[1.5]" />
+                <div key={idx} className="embla__slide flex-[0_0_85%] md:flex-[0_0_40%] lg:flex-[0_0_24%] min-w-0">
+                  <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-lg hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
+                    {/* Subtle glass effect background element */}
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-blue/10 transition-colors duration-500" />
+                    
+                    <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-500 border border-navy/5 shadow-sm">
+                      <Icon className="h-6 w-6 text-brand-blue stroke-[1.5]" />
                     </div>
                     
-                    <h3 className="text-xl font-display text-navy mb-4 font-semibold">{g.title}</h3>
+                    <h3 className="text-lg font-display text-navy mb-3 font-bold leading-tight group-hover:text-brand-blue transition-colors duration-300">{g.title}</h3>
                     
-                    <p className="text-muted-foreground text-[14px] leading-relaxed mb-8 flex-grow">
+                    <p className="text-muted-foreground text-[13px] leading-relaxed mb-6 flex-grow">
                       {g.description || "Solução personalizada de garantia para as necessidades da sua empresa."}
                     </p>
                     
-                    <a
-                      href={g.link || "#"}
-                      className="inline-flex items-center gap-2 text-[12px] font-bold tracking-widest text-brand-blue uppercase group/link"
-                    >
-                      SAIBA MAIS 
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-                    </a>
+                    <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
+                      <a
+                        href={g.link || "#"}
+                        className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest text-brand-blue uppercase group/link"
+                      >
+                        SAIBA MAIS 
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               );
