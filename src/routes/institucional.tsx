@@ -320,15 +320,15 @@ function InstitucionalPage() {
       {/* SEÇÃO 07 — LIDERANÇA */}
       <section className="py-16 bg-surface">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
-              <div className="relative">
+              <div className="relative max-w-sm">
                 <img
                   src={data.lideranca.photo}
                   alt={data.lideranca.name}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-[0_50px_100px_-20px_rgba(4,26,59,0.3)]"
+                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
                 />
-                <div className="absolute -bottom-8 -left-8 w-40 h-40 border border-brand-blue/20 -z-10" />
+                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 -z-10" />
               </div>
             </div>
             <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
