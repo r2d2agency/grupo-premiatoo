@@ -284,15 +284,18 @@ function InstitucionalPage() {
             alt="Pensamento"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-navy/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/30" />
         </div>
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center text-white">
-          <h2 className="font-display text-3xl lg:text-4xl mb-6 max-w-3xl mx-auto leading-tight">
-            {data.pensamento.title}
-          </h2>
-          <p className="text-sm text-white/70 max-w-2xl mx-auto leading-relaxed">
-            {data.pensamento.text}
-          </p>
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-white">
+          <div className="max-w-xl space-y-5">
+            <h2 className="font-display text-3xl lg:text-4xl leading-tight">
+              {data.pensamento.title}
+            </h2>
+            <div className="w-12 h-px bg-brand-blue" />
+            <p className="text-sm text-white/70 leading-relaxed">
+              {data.pensamento.text}
+            </p>
+          </div>
         </div>
       </section>
 
