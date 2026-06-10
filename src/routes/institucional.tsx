@@ -401,26 +401,27 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 10 — CTA FINAL */}
-      <section className="relative py-16 overflow-hidden">
+      <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={data.ctaFinal.image}
             alt="CTA Background"
-            className="w-full h-full object-cover grayscale opacity-30"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-surface/95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/95 to-surface/40" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-display text-2xl lg:text-3xl text-navy mb-4 leading-tight">{data.ctaFinal.title}</h2>
-          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-6 leading-relaxed">
-            {data.ctaFinal.text}
-          </p>
-          <button className="bg-brand-blue text-brand-blue-foreground px-8 py-3 rounded-sm font-semibold tracking-wider uppercase text-[12px] hover:opacity-90 transition-all duration-500 shadow-xl group">
-            {data.ctaFinal.ctaLabel}
-            <ArrowRight className="inline-block ml-3 w-4 h-4 transition-transform group-hover:translate-x-2" />
-          </button>
-        </div>
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+          <div className="max-w-xl space-y-5">
+            <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">{data.ctaFinal.title}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {data.ctaFinal.text}
+            </p>
+            <button className="bg-brand-blue text-brand-blue-foreground px-7 py-3 rounded-sm font-semibold tracking-wider uppercase text-[11px] hover:opacity-90 transition-all duration-500 shadow-xl group inline-flex items-center gap-3">
+              {data.ctaFinal.ctaLabel}
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
       </section>
 
       <Footer content={content} />
