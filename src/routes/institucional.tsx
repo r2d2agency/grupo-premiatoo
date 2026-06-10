@@ -187,22 +187,21 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 02 — NOSSA HISTÓRIA */}
-      <section className="py-16 bg-white overflow-hidden" id="historia">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
-              <img
-                src={data.historia.image}
-                alt="História"
-                className="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
-              />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F5F7FA] -z-10" />
-            </div>
-            <div className="space-y-4 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">NOSSA HISTÓRIA</div>
+      <section className="bg-white overflow-hidden" id="historia">
+        <div className="grid lg:grid-cols-2 items-stretch">
+          <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
+            <img
+              src={data.historia.image}
+              alt="História"
+              className="w-full h-full min-h-[400px] object-cover"
+            />
+          </div>
+          <div className="flex items-center px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-right-12 duration-1000">
+            <div className="max-w-xl space-y-5">
               <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.historia.title}
               </h2>
+              <div className="w-12 h-px bg-brand-blue" />
               <div className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
                 {data.historia.text}
               </div>
@@ -212,25 +211,25 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 03 — O PREMIATTO HOJE */}
-      <section className="py-16 bg-surface">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 space-y-5 animate-in fade-in slide-in-from-left-12 duration-1000">
-              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">O PREMIATTO HOJE</div>
+      <section className="bg-surface overflow-hidden">
+        <div className="grid lg:grid-cols-2 items-stretch">
+          <div className="order-2 lg:order-1 flex items-center justify-end px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-left-12 duration-1000">
+            <div className="max-w-xl space-y-5">
               <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.hoje.title}
               </h2>
+              <div className="w-12 h-px bg-brand-blue" />
               <p className="text-muted-foreground leading-relaxed text-sm">
                 {data.hoje.text}
               </p>
             </div>
-            <div className="order-1 lg:order-2 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <img
-                src={data.hoje.image}
-                alt="Hoje"
-                className="w-full aspect-video object-cover shadow-xl"
-              />
-            </div>
+          </div>
+          <div className="order-1 lg:order-2 animate-in fade-in slide-in-from-right-12 duration-1000">
+            <img
+              src={data.hoje.image}
+              alt="Hoje"
+              className="w-full h-full min-h-[360px] object-cover"
+            />
           </div>
         </div>
       </section>
