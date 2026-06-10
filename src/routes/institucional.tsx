@@ -237,7 +237,7 @@ function InstitucionalPage() {
               <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.proposito.title}
               </h3>
-              <p className="text-base text-navy font-light leading-snug">
+              <p className="text-muted-foreground leading-relaxed text-sm">
                 {data.orientacao.proposito.text}
               </p>
             </div>
@@ -245,23 +245,24 @@ function InstitucionalPage() {
               <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.visao.title}
               </h3>
-              <p className="text-base text-navy font-light leading-snug">
+              <p className="text-muted-foreground leading-relaxed text-sm">
                 {data.orientacao.visao.text}
               </p>
             </div>
-            <div className="space-y-5">
+            <div className="space-y-4">
               <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.principios.title}
               </h3>
               <ul className="grid grid-cols-1 gap-3">
                 {data.orientacao.principios.items.map((item, i) => (
-                  <li key={i} className="text-navy flex items-center gap-3 text-sm font-light group">
+                  <li key={i} className="text-muted-foreground flex items-center gap-3 text-sm group">
                     <span className="w-1 h-1 bg-brand-blue group-hover:w-4 transition-all duration-300" />
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
+
           </div>
         </div>
       </section>
