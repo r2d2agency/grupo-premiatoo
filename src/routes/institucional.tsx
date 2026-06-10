@@ -177,23 +177,23 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 02 — NOSSA HISTÓRIA */}
-      <section className="py-32 bg-white overflow-hidden" id="historia">
+      <section className="py-16 bg-white overflow-hidden" id="historia">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-24 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
-              <img 
-                src={data.historia.image} 
-                alt="História" 
+              <img
+                src={data.historia.image}
+                alt="História"
                 className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl"
               />
               <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#F5F7FA] -z-10" />
             </div>
-            <div className="space-y-10 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <div className="w-16 h-px bg-[#0B3EA9]" />
-              <h2 className="font-['Playfair_Display'] text-5xl text-[#041A3B]">
+            <div className="space-y-5 animate-in fade-in slide-in-from-right-12 duration-1000">
+              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">NOSSA HISTÓRIA</div>
+              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.historia.title}
               </h2>
-              <div className="space-y-8 text-[#041A3B]/80 leading-relaxed text-xl font-light whitespace-pre-line">
+              <div className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
                 {data.historia.text}
               </div>
             </div>
@@ -202,21 +202,22 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 03 — O PREMIATTO HOJE */}
-      <section className="py-32 bg-[#F5F7FA]">
+      <section className="py-16 bg-surface">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-24 items-center">
-            <div className="order-2 lg:order-1 space-y-10 animate-in fade-in slide-in-from-left-12 duration-1000">
-              <h2 className="font-['Playfair_Display'] text-5xl text-[#041A3B] leading-tight">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1 space-y-5 animate-in fade-in slide-in-from-left-12 duration-1000">
+              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">O PREMIATTO HOJE</div>
+              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.hoje.title}
               </h2>
-              <p className="text-[#041A3B]/80 leading-relaxed text-xl font-light">
+              <p className="text-muted-foreground leading-relaxed text-sm">
                 {data.hoje.text}
               </p>
             </div>
             <div className="order-1 lg:order-2 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <img 
-                src={data.hoje.image} 
-                alt="Hoje" 
+              <img
+                src={data.hoje.image}
+                alt="Hoje"
                 className="w-full aspect-video object-cover shadow-xl"
               />
             </div>
@@ -225,36 +226,37 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 04 — O QUE NOS ORIENTA */}
-      <section className="py-40 bg-white">
+      <section className="py-16 bg-white">
         <div className="mx-auto max-w-[1280px] px-6">
-          <h2 className="font-['Playfair_Display'] text-5xl text-[#041A3B] text-center mb-24">
+          <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3 text-center">DIRECIONAMENTO</div>
+          <h2 className="font-display text-3xl lg:text-4xl text-navy text-center mb-12 leading-tight">
             {data.orientacao.title}
           </h2>
-          <div className="grid md:grid-cols-3 gap-20">
-            <div className="space-y-6">
-              <h3 className="font-bold text-[#0B3EA9] uppercase tracking-[0.2em] text-[10px]">
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.proposito.title}
               </h3>
-              <p className="text-2xl text-[#041A3B] font-light leading-snug">
+              <p className="text-base text-navy font-light leading-snug">
                 {data.orientacao.proposito.text}
               </p>
             </div>
-            <div className="space-y-6">
-              <h3 className="font-bold text-[#0B3EA9] uppercase tracking-[0.2em] text-[10px]">
+            <div className="space-y-4">
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.visao.title}
               </h3>
-              <p className="text-2xl text-[#041A3B] font-light leading-snug">
+              <p className="text-base text-navy font-light leading-snug">
                 {data.orientacao.visao.text}
               </p>
             </div>
-            <div className="space-y-8">
-              <h3 className="font-bold text-[#0B3EA9] uppercase tracking-[0.2em] text-[10px]">
+            <div className="space-y-5">
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
                 {data.orientacao.principios.title}
               </h3>
-              <ul className="grid grid-cols-1 gap-4">
+              <ul className="grid grid-cols-1 gap-3">
                 {data.orientacao.principios.items.map((item, i) => (
-                  <li key={i} className="text-[#041A3B] flex items-center gap-3 text-lg font-light group">
-                    <span className="w-1 h-1 bg-[#0B3EA9] group-hover:w-4 transition-all duration-300" />
+                  <li key={i} className="text-navy flex items-center gap-3 text-sm font-light group">
+                    <span className="w-1 h-1 bg-brand-blue group-hover:w-4 transition-all duration-300" />
                     {item}
                   </li>
                 ))}
@@ -265,84 +267,86 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 05 — NOSSA FORMA DE PENSAR */}
-      <section className="relative py-56 overflow-hidden">
+      <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src={data.pensamento.image} 
-            alt="Pensamento" 
+          <img
+            src={data.pensamento.image}
+            alt="Pensamento"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#041A3B]/85" />
+          <div className="absolute inset-0 bg-navy/85" />
         </div>
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center text-white">
-          <h2 className="font-['Playfair_Display'] text-4xl md:text-6xl mb-12 max-w-4xl mx-auto leading-tight">
+          <h2 className="font-display text-3xl lg:text-4xl mb-6 max-w-3xl mx-auto leading-tight">
             {data.pensamento.title}
           </h2>
-          <p className="text-2xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-sm text-white/70 max-w-2xl mx-auto leading-relaxed">
             {data.pensamento.text}
           </p>
         </div>
       </section>
 
       {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
-      <section className="py-40 bg-white overflow-hidden">
+      <section className="py-16 bg-white overflow-hidden">
         <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-['Playfair_Display'] text-5xl text-[#041A3B] mb-24">Estrutura Organizacional</h2>
-          
-          <div className="relative max-w-4xl mx-auto py-16">
-            <div className="bg-[#041A3B] text-white p-8 inline-block rounded-sm mb-20 relative z-10 min-w-[280px] shadow-xl">
+          <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">ORGANIZAÇÃO</div>
+          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight">Estrutura Organizacional</h2>
+
+          <div className="relative max-w-4xl mx-auto py-8">
+            <div className="bg-navy text-white p-6 inline-block rounded-sm mb-16 relative z-10 min-w-[260px] shadow-xl">
               <span className="font-bold tracking-[0.3em] uppercase text-[9px] block mb-2 text-white/50">Liderança</span>
-              <span className="text-2xl font-['Playfair_Display']">{data.organizacional.items[0].label}</span>
+              <span className="font-display text-xl">{data.organizacional.items[0].label}</span>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-              <div className="hidden md:block absolute top-[-80px] left-1/2 w-px h-20 bg-[#0B3EA9]/20" />
-              <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-[#0B3EA9]/20" />
-              
+              <div className="hidden md:block absolute top-[-64px] left-1/2 w-px h-16 bg-brand-blue/20" />
+              <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-brand-blue/20" />
+
               {data.organizacional.items[0].children?.map((child, i) => (
-                <div key={i} className="bg-[#F5F7FA] p-6 border border-[#041A3B]/5 hover:border-[#0B3EA9]/40 transition-all duration-500 group relative">
-                  <div className="hidden md:block absolute top-[-24px] left-1/2 w-px h-6 bg-[#0B3EA9]/20" />
-                  <span className="text-sm font-semibold tracking-wider text-[#041A3B] group-hover:text-[#0B3EA9] transition-colors uppercase">{child.label}</span>
+                <div key={i} className="bg-surface p-5 border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group relative">
+                  <div className="hidden md:block absolute top-[-24px] left-1/2 w-px h-6 bg-brand-blue/20" />
+                  <span className="text-xs font-semibold tracking-wider text-navy group-hover:text-brand-blue transition-colors uppercase">{child.label}</span>
                 </div>
               ))}
             </div>
           </div>
-          
-          <p className="mt-24 text-[#041A3B]/60 max-w-3xl mx-auto text-lg font-light leading-relaxed italic">
+
+          <p className="mt-12 text-muted-foreground max-w-2xl mx-auto text-sm font-light leading-relaxed italic">
             "{data.organizacional.text}"
           </p>
         </div>
       </section>
 
       {/* SEÇÃO 07 — LIDERANÇA */}
-      <section className="py-40 bg-[#F5F7FA]">
+      <section className="py-16 bg-surface">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-32 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
               <div className="relative">
-                <img 
-                  src={data.lideranca.photo} 
-                  alt={data.lideranca.name} 
+                <img
+                  src={data.lideranca.photo}
+                  alt={data.lideranca.name}
                   className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-[0_50px_100px_-20px_rgba(4,26,59,0.3)]"
                 />
-                <div className="absolute -bottom-8 -left-8 w-40 h-40 border border-[#0B3EA9]/20 -z-10" />
+                <div className="absolute -bottom-8 -left-8 w-40 h-40 border border-brand-blue/20 -z-10" />
               </div>
             </div>
-            <div className="space-y-12 animate-in fade-in slide-in-from-right-12 duration-1000">
+            <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
               <div>
-                <h2 className="font-['Playfair_Display'] text-6xl text-[#041A3B] mb-4">{data.lideranca.name}</h2>
-                <p className="text-[#0B3EA9] font-bold tracking-[0.3em] uppercase text-xs">{data.lideranca.role}</p>
+                <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">LIDERANÇA</div>
+                <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
+                <p className="text-brand-blue font-bold tracking-[0.3em] uppercase text-[11px]">{data.lideranca.role}</p>
               </div>
-              
-              <p className="text-[#041A3B]/80 leading-relaxed text-xl font-light whitespace-pre-line">
+
+              <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
                 {data.lideranca.bio}
               </p>
-              
-              <div className="space-y-5 pt-10 border-t border-[#041A3B]/10">
+
+              <div className="space-y-3 pt-6 border-t border-navy/10">
                 {data.lideranca.positions.map((pos, i) => (
-                  <div key={i} className="flex items-start gap-4 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#0B3EA9] mt-2.5 flex-shrink-0" />
-                    <span className="text-[#041A3B] font-medium text-lg">{pos}</span>
+                  <div key={i} className="flex items-start gap-3 group">
+                    <div className="w-1.5 h-1.5 rounded-full bg-brand-blue mt-2 flex-shrink-0" />
+                    <span className="text-navy text-sm">{pos}</span>
                   </div>
                 ))}
               </div>
@@ -352,14 +356,15 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 08 — DIFERENCIAIS INSTITUCIONAIS */}
-      <section className="py-40 bg-white">
+      <section className="py-16 bg-white">
         <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-['Playfair_Display'] text-5xl text-[#041A3B] mb-24 uppercase tracking-widest">Diferenciais</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12">
+          <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">DIFERENCIAIS</div>
+          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight">Diferenciais Institucionais</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {data.diferenciais.map((diff, i) => (
               <div key={i} className="group cursor-default">
-                <div className="w-px h-16 bg-[#0B3EA9]/20 mx-auto mb-8 group-hover:h-24 transition-all duration-700" />
-                <span className="text-xs font-bold text-[#041A3B] uppercase tracking-[0.25em] group-hover:text-[#0B3EA9] transition-colors">{diff}</span>
+                <div className="w-px h-12 bg-brand-blue/20 mx-auto mb-6 group-hover:h-20 transition-all duration-700" />
+                <span className="text-[11px] font-bold text-navy uppercase tracking-[0.25em] group-hover:text-brand-blue transition-colors">{diff}</span>
               </div>
             ))}
           </div>
@@ -367,15 +372,14 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 09 — MANIFESTO */}
-      <section className="py-56 bg-[#041A3B] relative overflow-hidden">
-        {/* Marca d'água discreta */}
+      <section className="py-24 bg-navy-deep relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none flex items-center justify-center">
            <Logo src={content.branding.logoUrl} height={800} />
         </div>
-        
+
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <div className="max-w-5xl mx-auto">
-            <div className="font-['Playfair_Display'] text-3xl md:text-5xl lg:text-6xl text-white/90 leading-[1.3] space-y-8 italic font-light">
+          <div className="max-w-4xl mx-auto">
+            <div className="font-display text-2xl md:text-3xl lg:text-4xl text-white/90 leading-[1.4] space-y-6 italic font-light">
               {data.manifesto.text.split('. ').map((sentence, i) => (
                 <p key={i} className="animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ animationDelay: `${i * 400}ms` }}>
                   {sentence}{i < data.manifesto.text.split('. ').length - 1 ? '.' : ''}
@@ -387,24 +391,24 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 10 — CTA FINAL */}
-      <section className="relative py-64 overflow-hidden">
+      <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src={data.ctaFinal.image} 
-            alt="CTA Background" 
+          <img
+            src={data.ctaFinal.image}
+            alt="CTA Background"
             className="w-full h-full object-cover grayscale opacity-30"
           />
-          <div className="absolute inset-0 bg-[#F5F7FA]/95" />
+          <div className="absolute inset-0 bg-surface/95" />
         </div>
-        
+
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-['Playfair_Display'] text-6xl md:text-8xl text-[#041A3B] mb-12 opacity-90">{data.ctaFinal.title}</h2>
-          <p className="text-2xl text-[#041A3B]/70 max-w-3xl mx-auto mb-16 font-light leading-relaxed">
+          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-6 leading-tight">{data.ctaFinal.title}</h2>
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
             {data.ctaFinal.text}
           </p>
-          <button className="bg-[#0B3EA9] text-white px-16 py-6 rounded-sm font-bold tracking-[0.3em] uppercase text-xs hover:bg-[#041A3B] transition-all duration-500 shadow-2xl group">
+          <button className="bg-brand-blue text-brand-blue-foreground px-10 py-4 rounded-sm font-semibold tracking-wider uppercase text-[12px] hover:opacity-90 transition-all duration-500 shadow-2xl group">
             {data.ctaFinal.ctaLabel}
-            <ArrowRight className="inline-block ml-3 w-4 h-4 transition-transform group-hover:translate-x-3" />
+            <ArrowRight className="inline-block ml-3 w-4 h-4 transition-transform group-hover:translate-x-2" />
           </button>
         </div>
       </section>
