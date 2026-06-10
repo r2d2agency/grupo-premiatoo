@@ -422,6 +422,7 @@ function InstitucionalPage() {
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
+        </div>
       </section>
 
       <Footer content={content} />
