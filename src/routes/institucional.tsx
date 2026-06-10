@@ -21,12 +21,13 @@ export const Route = createFileRoute("/institucional")({
 });
 
 function InstitucionalPage() {
-  const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [content, setContent] = useState<SiteContent | null>(null);
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
+
 
   const hero = content.institucional.hero;
   const banners = hero.banners || [];
