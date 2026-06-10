@@ -335,40 +335,32 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 07 — LIDERANÇA */}
-      <section className="py-16 bg-surface">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-[auto_1fr] gap-8 items-center">
-
-            <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
-              <div className="relative max-w-sm">
-                <img
-                  src={data.lideranca.photo}
-                  alt={data.lideranca.name}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl rounded-2xl"
-                />
-                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 rounded-2xl -z-10" />
-              </div>
+      <section className="bg-surface overflow-hidden">
+        <div className="grid lg:grid-cols-[1fr_1fr_1fr] items-stretch">
+          <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
+            <img
+              src={data.lideranca.photo}
+              alt={data.lideranca.name}
+              className="w-full h-full min-h-[400px] object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center px-6 lg:px-12 py-12 space-y-5 animate-in fade-in duration-1000">
+            <div>
+              <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
+              <p className="text-brand-blue font-semibold tracking-wider text-[12px]">{data.lideranca.role}</p>
             </div>
-            <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <div>
-                <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">LIDERANÇA</div>
-                <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
-                <p className="text-brand-blue font-bold tracking-[0.3em] uppercase text-[11px]">{data.lideranca.role}</p>
+            <div className="w-12 h-px bg-brand-blue" />
+            <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
+              {data.lideranca.bio}
+            </p>
+          </div>
+          <div className="flex flex-col justify-center px-6 lg:px-12 py-12 space-y-5 animate-in fade-in slide-in-from-right-12 duration-1000">
+            {data.lideranca.positions.map((pos, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className="w-6 h-px bg-brand-blue mt-2 flex-shrink-0" />
+                <span className="text-navy text-[11px] font-semibold tracking-[0.15em] uppercase leading-relaxed">{pos}</span>
               </div>
-
-              <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
-                {data.lideranca.bio}
-              </p>
-
-              <div className="space-y-3 pt-6 border-t border-navy/10">
-                {data.lideranca.positions.map((pos, i) => (
-                  <div key={i} className="flex items-start gap-3 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-blue mt-2 flex-shrink-0" />
-                    <span className="text-navy text-sm">{pos}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
