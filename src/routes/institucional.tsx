@@ -29,16 +29,24 @@ function InstitucionalPage() {
   }, []);
 
 
-  const hero = content.institucional.hero;
-  const banners = hero.banners || [];
+  const hero = content?.institucional.hero;
+  const banners = hero?.banners || [];
   
   useEffect(() => {
     if (banners.length <= 1) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
-    }, hero.interval || 5000);
+    }, hero?.interval || 5000);
     return () => clearInterval(timer);
-  }, [banners.length, hero.interval]);
+  }, [banners.length, hero?.interval]);
+
+  if (!content) {
+    return (
+      <div className="min-h-screen bg-navy flex items-center justify-center">
+        <div className="h-8 w-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const banner = banners[current] || (banners.length > 0 ? banners[0] : null);
 
@@ -60,9 +68,10 @@ function InstitucionalPage() {
     },
   };
 
-  const currentVariant = variants[hero.animation || "fade"];
+  const currentVariant = variants[hero!.animation || "fade"];
 
   const data = content.institucional;
+
 
   if (!content.modules.institucional) {
     return (
