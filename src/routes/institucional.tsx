@@ -321,7 +321,8 @@ function InstitucionalPage() {
       {/* SEÇÃO 07 — LIDERANÇA */}
       <section className="py-16 bg-surface">
         <div className="mx-auto max-w-[1280px] px-6">
-          {data.pensamento.text}
+          <div className="grid lg:grid-cols-[auto_1fr] gap-8 items-center">
+
             <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
               <div className="relative max-w-sm">
                 <img
