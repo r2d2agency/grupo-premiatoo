@@ -228,7 +228,7 @@ function InstitucionalPage() {
             <img
               src={data.hoje.image}
               alt="Hoje"
-              className="w-full h-full min-h-[360px] object-cover"
+              className="w-full h-full min-h-[400px] max-h-[520px] object-cover"
             />
           </div>
         </div>
