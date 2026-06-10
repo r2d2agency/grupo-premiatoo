@@ -27,10 +27,18 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [content, setContent] = useState<SiteContent | null>(null);
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
+
+  if (!content) {
+    return (
+      <div className="min-h-screen bg-navy flex items-center justify-center">
+        <div className="h-8 w-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background" style={{ 
