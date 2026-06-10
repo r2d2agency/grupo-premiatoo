@@ -301,9 +301,6 @@ function InstitucionalPage() {
 
       {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
       <section className="py-16 bg-white overflow-hidden">
-        <div className="mx-auto max-w-[1280px] px-6 text-center">
-      {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
-      <section className="py-16 bg-white overflow-hidden">
         <div className="mx-auto max-w-[1280px] px-6">
           <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
             <div className="space-y-5">
