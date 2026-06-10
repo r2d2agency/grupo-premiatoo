@@ -179,12 +179,12 @@ function InstitucionalPage() {
       {/* SEÇÃO 02 — NOSSA HISTÓRIA */}
       <section className="py-16 bg-white overflow-hidden" id="historia">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000 max-w-md">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
               <img
                 src={data.historia.image}
                 alt="História"
-                className="w-full aspect-[4/3] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
+                className="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
               />
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F5F7FA] -z-10" />
             </div>
