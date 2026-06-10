@@ -314,8 +314,10 @@ function InstitucionalPage() {
             </div>
 
             <div className="relative py-8">
-              <div className="bg-navy text-white px-6 py-3 inline-block rounded-sm mb-12 relative z-10 min-w-[200px] text-center shadow-xl mx-auto block w-fit">
-                <span className="font-semibold tracking-[0.2em] uppercase text-[11px]">{data.organizacional.items[0].label}</span>
+              <div className="flex justify-center mb-12">
+                <div className="bg-navy text-white px-6 py-3 rounded-sm relative z-10 min-w-[200px] text-center shadow-xl">
+                  <span className="font-semibold tracking-[0.2em] uppercase text-[11px]">{data.organizacional.items[0].label}</span>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3 relative">
