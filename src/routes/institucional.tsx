@@ -302,31 +302,38 @@ function InstitucionalPage() {
       {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
       <section className="py-16 bg-white overflow-hidden">
         <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">ORGANIZAÇÃO</div>
-          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight">Estrutura Organizacional</h2>
-
-          <div className="relative max-w-4xl mx-auto py-8">
-            <div className="bg-navy text-white p-6 inline-block rounded-sm mb-16 relative z-10 min-w-[260px] shadow-xl">
-              <span className="font-bold tracking-[0.3em] uppercase text-[9px] block mb-2 text-white/50">Liderança</span>
-              <span className="font-display text-xl">{data.organizacional.items[0].label}</span>
+      {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
+      <section className="py-16 bg-white overflow-hidden">
+        <div className="mx-auto max-w-[1280px] px-6">
+          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
+            <div className="space-y-5">
+              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
+                Uma estrutura construída sobre especialização.
+              </h2>
+              <div className="w-12 h-px bg-brand-blue" />
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {data.organizacional.text}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-              <div className="hidden md:block absolute top-[-64px] left-1/2 w-px h-16 bg-brand-blue/20" />
-              <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-brand-blue/20" />
+            <div className="relative py-8">
+              <div className="bg-navy text-white px-6 py-3 inline-block rounded-sm mb-12 relative z-10 min-w-[200px] text-center shadow-xl mx-auto block w-fit">
+                <span className="font-semibold tracking-[0.2em] uppercase text-[11px]">{data.organizacional.items[0].label}</span>
+              </div>
 
-              {data.organizacional.items[0].children?.map((child, i) => (
-                <div key={i} className="bg-surface p-5 border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group relative">
-                  <div className="hidden md:block absolute top-[-24px] left-1/2 w-px h-6 bg-brand-blue/20" />
-                  <span className="text-xs font-semibold tracking-wider text-navy group-hover:text-brand-blue transition-colors uppercase">{child.label}</span>
-                </div>
-              ))}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 relative">
+                <div className="hidden md:block absolute top-[-48px] left-1/2 w-px h-12 bg-navy/20" />
+                <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-navy/20" />
+
+                {data.organizacional.items[0].children?.map((child, i) => (
+                  <div key={i} className="bg-white border border-navy/20 px-3 py-3 text-center hover:border-brand-blue transition-all duration-500 group relative">
+                    <div className="hidden md:block absolute top-[-12px] left-1/2 w-px h-3 bg-navy/20" />
+                    <span className="text-[10px] font-semibold tracking-wider text-navy group-hover:text-brand-blue transition-colors uppercase">{child.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-
-          <p className="mt-12 text-muted-foreground max-w-2xl mx-auto text-sm font-light leading-relaxed italic">
-            "{data.organizacional.text}"
-          </p>
         </div>
       </section>
 
