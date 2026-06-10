@@ -187,22 +187,21 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 02 — NOSSA HISTÓRIA */}
-      <section className="py-16 bg-white overflow-hidden" id="historia">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
-              <img
-                src={data.historia.image}
-                alt="História"
-                className="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
-              />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F5F7FA] -z-10" />
-            </div>
-            <div className="space-y-4 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">NOSSA HISTÓRIA</div>
+      <section className="bg-white overflow-hidden" id="historia">
+        <div className="grid lg:grid-cols-2 items-stretch">
+          <div className="relative animate-in fade-in slide-in-from-left-12 duration-1000">
+            <img
+              src={data.historia.image}
+              alt="História"
+              className="w-full h-full min-h-[400px] object-cover"
+            />
+          </div>
+          <div className="flex items-center px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-right-12 duration-1000">
+            <div className="max-w-xl space-y-5">
               <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.historia.title}
               </h2>
+              <div className="w-12 h-px bg-brand-blue" />
               <div className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
                 {data.historia.text}
               </div>
@@ -212,25 +211,25 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 03 — O PREMIATTO HOJE */}
-      <section className="py-16 bg-surface">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 space-y-5 animate-in fade-in slide-in-from-left-12 duration-1000">
-              <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold">O PREMIATTO HOJE</div>
+      <section className="bg-surface overflow-hidden">
+        <div className="grid lg:grid-cols-2 items-stretch">
+          <div className="order-2 lg:order-1 flex items-center justify-end px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-left-12 duration-1000">
+            <div className="max-w-xl space-y-5">
               <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
                 {data.hoje.title}
               </h2>
+              <div className="w-12 h-px bg-brand-blue" />
               <p className="text-muted-foreground leading-relaxed text-sm">
                 {data.hoje.text}
               </p>
             </div>
-            <div className="order-1 lg:order-2 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <img
-                src={data.hoje.image}
-                alt="Hoje"
-                className="w-full aspect-video object-cover shadow-xl"
-              />
-            </div>
+          </div>
+          <div className="order-1 lg:order-2 animate-in fade-in slide-in-from-right-12 duration-1000">
+            <img
+              src={data.hoje.image}
+              alt="Hoje"
+              className="w-full h-full min-h-[360px] object-cover"
+            />
           </div>
         </div>
       </section>
@@ -285,84 +284,83 @@ function InstitucionalPage() {
             alt="Pensamento"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-navy/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/30" />
         </div>
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center text-white">
-          <h2 className="font-display text-3xl lg:text-4xl mb-6 max-w-3xl mx-auto leading-tight">
-            {data.pensamento.title}
-          </h2>
-          <p className="text-sm text-white/70 max-w-2xl mx-auto leading-relaxed">
-            {data.pensamento.text}
-          </p>
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-white">
+          <div className="max-w-xl space-y-5">
+            <h2 className="font-display text-3xl lg:text-4xl leading-tight">
+              {data.pensamento.title}
+            </h2>
+            <div className="w-12 h-px bg-brand-blue" />
+            <p className="text-sm text-white/70 leading-relaxed">
+              {data.pensamento.text}
+            </p>
+          </div>
         </div>
       </section>
 
       {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
       <section className="py-16 bg-white overflow-hidden">
-        <div className="mx-auto max-w-[1280px] px-6 text-center">
-          <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">ORGANIZAÇÃO</div>
-          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight">Estrutura Organizacional</h2>
-
-          <div className="relative max-w-4xl mx-auto py-8">
-            <div className="bg-navy text-white p-6 inline-block rounded-sm mb-16 relative z-10 min-w-[260px] shadow-xl">
-              <span className="font-bold tracking-[0.3em] uppercase text-[9px] block mb-2 text-white/50">Liderança</span>
-              <span className="font-display text-xl">{data.organizacional.items[0].label}</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-              <div className="hidden md:block absolute top-[-64px] left-1/2 w-px h-16 bg-brand-blue/20" />
-              <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-brand-blue/20" />
-
-              {data.organizacional.items[0].children?.map((child, i) => (
-                <div key={i} className="bg-surface p-5 border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group relative">
-                  <div className="hidden md:block absolute top-[-24px] left-1/2 w-px h-6 bg-brand-blue/20" />
-                  <span className="text-xs font-semibold tracking-wider text-navy group-hover:text-brand-blue transition-colors uppercase">{child.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <p className="mt-12 text-muted-foreground max-w-2xl mx-auto text-sm font-light leading-relaxed italic">
-            "{data.organizacional.text}"
-          </p>
-        </div>
-      </section>
-
-      {/* SEÇÃO 07 — LIDERANÇA */}
-      <section className="py-16 bg-surface">
         <div className="mx-auto max-w-[1280px] px-6">
-          <div className="grid lg:grid-cols-[auto_1fr] gap-8 items-center">
-
-            <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
-              <div className="relative max-w-sm">
-                <img
-                  src={data.lideranca.photo}
-                  alt={data.lideranca.name}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl rounded-2xl"
-                />
-                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 rounded-2xl -z-10" />
-              </div>
-            </div>
-            <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
-              <div>
-                <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">LIDERANÇA</div>
-                <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
-                <p className="text-brand-blue font-bold tracking-[0.3em] uppercase text-[11px]">{data.lideranca.role}</p>
-              </div>
-
-              <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
-                {data.lideranca.bio}
+          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
+            <div className="space-y-5">
+              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
+                Uma estrutura construída sobre especialização.
+              </h2>
+              <div className="w-12 h-px bg-brand-blue" />
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {data.organizacional.text}
               </p>
+            </div>
 
-              <div className="space-y-3 pt-6 border-t border-navy/10">
-                {data.lideranca.positions.map((pos, i) => (
-                  <div key={i} className="flex items-start gap-3 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-blue mt-2 flex-shrink-0" />
-                    <span className="text-navy text-sm">{pos}</span>
+            <div className="relative py-8">
+              <div className="bg-navy text-white px-6 py-3 inline-block rounded-sm mb-12 relative z-10 min-w-[200px] text-center shadow-xl mx-auto block w-fit">
+                <span className="font-semibold tracking-[0.2em] uppercase text-[11px]">{data.organizacional.items[0].label}</span>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 relative">
+                <div className="hidden md:block absolute top-[-48px] left-1/2 w-px h-12 bg-navy/20" />
+                <div className="hidden md:block absolute top-0 left-[10%] right-[10%] h-px bg-navy/20" />
+
+                {data.organizacional.items[0].children?.map((child, i) => (
+                  <div key={i} className="bg-white border border-navy/20 px-3 py-3 text-center hover:border-brand-blue transition-all duration-500 group relative">
+                    <div className="hidden md:block absolute top-[-12px] left-1/2 w-px h-3 bg-navy/20" />
+                    <span className="text-[10px] font-semibold tracking-wider text-navy group-hover:text-brand-blue transition-colors uppercase">{child.label}</span>
                   </div>
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO 07 — LIDERANÇA */}
+      <section className="bg-surface overflow-hidden">
+        <div className="grid lg:grid-cols-[1fr_1fr_1fr] items-stretch">
+          <div className="animate-in fade-in slide-in-from-left-12 duration-1000">
+            <img
+              src={data.lideranca.photo}
+              alt={data.lideranca.name}
+              className="w-full h-full min-h-[400px] object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center px-6 lg:px-12 py-12 space-y-5 animate-in fade-in duration-1000">
+            <div>
+              <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
+              <p className="text-brand-blue font-semibold tracking-wider text-[12px]">{data.lideranca.role}</p>
+            </div>
+            <div className="w-12 h-px bg-brand-blue" />
+            <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
+              {data.lideranca.bio}
+            </p>
+          </div>
+          <div className="flex flex-col justify-center px-6 lg:px-12 py-12 space-y-5 animate-in fade-in slide-in-from-right-12 duration-1000">
+            {data.lideranca.positions.map((pos, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className="w-6 h-px bg-brand-blue mt-2 flex-shrink-0" />
+                <span className="text-navy text-[11px] font-semibold tracking-[0.15em] uppercase leading-relaxed">{pos}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -403,25 +401,27 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 10 — CTA FINAL */}
-      <section className="relative py-16 overflow-hidden">
+      <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={data.ctaFinal.image}
             alt="CTA Background"
-            className="w-full h-full object-cover grayscale opacity-30"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-surface/95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/95 to-surface/40" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-display text-2xl lg:text-3xl text-navy mb-4 leading-tight">{data.ctaFinal.title}</h2>
-          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-6 leading-relaxed">
-            {data.ctaFinal.text}
-          </p>
-          <button className="bg-brand-blue text-brand-blue-foreground px-8 py-3 rounded-sm font-semibold tracking-wider uppercase text-[12px] hover:opacity-90 transition-all duration-500 shadow-xl group">
-            {data.ctaFinal.ctaLabel}
-            <ArrowRight className="inline-block ml-3 w-4 h-4 transition-transform group-hover:translate-x-2" />
-          </button>
+        <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+          <div className="max-w-xl space-y-5">
+            <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">{data.ctaFinal.title}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {data.ctaFinal.text}
+            </p>
+            <button className="bg-brand-blue text-brand-blue-foreground px-7 py-3 rounded-sm font-semibold tracking-wider uppercase text-[11px] hover:opacity-90 transition-all duration-500 shadow-xl group inline-flex items-center gap-3">
+              {data.ctaFinal.ctaLabel}
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
         </div>
       </section>
 
