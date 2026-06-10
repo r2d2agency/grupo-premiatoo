@@ -338,9 +338,9 @@ function InstitucionalPage() {
                 <img
                   src={data.lideranca.photo}
                   alt={data.lideranca.name}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
+                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl rounded-2xl"
                 />
-                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 -z-10" />
+                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 rounded-2xl -z-10" />
               </div>
             </div>
             <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
