@@ -21,23 +21,32 @@ export const Route = createFileRoute("/institucional")({
 });
 
 function InstitucionalPage() {
-  const [content, setContent] = useState<SiteContent>(defaultContent);
+  const [content, setContent] = useState<SiteContent | null>(null);
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     fetchContent().then(setContent);
   }, []);
 
-  const hero = content.institucional.hero;
-  const banners = hero.banners || [];
+
+  const hero = content?.institucional.hero;
+  const banners = hero?.banners || [];
   
   useEffect(() => {
     if (banners.length <= 1) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
-    }, hero.interval || 5000);
+    }, hero?.interval || 5000);
     return () => clearInterval(timer);
-  }, [banners.length, hero.interval]);
+  }, [banners.length, hero?.interval]);
+
+  if (!content) {
+    return (
+      <div className="min-h-screen bg-navy flex items-center justify-center">
+        <div className="h-8 w-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const banner = banners[current] || (banners.length > 0 ? banners[0] : null);
 
@@ -59,9 +68,10 @@ function InstitucionalPage() {
     },
   };
 
-  const currentVariant = variants[hero.animation || "fade"];
+  const currentVariant = variants[hero!.animation || "fade"];
 
   const data = content.institucional;
+
 
   if (!content.modules.institucional) {
     return (
@@ -328,9 +338,9 @@ function InstitucionalPage() {
                 <img
                   src={data.lideranca.photo}
                   alt={data.lideranca.name}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl"
+                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 shadow-xl rounded-2xl"
                 />
-                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 -z-10" />
+                <div className="absolute -bottom-6 -left-6 w-28 h-28 border border-brand-blue/20 rounded-2xl -z-10" />
               </div>
             </div>
             <div className="space-y-6 animate-in fade-in slide-in-from-right-12 duration-1000">
