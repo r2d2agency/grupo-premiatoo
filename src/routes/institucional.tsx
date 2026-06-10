@@ -372,14 +372,14 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 09 — MANIFESTO */}
-      <section className="py-24 bg-navy-deep relative overflow-hidden">
+      <section className="py-16 bg-navy-deep relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none flex items-center justify-center">
-           <Logo src={content.branding.logoUrl} height={800} />
+           <Logo src={content.branding.logoUrl} height={500} />
         </div>
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <div className="max-w-4xl mx-auto">
-            <div className="font-display text-2xl md:text-3xl lg:text-4xl text-white/90 leading-[1.4] space-y-6 italic font-light">
+          <div className="max-w-3xl mx-auto">
+            <div className="font-display text-lg md:text-xl lg:text-2xl text-white/90 leading-[1.5] space-y-4 italic font-light">
               {data.manifesto.text.split('. ').map((sentence, i) => (
                 <p key={i} className="animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ animationDelay: `${i * 400}ms` }}>
                   {sentence}{i < data.manifesto.text.split('. ').length - 1 ? '.' : ''}
@@ -391,7 +391,7 @@ function InstitucionalPage() {
       </section>
 
       {/* SEÇÃO 10 — CTA FINAL */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={data.ctaFinal.image}
@@ -402,11 +402,11 @@ function InstitucionalPage() {
         </div>
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-6 leading-tight">{data.ctaFinal.title}</h2>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+          <h2 className="font-display text-2xl lg:text-3xl text-navy mb-4 leading-tight">{data.ctaFinal.title}</h2>
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-6 leading-relaxed">
             {data.ctaFinal.text}
           </p>
-          <button className="bg-brand-blue text-brand-blue-foreground px-10 py-4 rounded-sm font-semibold tracking-wider uppercase text-[12px] hover:opacity-90 transition-all duration-500 shadow-2xl group">
+          <button className="bg-brand-blue text-brand-blue-foreground px-8 py-3 rounded-sm font-semibold tracking-wider uppercase text-[12px] hover:opacity-90 transition-all duration-500 shadow-xl group">
             {data.ctaFinal.ctaLabel}
             <ArrowRight className="inline-block ml-3 w-4 h-4 transition-transform group-hover:translate-x-2" />
           </button>
