@@ -136,7 +136,7 @@ export function AdminSidebar() {
 
       <div className="p-4 border-t border-white/10 space-y-1 bg-navy/80 backdrop-blur-sm">
         <div className="px-3 py-2 mb-2 text-[10px] uppercase tracking-widest text-white/40">
-          Desenvolvido por Thiago Nicodemos
+          Desenvolvido por Thiago Nicodemos - R2D2
         </div>
         <Link 
           to="/" 
