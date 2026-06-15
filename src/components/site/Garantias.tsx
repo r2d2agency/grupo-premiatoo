@@ -28,12 +28,10 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
     slidesToScroll: columnsCount,
   });
 
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const onSelect = useCallback((emblaApi: any) => {
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
+  const onSelect = useCallback((api: any) => {
+    setSelectedIndex(api.selectedScrollSnap());
   }, []);
 
   useEffect(() => {
@@ -43,8 +41,20 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onSelect]);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const canScrollPrev = selectedIndex > 0;
+  const canScrollNext = selectedIndex + columnsCount < items.length;
+
+  const scrollPrev = useCallback(() => {
+    if (!emblaApi) return;
+    const target = Math.max(0, selectedIndex - columnsCount);
+    emblaApi.scrollTo(target);
+  }, [emblaApi, selectedIndex, columnsCount]);
+
+  const scrollNext = useCallback(() => {
+    if (!emblaApi) return;
+    const target = Math.min(items.length - 1, selectedIndex + columnsCount);
+    emblaApi.scrollTo(target);
+  }, [emblaApi, selectedIndex, columnsCount, items.length]);
 
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
