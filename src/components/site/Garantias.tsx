@@ -25,12 +25,7 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: false,
-    slidesToScroll: 1,
-    breakpoints: {
-      "(min-width: 768px)": { slidesToScroll: 2 },
-      "(min-width: 1024px)": { slidesToScroll: Math.max(1, columnsCount - 1) },
-      "(min-width: 1280px)": { slidesToScroll: columnsCount },
-    },
+    slidesToScroll: columnsCount,
   });
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
