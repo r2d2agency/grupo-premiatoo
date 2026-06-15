@@ -47,12 +47,15 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const canScrollNext = scrollPosition + columnsCount < items.length;
 
   const scrollPrev = useCallback(() => {
-    setScrollPosition((prev) => Math.max(0, prev - columnsCount));
-  }, [columnsCount]);
+    setScrollPosition((prev) => Math.max(0, prev - scrollStep));
+  }, [scrollStep]);
 
   const scrollNext = useCallback(() => {
-    setScrollPosition((prev) => prev + columnsCount);
-  }, [columnsCount]);
+    setScrollPosition((prev) => {
+      const max = Math.max(0, items.length - columnsCount);
+      return Math.min(max, prev + scrollStep);
+    });
+  }, [scrollStep, columnsCount, items.length]);
 
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
