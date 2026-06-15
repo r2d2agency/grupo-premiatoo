@@ -30,12 +30,16 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
       if (!trackRef.current) return;
       const firstCard = trackRef.current.firstElementChild as HTMLElement | null;
       if (firstCard) {
-        setCardWidth(firstCard.offsetWidth + 24); // card + gap
+        const gap = 24;
+        const style = window.getComputedStyle(trackRef.current);
+        const gapValue = parseFloat(style.gap) || gap;
+        setCardWidth(firstCard.getBoundingClientRect().width + gapValue);
       }
     };
+    const ro = new ResizeObserver(updateWidth);
+    if (trackRef.current) ro.observe(trackRef.current);
     updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    return () => ro.disconnect();
   }, []);
 
   const canScrollPrev = scrollPosition > 0;
