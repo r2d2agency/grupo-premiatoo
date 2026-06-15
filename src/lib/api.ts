@@ -421,7 +421,7 @@ export const defaultContent: SiteContent = {
     { value: "Atuação", label: "em todo o território nacional" },
   ],
   garantias: [
-    { id: "1", title: "Garantia Judicial", description: "Substituição de depósitos judiciais e garantia de execuções fiscais.", link: "/garantias/1", icon: "scale" },
+    { id: "1", title: "Garantia Judicial", description: "Substituição de depósitos judiciais e garantia de execuções fiscais.", link: "/garantias/1", icon: "scale", columns: 5 },
     { id: "2", title: "Garantia Contratual", description: "Assegura o cumprimento de obrigações em contratos públicos ou privados.", link: "/garantias/2", icon: "file" },
     { id: "3", title: "Garantia para Licitações", description: "Garante a assinatura do contrato e a manutenção da proposta no certame.", link: "/garantias/3", icon: "gavel" },
     { id: "4", title: "Garantia Aduaneira", description: "Garante o pagamento de tributos em operações de importação e exportação.", link: "/garantias/4", icon: "globe" },
