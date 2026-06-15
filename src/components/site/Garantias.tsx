@@ -88,8 +88,8 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
           </div>
         </div>
 
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex gap-6">
+        <div className="overflow-x-auto scrollbar-hide" ref={containerRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          <div className="flex gap-6">
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
               return (
