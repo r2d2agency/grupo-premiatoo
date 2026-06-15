@@ -1,8 +1,7 @@
 import { Scale, FileText, Gavel, Globe, Building, FileCheck2, ArrowRight, Shield, Briefcase, Landmark, Handshake, ChevronLeft, ChevronRight } from "lucide-react";
 import type { SiteContent } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -22,34 +21,37 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
   const layoutStyle = items[0]?.layout || "card";
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-    slidesToScroll: 1,
-    breakpoints: {
-      "(min-width: 768px)": { slidesToScroll: 2 },
-      "(min-width: 1024px)": { slidesToScroll: Math.max(1, columnsCount - 1) },
-      "(min-width: 1280px)": { slidesToScroll: columnsCount },
-    },
-  });
-
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
-
-  const onSelect = useCallback((emblaApi: any) => {
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
-  }, []);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
-    if (!emblaApi) return;
-    onSelect(emblaApi);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-  }, [emblaApi, onSelect]);
+    const updateWidth = () => {
+      if (!trackRef.current) return;
+      const firstCard = trackRef.current.firstElementChild as HTMLElement | null;
+      if (firstCard) {
+        const gap = 24;
+        const style = window.getComputedStyle(trackRef.current);
+        const gapValue = parseFloat(style.gap) || gap;
+        setCardWidth(firstCard.getBoundingClientRect().width + gapValue);
+      }
+    };
+    const ro = new ResizeObserver(updateWidth);
+    if (trackRef.current) ro.observe(trackRef.current);
+    updateWidth();
+    return () => ro.disconnect();
+  }, []);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const canScrollPrev = scrollPosition > 0;
+  const canScrollNext = scrollPosition + columnsCount < items.length;
+
+  const scrollPrev = useCallback(() => {
+    setScrollPosition((prev) => Math.max(0, prev - columnsCount));
+  }, [columnsCount]);
+
+  const scrollNext = useCallback(() => {
+    setScrollPosition((prev) => prev + columnsCount);
+  }, [columnsCount]);
 
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
@@ -86,8 +88,12 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
           </div>
         </div>
 
-        <div className="embla" ref={emblaRef}>
-          <div className="embla__container flex gap-6">
+        <div className="overflow-hidden">
+          <div 
+            ref={trackRef}
+            className="flex gap-6 transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${scrollPosition * cardWidth}px)` }}
+          >
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
               return (
