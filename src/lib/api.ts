@@ -97,6 +97,7 @@ export type SiteContent = {
     link?: string; 
     icon: string;
     columns?: number;
+    scrollStep?: number;
     layout?: "card" | "minimal";
   }[];
   capital: {
