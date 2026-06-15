@@ -19,6 +19,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
+  const scrollStep = items[0]?.scrollStep || 1;
   const layoutStyle = items[0]?.layout || "card";
 
   const trackRef = useRef<HTMLDivElement>(null);
