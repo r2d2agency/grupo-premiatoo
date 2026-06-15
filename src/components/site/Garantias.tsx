@@ -1,8 +1,7 @@
 import { Scale, FileText, Gavel, Globe, Building, FileCheck2, ArrowRight, Shield, Briefcase, Landmark, Handshake, ChevronLeft, ChevronRight } from "lucide-react";
 import type { SiteContent } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
