@@ -69,8 +69,11 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
           </div>
         </div>
 
-        <div className="overflow-x-auto scrollbar-hide" ref={containerRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-          <div className="flex gap-6">
+        <div className="overflow-hidden">
+          <div 
+            className="flex gap-6 transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${scrollPosition * (100 / columnsCount + (scrollPosition > 0 ? 1.5 : 0))}%)` }}
+          >
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
               return (
