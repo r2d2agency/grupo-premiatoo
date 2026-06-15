@@ -21,39 +21,37 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
   const layoutStyle = items[0]?.layout || "card";
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-    slidesToScroll: columnsCount,
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const getCardWidth = useCallback(() => {
+    if (!containerRef.current) return 0;
+    const containerWidth = containerRef.current.offsetWidth;
+    const gap = 24; // gap-6 = 1.5rem = 24px
+    const totalGap = (columnsCount - 1) * gap;
+    return (containerWidth - totalGap) / columnsCount;
+  }, [columnsCount]);
 
-  const onSelect = useCallback((api: any) => {
-    setSelectedIndex(api.selectedScrollSnap());
-  }, []);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect(emblaApi);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-  }, [emblaApi, onSelect]);
-
-  const canScrollPrev = selectedIndex > 0;
-  const canScrollNext = selectedIndex + columnsCount < items.length;
+  const canScrollPrev = scrollPosition > 0;
+  const canScrollNext = scrollPosition + columnsCount < items.length;
 
   const scrollPrev = useCallback(() => {
-    if (!emblaApi) return;
-    const target = Math.max(0, selectedIndex - columnsCount);
-    emblaApi.scrollTo(target);
-  }, [emblaApi, selectedIndex, columnsCount]);
+    if (!containerRef.current) return;
+    const cardWidth = getCardWidth();
+    const gap = 24;
+    const scrollAmount = columnsCount * (cardWidth + gap);
+    containerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    setScrollPosition((prev) => Math.max(0, prev - columnsCount));
+  }, [columnsCount, getCardWidth]);
 
   const scrollNext = useCallback(() => {
-    if (!emblaApi) return;
-    const target = Math.min(items.length - 1, selectedIndex + columnsCount);
-    emblaApi.scrollTo(target);
-  }, [emblaApi, selectedIndex, columnsCount, items.length]);
+    if (!containerRef.current) return;
+    const cardWidth = getCardWidth();
+    const gap = 24;
+    const scrollAmount = columnsCount * (cardWidth + gap);
+    containerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    setScrollPosition((prev) => Math.min(items.length - columnsCount, prev + columnsCount));
+  }, [columnsCount, getCardWidth, items.length]);
 
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
