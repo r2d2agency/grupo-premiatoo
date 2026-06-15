@@ -19,6 +19,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
+  const scrollStep = items[0]?.scrollStep || 1;
   const layoutStyle = items[0]?.layout || "card";
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -46,12 +47,15 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const canScrollNext = scrollPosition + columnsCount < items.length;
 
   const scrollPrev = useCallback(() => {
-    setScrollPosition((prev) => Math.max(0, prev - columnsCount));
-  }, [columnsCount]);
+    setScrollPosition((prev) => Math.max(0, prev - scrollStep));
+  }, [scrollStep]);
 
   const scrollNext = useCallback(() => {
-    setScrollPosition((prev) => prev + columnsCount);
-  }, [columnsCount]);
+    setScrollPosition((prev) => {
+      const max = Math.max(0, items.length - columnsCount);
+      return Math.min(max, prev + scrollStep);
+    });
+  }, [scrollStep, columnsCount, items.length]);
 
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
