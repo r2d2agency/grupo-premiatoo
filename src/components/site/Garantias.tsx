@@ -86,8 +86,9 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
 
         <div className="overflow-hidden">
           <div 
+            ref={trackRef}
             className="flex gap-6 transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${scrollPosition * (100 / columnsCount + (scrollPosition > 0 ? 1.5 : 0))}%)` }}
+            style={{ transform: `translateX(-${scrollPosition * cardWidth}px)` }}
           >
             {items.map((g, idx) => {
               const Icon = iconMap[g.icon] || FileText;
