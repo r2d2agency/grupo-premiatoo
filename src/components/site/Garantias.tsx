@@ -21,7 +21,22 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
   const layoutStyle = items[0]?.layout || "card";
 
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [cardWidth, setCardWidth] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (!trackRef.current) return;
+      const firstCard = trackRef.current.firstElementChild as HTMLElement | null;
+      if (firstCard) {
+        setCardWidth(firstCard.offsetWidth + 24); // card + gap
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   const canScrollPrev = scrollPosition > 0;
   const canScrollNext = scrollPosition + columnsCount < items.length;
