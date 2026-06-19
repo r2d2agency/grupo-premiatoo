@@ -103,7 +103,7 @@ function AdminGarantiasPage() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 p-4 bg-muted/30 rounded-lg">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-muted/30 rounded-lg">
                 <div className="space-y-2">
                   <Label className="text-[11px] uppercase tracking-wider">Itens por Linha (Desktop)</Label>
                   <select
@@ -131,6 +131,36 @@ function AdminGarantiasPage() {
                   >
                     <option value="card">Card Moderno (Grande)</option>
                     <option value="minimal">Minimalista (Compacto)</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[11px] uppercase tracking-wider">Alinhamento do Cabeçalho (Home)</Label>
+                  <select
+                    value={content.garantias[0]?.headerAlign || "left"}
+                    onChange={(e) => {
+                      const next = content.garantias.map(item => ({ ...item, headerAlign: e.target.value as any }));
+                      update("garantias", next);
+                    }}
+                    className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                  >
+                    <option value="left">Esquerda</option>
+                    <option value="center">Centro</option>
+                    <option value="right">Direita</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-[11px] uppercase tracking-wider">Alinhamento dos Cards</Label>
+                  <select
+                    value={content.garantias[0]?.cardAlign || "left"}
+                    onChange={(e) => {
+                      const next = content.garantias.map(item => ({ ...item, cardAlign: e.target.value as any }));
+                      update("garantias", next);
+                    }}
+                    className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                  >
+                    <option value="left">Esquerda</option>
+                    <option value="center">Centro</option>
+                    <option value="right">Direita</option>
                   </select>
                 </div>
               </div>
