@@ -88,12 +88,15 @@ function GarantiasIndex() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredGarantias.map((item) => {
                 const Icon = iconMap[item.icon] || Shield;
+                const cardAlign = content.garantias[0]?.cardAlign || "left";
+                const alignWrap = cardAlign === "center" ? "items-center text-center" : cardAlign === "right" ? "items-end text-right" : "items-start text-left";
+                const footerAlign = cardAlign === "center" ? "justify-center" : cardAlign === "right" ? "justify-end" : "justify-between";
                 return (
                   <Link 
                     key={item.id}
                     to="/garantias/$garantiaId"
                     params={{ garantiaId: item.id || item.title.toLowerCase().replace(/\s+/g, '-') }}
-                    className="group bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex flex-col h-full"
+                    className={`group bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex flex-col h-full ${alignWrap}`}
                   >
                     <div className="w-16 h-16 rounded-2xl bg-brand-blue/5 flex items-center justify-center mb-8 group-hover:bg-brand-blue group-hover:text-white transition-all duration-500 border border-brand-blue/10">
                       <Icon className="w-8 h-8" />
@@ -108,7 +111,7 @@ function GarantiasIndex() {
                       </p>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
+                    <div className={`mt-8 pt-6 border-t border-slate-50 flex items-center w-full gap-4 ${footerAlign}`}>
                       <span className="text-[10px] font-bold tracking-widest text-navy/40 uppercase group-hover:text-brand-blue transition-colors">
                         Saber mais
                       </span>

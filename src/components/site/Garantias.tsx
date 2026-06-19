@@ -21,6 +21,11 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
   const scrollStep = items[0]?.scrollStep || 1;
   const layoutStyle = items[0]?.layout || "card";
+  const headerAlign = items[0]?.headerAlign || "left";
+  const cardAlign = items[0]?.cardAlign || "left";
+  const alignClass = cardAlign === "center" ? "text-center items-center" : cardAlign === "right" ? "text-right items-end" : "text-left items-start";
+  const headerWrapClass = headerAlign === "center" ? "justify-center text-center" : headerAlign === "right" ? "justify-end text-right" : "";
+  const headerInnerClass = headerAlign === "center" ? "mx-auto" : headerAlign === "right" ? "ml-auto" : "";
 
   const trackRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(0);
@@ -60,12 +65,12 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
-          <div className="flex-1 min-w-[300px]">
+        <div className={cn("flex flex-wrap items-end gap-6 mb-12", headerWrapClass || "justify-between")}>
+          <div className={cn("flex-1 min-w-[300px]", headerInnerClass)}>
             <div className="text-[11px] tracking-[0.25em] text-brand-blue font-bold mb-4 uppercase">
               NOSSAS SOLUÇÕES EM GARANTIAS
             </div>
-            <h2 className="font-display text-3xl lg:text-4xl text-navy max-w-xl leading-tight">
+            <h2 className={cn("font-display text-3xl lg:text-4xl text-navy max-w-xl leading-tight", headerAlign === "center" && "mx-auto", headerAlign === "right" && "ml-auto")}>
               Proteção e segurança para o seu negócio.
             </h2>
           </div>
@@ -112,8 +117,8 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                   )}
                 >
                   {layoutStyle === "minimal" ? (
-                    <div className="bg-white/50 backdrop-blur-sm rounded-lg p-5 h-full flex flex-col border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group">
-                      <div className="flex items-center gap-3 mb-3">
+                    <div className={cn("bg-white/50 backdrop-blur-sm rounded-lg p-5 h-full flex flex-col border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group", alignClass)}>
+                      <div className={cn("flex items-center gap-3 mb-3", cardAlign === "center" && "justify-center", cardAlign === "right" && "justify-end")}>
                         <div className="w-10 h-10 rounded bg-brand-blue/10 flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
                           <Icon className="h-5 w-5" />
                         </div>
@@ -131,7 +136,7 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                       </Link>
                     </div>
                   ) : (
-                    <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
+                    <div className={cn("bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden", alignClass)}>
                       <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-blue/10 transition-colors duration-500" />
                       
                       <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-navy/5 shadow-sm">
@@ -144,7 +149,7 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                         {g.description || "Solução personalizada de garantia para as necessidades da sua empresa."}
                       </p>
                       
-                      <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
+                      <div className={cn("pt-4 border-t border-navy/5 flex items-center group-hover:border-brand-blue/20 transition-colors w-full", cardAlign === "center" ? "justify-center" : cardAlign === "right" ? "justify-end" : "justify-between")}>
                         <Link
                           to="/garantias/$garantiaId"
                           params={{ garantiaId: g.id || g.title.toLowerCase().replace(/\s+/g, '-') }}
