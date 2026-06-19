@@ -65,12 +65,12 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   return (
     <section className="bg-surface py-20 overflow-hidden" id="garantias">
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
-          <div className="flex-1 min-w-[300px]">
+        <div className={cn("flex flex-wrap items-end gap-6 mb-12", headerWrapClass || "justify-between")}>
+          <div className={cn("flex-1 min-w-[300px]", headerInnerClass)}>
             <div className="text-[11px] tracking-[0.25em] text-brand-blue font-bold mb-4 uppercase">
               NOSSAS SOLUÇÕES EM GARANTIAS
             </div>
-            <h2 className="font-display text-3xl lg:text-4xl text-navy max-w-xl leading-tight">
+            <h2 className={cn("font-display text-3xl lg:text-4xl text-navy max-w-xl leading-tight", headerAlign === "center" && "mx-auto", headerAlign === "right" && "ml-auto")}>
               Proteção e segurança para o seu negócio.
             </h2>
           </div>
