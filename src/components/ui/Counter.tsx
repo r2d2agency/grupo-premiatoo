@@ -6,18 +6,28 @@ export function Counter({ value }: { value: string }) {
   const nodeRef = useRef(null);
   const isInView = useInView(nodeRef, { once: true });
   
-  // Extract number and suffix (e.g., "15+" -> number: 15, suffix: "+")
-  const numericMatch = value.match(/(\d+)/);
-  const suffix = value.replace(/(\d+)/, "");
-  const targetNumber = numericMatch ? parseInt(numericMatch[0], 10) : null;
+  // Extract first number (with optional decimals) plus prefix/suffix.
+  // e.g. "R$ 619,59 mi" -> prefix: "R$ ", number: 619.59, suffix: " mi"
+  const numericMatch = value.match(/(\d+(?:[.,]\d+)?)/);
+  const prefix = numericMatch ? value.slice(0, numericMatch.index!) : "";
+  const suffix = numericMatch ? value.slice(numericMatch.index! + numericMatch[0].length) : "";
+  const rawNumber = numericMatch ? numericMatch[0] : "";
+  const decimalSep = rawNumber.includes(",") ? "," : rawNumber.includes(".") ? "." : "";
+  const decimals = decimalSep ? rawNumber.split(decimalSep)[1].length : 0;
+  const targetNumber = numericMatch ? parseFloat(rawNumber.replace(",", ".")) : null;
+
+  const formatNumber = (n: number) => {
+    const fixed = n.toFixed(decimals);
+    return decimalSep === "," ? fixed.replace(".", ",") : fixed;
+  };
 
   useEffect(() => {
     if (isInView && targetNumber !== null) {
       const controls = animate(0, targetNumber, {
         duration: 2,
         ease: "easeOut",
-        onUpdate(value) {
-          setDisplayValue(Math.round(value).toString());
+        onUpdate(v) {
+          setDisplayValue(formatNumber(v));
         },
       });
       return () => controls.stop();
@@ -28,7 +38,7 @@ export function Counter({ value }: { value: string }) {
 
   return (
     <span ref={nodeRef}>
-      {targetNumber !== null ? `${displayValue}${suffix}` : value}
+      {targetNumber !== null ? `${prefix}${displayValue}${suffix}` : value}
     </span>
   );
 }
