@@ -117,8 +117,8 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                   )}
                 >
                   {layoutStyle === "minimal" ? (
-                    <div className="bg-white/50 backdrop-blur-sm rounded-lg p-5 h-full flex flex-col border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group">
-                      <div className="flex items-center gap-3 mb-3">
+                    <div className={cn("bg-white/50 backdrop-blur-sm rounded-lg p-5 h-full flex flex-col border border-navy/5 hover:border-brand-blue/40 transition-all duration-500 group", alignClass)}>
+                      <div className={cn("flex items-center gap-3 mb-3", cardAlign === "center" && "justify-center", cardAlign === "right" && "justify-end")}>
                         <div className="w-10 h-10 rounded bg-brand-blue/10 flex items-center justify-center group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300">
                           <Icon className="h-5 w-5" />
                         </div>
@@ -136,7 +136,7 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                       </Link>
                     </div>
                   ) : (
-                    <div className="bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden">
+                    <div className={cn("bg-white rounded-lg p-6 h-full flex flex-col border border-navy/5 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-500 group relative overflow-hidden", alignClass)}>
                       <div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-blue/10 transition-colors duration-500" />
                       
                       <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-navy/5 shadow-sm">
@@ -149,7 +149,7 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
                         {g.description || "Solução personalizada de garantia para as necessidades da sua empresa."}
                       </p>
                       
-                      <div className="pt-4 border-t border-navy/5 flex items-center justify-between group-hover:border-brand-blue/20 transition-colors">
+                      <div className={cn("pt-4 border-t border-navy/5 flex items-center group-hover:border-brand-blue/20 transition-colors w-full", cardAlign === "center" ? "justify-center" : cardAlign === "right" ? "justify-end" : "justify-between")}>
                         <Link
                           to="/garantias/$garantiaId"
                           params={{ garantiaId: g.id || g.title.toLowerCase().replace(/\s+/g, '-') }}
