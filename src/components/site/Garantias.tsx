@@ -23,8 +23,8 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const layoutStyle = items[0]?.layout || "card";
   const headerAlign = items[0]?.headerAlign || "left";
   const cardAlign = items[0]?.cardAlign || "left";
-  const alignClass = cardAlign === "center" ? "text-center items-center" : cardAlign === "right" ? "text-right items-end" : "text-left items-start";
-  const headerWrapClass = headerAlign === "center" ? "justify-center text-center" : headerAlign === "right" ? "justify-end text-right" : "";
+  const alignClass = cardAlign === "center" ? "text-center items-center" : cardAlign === "right" ? "text-right items-end" : cardAlign === "justify" ? "text-justify items-stretch" : "text-left items-start";
+  const headerWrapClass = headerAlign === "center" ? "justify-center text-center" : headerAlign === "right" ? "justify-end text-right" : headerAlign === "justify" ? "text-justify" : "";
   const headerInnerClass = headerAlign === "center" ? "mx-auto" : headerAlign === "right" ? "ml-auto" : "";
 
   const trackRef = useRef<HTMLDivElement>(null);

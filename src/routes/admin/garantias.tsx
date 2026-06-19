@@ -146,6 +146,7 @@ function AdminGarantiasPage() {
                     <option value="left">Esquerda</option>
                     <option value="center">Centro</option>
                     <option value="right">Direita</option>
+                    <option value="justify">Justificado</option>
                   </select>
                 </div>
                 <div className="space-y-2">
@@ -161,6 +162,7 @@ function AdminGarantiasPage() {
                     <option value="left">Esquerda</option>
                     <option value="center">Centro</option>
                     <option value="right">Direita</option>
+                    <option value="justify">Justificado</option>
                   </select>
                 </div>
               </div>
