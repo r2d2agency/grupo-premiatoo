@@ -99,6 +99,8 @@ export type SiteContent = {
     columns?: number;
     scrollStep?: number;
     layout?: "card" | "minimal";
+    headerAlign?: "left" | "center" | "right";
+    cardAlign?: "left" | "center" | "right";
   }[];
   capital: {
     title: string;

@@ -21,6 +21,11 @@ export function Garantias({ items }: { items: SiteContent["garantias"] }) {
   const columnsCount = items[0]?.columns || 4;
   const scrollStep = items[0]?.scrollStep || 1;
   const layoutStyle = items[0]?.layout || "card";
+  const headerAlign = items[0]?.headerAlign || "left";
+  const cardAlign = items[0]?.cardAlign || "left";
+  const alignClass = cardAlign === "center" ? "text-center items-center" : cardAlign === "right" ? "text-right items-end" : "text-left items-start";
+  const headerWrapClass = headerAlign === "center" ? "justify-center text-center" : headerAlign === "right" ? "justify-end text-right" : "";
+  const headerInnerClass = headerAlign === "center" ? "mx-auto" : headerAlign === "right" ? "ml-auto" : "";
 
   const trackRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(0);
