@@ -89,7 +89,7 @@ function GarantiasIndex() {
               {filteredGarantias.map((item) => {
                 const Icon = iconMap[item.icon] || Shield;
                 const cardAlign = content.garantias[0]?.cardAlign || "left";
-                const alignWrap = cardAlign === "center" ? "items-center text-center" : cardAlign === "right" ? "items-end text-right" : "items-start text-left";
+                const alignWrap = cardAlign === "center" ? "items-center text-center" : cardAlign === "right" ? "items-end text-right" : cardAlign === "justify" ? "items-stretch text-justify" : "items-start text-left";
                 const footerAlign = cardAlign === "center" ? "justify-center" : cardAlign === "right" ? "justify-end" : "justify-between";
                 return (
                   <Link 
