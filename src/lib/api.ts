@@ -101,6 +101,12 @@ export type SiteContent = {
     layout?: "card" | "minimal";
     headerAlign?: "left" | "center" | "right" | "justify";
     cardAlign?: "left" | "center" | "right" | "justify";
+    detailTitleAlign?: "left" | "center" | "right" | "justify";
+    detailDescriptionAlign?: "left" | "center" | "right" | "justify";
+    detailContentAlign?: "left" | "center" | "right" | "justify";
+    detailTitleSize?: number;
+    detailDescriptionSize?: number;
+    detailContentSize?: number;
   }[];
   capital: {
     title: string;

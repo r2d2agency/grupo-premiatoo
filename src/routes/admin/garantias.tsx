@@ -201,6 +201,52 @@ function AdminGarantiasPage() {
                       <Field label="Conteúdo Detalhado" value={g.content || ""} onChange={(v: string) => {
                         const next = [...content.garantias]; next[i] = { ...g, content: v }; update("garantias", next);
                       }} textarea placeholder="Conteúdo que aparecerá na página interna da garantia..." />
+
+                      <div className="border border-dashed border-navy/20 rounded-sm p-3 bg-muted/20 space-y-3">
+                        <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                          Tipografia — Página de Detalhe
+                        </div>
+                        {[
+                          { key: "Title", label: "Título" },
+                          { key: "Description", label: "Descrição" },
+                          { key: "Content", label: "Conteúdo" },
+                        ].map(({ key, label }) => (
+                          <div key={key} className="grid grid-cols-2 gap-2">
+                            <label className="block">
+                              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label} — Tam. (px)</span>
+                              <input
+                                type="number"
+                                value={(g as any)[`detail${key}Size`] ?? ""}
+                                placeholder="auto"
+                                onChange={(e) => {
+                                  const next = [...content.garantias];
+                                  next[i] = { ...g, [`detail${key}Size`]: e.target.value ? Number(e.target.value) : undefined } as any;
+                                  update("garantias", next);
+                                }}
+                                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{label} — Alinh.</span>
+                              <select
+                                value={(g as any)[`detail${key}Align`] ?? ""}
+                                onChange={(e) => {
+                                  const next = [...content.garantias];
+                                  next[i] = { ...g, [`detail${key}Align`]: e.target.value || undefined } as any;
+                                  update("garantias", next);
+                                }}
+                                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+                              >
+                                <option value="">Padrão</option>
+                                <option value="left">Esquerda</option>
+                                <option value="center">Centro</option>
+                                <option value="right">Direita</option>
+                                <option value="justify">Justificado</option>
+                              </select>
+                            </label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="space-y-4">
