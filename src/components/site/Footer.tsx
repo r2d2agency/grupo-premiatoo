@@ -74,7 +74,12 @@ export function Footer({ content }: { content: SiteContent }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-[12px] text-navy-foreground/80 hover:text-navy-foreground transition-colors"
             >
-              <DynamicIcon name={(footer.intranet.icon || "lock") as any} className="h-4 w-4" />
+              {(() => {
+                const name = (footer.intranet?.icon || "Lock");
+                const pascal = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+                const Ico = (Icons as any)[pascal] || Lock;
+                return <Ico className="h-4 w-4" />;
+              })()}
               <span className="uppercase tracking-wider">{footer.intranet.label || "Intranet"}</span>
             </a>
           </div>
