@@ -59,7 +59,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
               onMouseLeave={() => n.label === "Garantias" && setActiveMegaMenu(null)}
             >
               <Link 
-                to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
+                to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : n.label === "Governança" ? "/governanca" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
                 hash={n.href.startsWith("#") && n.label !== "Institucional" ? n.href.replace("#", "") : undefined}
                 className="hover:opacity-80 flex items-center gap-1 cursor-pointer transition-opacity text-white"
               >
