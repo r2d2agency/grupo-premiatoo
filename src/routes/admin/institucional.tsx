@@ -37,6 +37,92 @@ function Field({ label, value, onChange, textarea, placeholder }: any) {
   );
 }
 
+function TypographyPanel({
+  sectionKey,
+  label,
+  typography,
+  onChange,
+  hideTitle,
+  hideText,
+}: {
+  sectionKey: string;
+  label?: string;
+  typography: Record<string, any> | undefined;
+  onChange: (next: Record<string, any>) => void;
+  hideTitle?: boolean;
+  hideText?: boolean;
+}) {
+  const current = (typography || {})[sectionKey] || {};
+  const update = (patch: any) => {
+    onChange({ ...(typography || {}), [sectionKey]: { ...current, ...patch } });
+  };
+  return (
+    <div className="border border-dashed border-navy/20 rounded-sm p-3 bg-muted/20">
+      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold mb-2">
+        Tipografia{label ? ` — ${label}` : ""}
+      </div>
+      <div className="grid md:grid-cols-4 gap-3">
+        {!hideTitle && (
+          <>
+            <label className="block">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Tam. Título (px)</span>
+              <input
+                type="number"
+                value={current.titleSize ?? ""}
+                placeholder="auto"
+                onChange={(e) => update({ titleSize: e.target.value ? Number(e.target.value) : undefined })}
+                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Alinh. Título</span>
+              <select
+                value={current.titleAlign ?? ""}
+                onChange={(e) => update({ titleAlign: e.target.value || undefined })}
+                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+              >
+                <option value="">Padrão</option>
+                <option value="left">Esquerda</option>
+                <option value="center">Centro</option>
+                <option value="right">Direita</option>
+                <option value="justify">Justificado</option>
+              </select>
+            </label>
+          </>
+        )}
+        {!hideText && (
+          <>
+            <label className="block">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Tam. Texto (px)</span>
+              <input
+                type="number"
+                value={current.textSize ?? ""}
+                placeholder="auto"
+                onChange={(e) => update({ textSize: e.target.value ? Number(e.target.value) : undefined })}
+                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Alinh. Texto</span>
+              <select
+                value={current.textAlign ?? ""}
+                onChange={(e) => update({ textAlign: e.target.value || undefined })}
+                className="mt-1 w-full border border-input rounded-sm px-2 py-1.5 text-sm"
+              >
+                <option value="">Padrão</option>
+                <option value="left">Esquerda</option>
+                <option value="center">Centro</option>
+                <option value="right">Direita</option>
+                <option value="justify">Justificado</option>
+              </select>
+            </label>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function AdminInstitucionalPage() {
   const navigate = useNavigate();
   const [content, setContent] = useState<SiteContent>(defaultContent);
