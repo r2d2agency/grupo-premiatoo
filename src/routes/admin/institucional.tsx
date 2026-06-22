@@ -217,6 +217,46 @@ function AdminInstitucionalPage() {
           </CardContent>
         </Card>
 
+        {/* SEÇÃO 04 — O QUE NOS ORIENTA */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-navy flex items-center gap-2">
+              <Compass className="w-5 h-5 text-gold" />
+              Seção 04 — O que nos orienta
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <Field label="Título da Seção" value={inst.orientacao.title} onChange={(v:any) => updateInst("orientacao", {...inst.orientacao, title:v})} />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <Field label="Título — Propósito" value={inst.orientacao.proposito.title} onChange={(v:any) => updateInst("orientacao", {...inst.orientacao, proposito: {...inst.orientacao.proposito, title:v}})} />
+                <Field label="Texto — Propósito" value={inst.orientacao.proposito.text} onChange={(v:any) => updateInst("orientacao", {...inst.orientacao, proposito: {...inst.orientacao.proposito, text:v}})} textarea />
+              </div>
+              <div className="space-y-4">
+                <Field label="Título — Visão" value={inst.orientacao.visao.title} onChange={(v:any) => updateInst("orientacao", {...inst.orientacao, visao: {...inst.orientacao.visao, title:v}})} />
+                <Field label="Texto — Visão" value={inst.orientacao.visao.text} onChange={(v:any) => updateInst("orientacao", {...inst.orientacao, visao: {...inst.orientacao.visao, text:v}})} textarea />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Título — Princípios</Label>
+              <input
+                value={inst.orientacao.principios.title}
+                onChange={(e) => updateInst("orientacao", {...inst.orientacao, principios: {...inst.orientacao.principios, title: e.target.value}})}
+                className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Princípios (um por linha)</Label>
+              <textarea
+                value={inst.orientacao.principios.items.join('\n')}
+                onChange={(e) => updateInst("orientacao", {...inst.orientacao, principios: {...inst.orientacao.principios, items: e.target.value.split('\n')}})}
+                rows={6}
+                className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* LIDERANÇA */}
         <Card>
           <CardHeader>
