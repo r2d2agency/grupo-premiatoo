@@ -82,21 +82,55 @@ function GovernancaPage() {
       </section>
 
       {/* PROCESSO */}
-      <section className="bg-background py-20">
-        <div className="mx-auto max-w-[1280px] px-6">
-          <div className="text-center text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-12">
+      <section className="bg-background py-24 relative overflow-hidden">
+        <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-brand-blue/20 to-transparent hidden lg:block" />
+        <div className="mx-auto max-w-[1280px] px-6 relative">
+          <div className="text-center text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">
             {g.processo.badge}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-start">
+          <div className="h-px w-16 bg-gold mx-auto mb-14" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-10 items-stretch">
             {g.processo.steps.map((s, i) => (
-              <div key={i} className={`relative ${alignCls(g.processo.itemAlign)}`}>
-                <div className="text-brand-blue font-display mb-4" style={sz(28)}>{s.number}</div>
-                <h3 className="font-display text-navy mb-3" style={sz(g.processo.titleSize, 16)}>{s.title}</h3>
-                <p className="text-muted-foreground leading-relaxed" style={sz(g.processo.descriptionSize, 13)}>
-                  {s.description}
-                </p>
+              <div key={i} className="relative group">
+                <div
+                  className={`relative h-full bg-white border border-navy/10 p-6 transition-all duration-500 ease-out
+                    hover:-translate-y-2 hover:shadow-[0_20px_50px_-15px_rgba(10,25,60,0.25)]
+                    hover:border-brand-blue/40 ${alignCls(g.processo.itemAlign)}`}
+                >
+                  <div className="absolute -top-4 left-6 flex items-center justify-center w-10 h-10 bg-navy text-gold font-display text-sm rounded-full shadow-md transition-all duration-500 group-hover:bg-brand-blue group-hover:scale-110 group-hover:rotate-[8deg]">
+                    {s.number}
+                  </div>
+                  <div className="mt-4">
+                    <h3
+                      className="font-display text-navy mb-3 transition-colors duration-300 group-hover:text-brand-blue"
+                      style={sz(g.processo.titleSize, 16)}
+                    >
+                      {s.title}
+                    </h3>
+                    <p
+                      className="text-muted-foreground leading-relaxed"
+                      style={sz(g.processo.descriptionSize, 13)}
+                    >
+                      {s.description}
+                    </p>
+                  </div>
+                  <div className="absolute left-0 bottom-0 h-[2px] w-0 bg-gold transition-all duration-500 ease-out group-hover:w-full" />
+                </div>
+
                 {i < g.processo.steps.length - 1 && (
-                  <ArrowRight className="hidden lg:block absolute top-2 -right-6 w-5 h-5 text-muted-foreground/40" />
+                  <div className="hidden lg:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 items-center justify-center pointer-events-none">
+                    <div className="relative w-6 h-6 flex items-center justify-center">
+                      <span className="absolute inset-0 rounded-full bg-brand-blue/0 group-hover:bg-brand-blue/10 transition-colors duration-500" />
+                      <ArrowRight
+                        className="w-5 h-5 text-navy/30 transition-all duration-500 ease-out
+                          group-hover:text-brand-blue group-hover:translate-x-2 group-hover:scale-125"
+                      />
+                      <ArrowRight
+                        className="absolute w-5 h-5 text-brand-blue opacity-0 -translate-x-2
+                          group-hover:opacity-60 group-hover:translate-x-4 transition-all duration-700 ease-out"
+                      />
+                    </div>
+                  </div>
                 )}
               </div>
             ))}
