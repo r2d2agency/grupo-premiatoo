@@ -4,7 +4,7 @@ import { defaultContent, fetchContent, getToken, saveContent, type SiteContent }
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Building2, History, Target, Users, Layout, Plus, Trash2 } from "lucide-react";
+import { Save, Building2, History, Target, Users, Layout, Plus, Trash2, Compass } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
