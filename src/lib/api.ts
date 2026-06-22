@@ -199,6 +199,12 @@ export type SiteContent = {
       ctaLabel: string;
       image: string;
     };
+    typography?: Record<string, {
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    }>;
   };
 };
 
@@ -299,6 +305,7 @@ export const defaultContent: SiteContent = {
       ctaLabel: "Solicitar análise",
       image: "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=1600&q=80",
     },
+    typography: {},
   },
 
   branding: {
