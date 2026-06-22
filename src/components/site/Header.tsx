@@ -136,7 +136,7 @@ export function Header({ content, sticky = true }: { content: SiteContent; stick
           {navLinks.map((n) => (
             <Link 
               key={n.label} 
-              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
+              to={n.label === "Notícias" || n.label === "Conteúdos" ? "/news" : n.label === "Garantias" ? "/garantias" : n.label === "Governança" ? "/governanca" : (n.href === "/institucional" || n.label === "Institucional" ? "/institucional" : (n.href.startsWith("#") ? "/" : n.href))} 
               hash={n.href.startsWith("#") && n.label !== "Institucional" ? n.href.replace("#", "") : undefined}
               className="text-white hover:text-gold transition-colors"
               onClick={() => setMobileMenuOpen(false)}
