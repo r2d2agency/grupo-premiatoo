@@ -27,6 +27,7 @@ import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
+import { Route as AdminGovernancaPaginaRouteImport } from './routes/admin/governanca-pagina'
 import { Route as AdminGovernancaRouteImport } from './routes/admin/governanca'
 import { Route as AdminGarantiasRouteImport } from './routes/admin/garantias'
 import { Route as AdminFooterRouteImport } from './routes/admin/footer'
@@ -124,6 +125,11 @@ const AdminHeroRoute = AdminHeroRouteImport.update({
   path: '/admin/hero',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGovernancaPaginaRoute = AdminGovernancaPaginaRouteImport.update({
+  id: '/admin/governanca-pagina',
+  path: '/admin/governanca-pagina',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminGovernancaRoute = AdminGovernancaRouteImport.update({
   id: '/admin/governanca',
   path: '/admin/governanca',
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -191,6 +198,7 @@ export interface FileRoutesByTo {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -272,6 +282,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -298,6 +309,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -325,6 +337,7 @@ export interface RootRouteChildren {
   AdminFooterRoute: typeof AdminFooterRoute
   AdminGarantiasRoute: typeof AdminGarantiasRoute
   AdminGovernancaRoute: typeof AdminGovernancaRoute
+  AdminGovernancaPaginaRoute: typeof AdminGovernancaPaginaRoute
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInstitucionalRoute: typeof AdminInstitucionalRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -470,6 +483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminHeroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/governanca-pagina': {
+      id: '/admin/governanca-pagina'
+      path: '/admin/governanca-pagina'
+      fullPath: '/admin/governanca-pagina'
+      preLoaderRoute: typeof AdminGovernancaPaginaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/governanca': {
       id: '/admin/governanca'
       path: '/admin/governanca'
@@ -525,6 +545,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminFooterRoute: AdminFooterRoute,
   AdminGarantiasRoute: AdminGarantiasRoute,
   AdminGovernancaRoute: AdminGovernancaRoute,
+  AdminGovernancaPaginaRoute: AdminGovernancaPaginaRoute,
   AdminHeroRoute: AdminHeroRoute,
   AdminInstitucionalRoute: AdminInstitucionalRoute,
   AdminLoginRoute: AdminLoginRoute,
