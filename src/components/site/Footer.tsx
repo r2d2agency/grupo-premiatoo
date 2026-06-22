@@ -1,6 +1,6 @@
 import { Logo } from "./Logo";
-import { Linkedin, Instagram, Phone, Mail, MapPin } from "lucide-react";
-import { DynamicIcon } from "lucide-react/dynamic";
+import * as Icons from "lucide-react";
+import { Linkedin, Instagram, Phone, Mail, MapPin, Lock } from "lucide-react";
 import { type SiteContent } from "@/lib/api";
 
 export function Footer({ content }: { content: SiteContent }) {
