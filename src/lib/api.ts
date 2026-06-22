@@ -121,6 +121,39 @@ export type SiteContent = {
     image: string;
     items: string[];
   };
+  governancaPage: {
+    hero: {
+      title: string; subtitle: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      subtitleSize?: number; subtitleAlign?: "left" | "center" | "right" | "justify";
+    };
+    intro: {
+      badge: string; title: string; text: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    processo: {
+      badge: string;
+      steps: { number: string; title: string; description: string }[];
+      titleSize?: number; descriptionSize?: number;
+      itemAlign?: "left" | "center" | "right" | "justify";
+    };
+    riscos: {
+      badge: string; title: string; text: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    principios: {
+      badge: string; title: string; text: string; items: string[];
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    ctaFinal: {
+      title: string; text: string; ctaLabel: string; ctaHref: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+  };
   footer: {
     text: string;
     columns: {
