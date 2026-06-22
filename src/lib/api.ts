@@ -665,7 +665,17 @@ export async function fetchContent(): Promise<SiteContent> {
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
       seo: { ...defaultContent.seo, ...data.seo },
-      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } }
+      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } },
+      governancaPage: data.governancaPage ? {
+        ...defaultContent.governancaPage,
+        ...data.governancaPage,
+        hero: { ...defaultContent.governancaPage.hero, ...(data.governancaPage.hero || {}) },
+        intro: { ...defaultContent.governancaPage.intro, ...(data.governancaPage.intro || {}) },
+        processo: { ...defaultContent.governancaPage.processo, ...(data.governancaPage.processo || {}) },
+        riscos: { ...defaultContent.governancaPage.riscos, ...(data.governancaPage.riscos || {}) },
+        principios: { ...defaultContent.governancaPage.principios, ...(data.governancaPage.principios || {}) },
+        ctaFinal: { ...defaultContent.governancaPage.ctaFinal, ...(data.governancaPage.ctaFinal || {}) },
+      } : defaultContent.governancaPage,
     };
 
     // Migration for Hero
