@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { defaultContent, fetchContent, getToken, saveContent, type SiteContent } from "@/lib/api";
 import { AdminLayout } from "@/components/AdminLayout";
