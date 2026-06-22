@@ -363,7 +363,7 @@ export const defaultContent: SiteContent = {
       { label: "Institucional", href: "/institucional" },
       { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
-      { label: "Governança", href: "#" },
+      { label: "Governança", href: "/governanca" },
       { label: "Conteúdos", href: "#" },
       { label: "Parceiros", href: "#" },
       { label: "Contato", href: "#" },
