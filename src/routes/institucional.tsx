@@ -135,7 +135,8 @@ function InstitucionalPage() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="font-display text-4xl lg:text-5xl leading-[1.1]"
+                    className={`font-display text-4xl lg:text-5xl leading-[1.1] ${alignClass(typo("hero").titleAlign)}`}
+                    style={sizeStyle(typo("hero").titleSize)}
                   >
                     {banner.title}
                   </motion.h1>
@@ -143,7 +144,8 @@ function InstitucionalPage() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-6 text-sm leading-relaxed text-white/80 max-w-md font-light"
+                    className={`mt-6 text-sm leading-relaxed text-white/80 max-w-md font-light ${alignClass(typo("hero").textAlign)}`}
+                    style={textStyle(typo("hero").textSize)}
                   >
                     {banner.subtitle}
                   </motion.p>
@@ -204,11 +206,11 @@ function InstitucionalPage() {
           </div>
           <div className="flex items-center px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-right-12 duration-1000">
             <div className="max-w-xl space-y-5">
-              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
+              <h2 className={`font-display text-3xl lg:text-4xl text-navy leading-tight ${alignClass(typo("historia").titleAlign)}`} style={sizeStyle(typo("historia").titleSize)}>
                 {data.historia.title}
               </h2>
               <div className="w-12 h-px bg-brand-blue" />
-              <div className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
+              <div className={`text-muted-foreground leading-relaxed text-sm whitespace-pre-line ${alignClass(typo("historia").textAlign)}`} style={textStyle(typo("historia").textSize)}>
                 {data.historia.text}
               </div>
             </div>
@@ -221,11 +223,11 @@ function InstitucionalPage() {
         <div className="grid lg:grid-cols-2 items-stretch">
           <div className="order-2 lg:order-1 flex items-center justify-end px-6 lg:px-16 py-16 animate-in fade-in slide-in-from-left-12 duration-1000">
             <div className="max-w-xl space-y-5">
-              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
+              <h2 className={`font-display text-3xl lg:text-4xl text-navy leading-tight ${alignClass(typo("hoje").titleAlign)}`} style={sizeStyle(typo("hoje").titleSize)}>
                 {data.hoje.title}
               </h2>
               <div className="w-12 h-px bg-brand-blue" />
-              <p className="text-muted-foreground leading-relaxed text-sm">
+              <p className={`text-muted-foreground leading-relaxed text-sm ${alignClass(typo("hoje").textAlign)}`} style={textStyle(typo("hoje").textSize)}>
                 {data.hoje.text}
               </p>
             </div>
@@ -244,33 +246,33 @@ function InstitucionalPage() {
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-[1280px] px-6">
           <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3 text-center">DIRECIONAMENTO</div>
-          <h2 className="font-display text-3xl lg:text-4xl text-navy text-center mb-12 leading-tight">
+          <h2 className={`font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight ${alignClass(typo("orientacao").titleAlign)}`} style={sizeStyle(typo("orientacao").titleSize)}>
             {data.orientacao.title}
           </h2>
           <div className="grid md:grid-cols-3 gap-12">
-            <div className="space-y-4">
-              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
+            <div className={`space-y-4 ${alignClass(typo("orientacaoCards").textAlign)}`}>
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]" style={sizeStyle(typo("orientacaoCards").titleSize)}>
                 {data.orientacao.proposito.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">
+              <p className="text-muted-foreground leading-relaxed text-sm" style={textStyle(typo("orientacaoCards").textSize)}>
                 {data.orientacao.proposito.text}
               </p>
             </div>
-            <div className="space-y-4">
-              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
+            <div className={`space-y-4 ${alignClass(typo("orientacaoCards").textAlign)}`}>
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]" style={sizeStyle(typo("orientacaoCards").titleSize)}>
                 {data.orientacao.visao.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">
+              <p className="text-muted-foreground leading-relaxed text-sm" style={textStyle(typo("orientacaoCards").textSize)}>
                 {data.orientacao.visao.text}
               </p>
             </div>
-            <div className="space-y-4">
-              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]">
+            <div className={`space-y-4 ${alignClass(typo("orientacaoCards").textAlign)}`}>
+              <h3 className="font-bold text-brand-blue uppercase tracking-[0.2em] text-[10px]" style={sizeStyle(typo("orientacaoCards").titleSize)}>
                 {data.orientacao.principios.title}
               </h3>
               <ul className="grid grid-cols-1 gap-3">
                 {data.orientacao.principios.items.map((item, i) => (
-                  <li key={i} className="text-muted-foreground flex items-center gap-3 text-sm group">
+                  <li key={i} className="text-muted-foreground flex items-center gap-3 text-sm group" style={textStyle(typo("orientacaoCards").textSize)}>
                     <span className="w-1 h-1 bg-brand-blue group-hover:w-4 transition-all duration-300" />
                     {item}
                   </li>
@@ -294,11 +296,11 @@ function InstitucionalPage() {
         </div>
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-white">
           <div className="max-w-xl space-y-5">
-            <h2 className="font-display text-3xl lg:text-4xl leading-tight">
+            <h2 className={`font-display text-3xl lg:text-4xl leading-tight ${alignClass(typo("pensamento").titleAlign)}`} style={sizeStyle(typo("pensamento").titleSize)}>
               {data.pensamento.title}
             </h2>
             <div className="w-12 h-px bg-brand-blue" />
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className={`text-sm text-white/70 leading-relaxed ${alignClass(typo("pensamento").textAlign)}`} style={textStyle(typo("pensamento").textSize)}>
               {data.pensamento.text}
             </p>
           </div>
@@ -310,11 +312,11 @@ function InstitucionalPage() {
         <div className="mx-auto max-w-[1280px] px-6">
           <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-center">
             <div className="space-y-5">
-              <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">
+              <h2 className={`font-display text-3xl lg:text-4xl text-navy leading-tight ${alignClass(typo("organizacional").titleAlign)}`} style={sizeStyle(typo("organizacional").titleSize)}>
                 Uma estrutura construída sobre especialização.
               </h2>
               <div className="w-12 h-px bg-brand-blue" />
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className={`text-muted-foreground text-sm leading-relaxed ${alignClass(typo("organizacional").textAlign)}`} style={textStyle(typo("organizacional").textSize)}>
                 {data.organizacional.text}
               </p>
             </div>
@@ -353,12 +355,12 @@ function InstitucionalPage() {
             />
           </div>
           <div className="flex flex-col justify-center px-6 lg:px-12 py-12 space-y-5 animate-in fade-in duration-1000">
-            <div>
-              <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight">{data.lideranca.name}</h2>
+            <div className={alignClass(typo("lideranca").titleAlign)}>
+              <h2 className="font-display text-3xl lg:text-4xl text-navy mb-2 leading-tight" style={sizeStyle(typo("lideranca").titleSize)}>{data.lideranca.name}</h2>
               <p className="text-brand-blue font-semibold tracking-wider text-[12px]">{data.lideranca.role}</p>
             </div>
             <div className="w-12 h-px bg-brand-blue" />
-            <p className="text-muted-foreground leading-relaxed text-sm whitespace-pre-line">
+            <p className={`text-muted-foreground leading-relaxed text-sm whitespace-pre-line ${alignClass(typo("lideranca").textAlign)}`} style={textStyle(typo("lideranca").textSize)}>
               {data.lideranca.bio}
             </p>
           </div>
@@ -377,7 +379,7 @@ function InstitucionalPage() {
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-[1280px] px-6 text-center">
           <div className="text-[11px] tracking-[0.25em] text-brand-blue font-semibold mb-3">DIFERENCIAIS</div>
-          <h2 className="font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight">Diferenciais Institucionais</h2>
+          <h2 className={`font-display text-3xl lg:text-4xl text-navy mb-12 leading-tight ${alignClass(typo("diferenciais").titleAlign)}`} style={sizeStyle(typo("diferenciais").titleSize)}>Diferenciais Institucionais</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {data.diferenciais.map((diff, i) => (
               <div key={i} className="group cursor-default">
@@ -397,7 +399,7 @@ function InstitucionalPage() {
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
           <div className="max-w-3xl mx-auto">
-            <div className="font-display text-lg md:text-xl lg:text-2xl text-white/90 leading-[1.5] space-y-4 italic font-light">
+            <div className={`font-display text-lg md:text-xl lg:text-2xl text-white/90 leading-[1.5] space-y-4 italic font-light ${alignClass(typo("manifesto").textAlign) === "text-left" ? "text-center" : alignClass(typo("manifesto").textAlign)}`} style={textStyle(typo("manifesto").textSize)}>
               {data.manifesto.text.split('. ').map((sentence, i) => (
                 <p key={i} className="animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ animationDelay: `${i * 400}ms` }}>
                   {sentence}{i < data.manifesto.text.split('. ').length - 1 ? '.' : ''}
@@ -421,8 +423,8 @@ function InstitucionalPage() {
 
         <div className="relative z-10 mx-auto max-w-[1280px] px-6">
           <div className="max-w-xl space-y-5">
-            <h2 className="font-display text-3xl lg:text-4xl text-navy leading-tight">{data.ctaFinal.title}</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h2 className={`font-display text-3xl lg:text-4xl text-navy leading-tight ${alignClass(typo("ctaFinal").titleAlign)}`} style={sizeStyle(typo("ctaFinal").titleSize)}>{data.ctaFinal.title}</h2>
+            <p className={`text-sm text-muted-foreground leading-relaxed ${alignClass(typo("ctaFinal").textAlign)}`} style={textStyle(typo("ctaFinal").textSize)}>
               {data.ctaFinal.text}
             </p>
             <button className="bg-brand-blue text-brand-blue-foreground px-7 py-3 rounded-sm font-semibold tracking-wider uppercase text-[11px] hover:opacity-90 transition-all duration-500 shadow-xl group inline-flex items-center gap-3">
