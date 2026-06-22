@@ -72,6 +72,12 @@ function InstitucionalPage() {
 
   const data = content.institucional;
 
+  const typo = (key: string) => data.typography?.[key] || {};
+  const alignClass = (a?: string) =>
+    a === "center" ? "text-center" : a === "right" ? "text-right" : a === "justify" ? "text-justify" : "text-left";
+  const sizeStyle = (s?: number) => (s ? { fontSize: `${s}px`, lineHeight: 1.3 } : undefined);
+  const textStyle = (s?: number) => (s ? { fontSize: `${s}px` } : undefined);
+
 
   if (!content.modules.institucional) {
     return (
