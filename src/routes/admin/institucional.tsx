@@ -4,7 +4,7 @@ import { defaultContent, fetchContent, getToken, saveContent, type SiteContent }
 import { AdminLayout } from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Save, Building2, History, Target, Users, Layout, Plus, Trash2, Compass } from "lucide-react";
+import { Save, Building2, History, Target, Users, Layout, Plus, Trash2, Compass, Lightbulb, Network } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -254,6 +254,70 @@ function AdminInstitucionalPage() {
                 className="w-full border border-input rounded-sm px-3 py-2 text-sm"
               />
             </div>
+          </CardContent>
+        </Card>
+
+        {/* SEÇÃO 05 — NOSSA FORMA DE PENSAR */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-navy flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-gold" />
+              Seção 05 — Nossa Forma de Pensar
+            </CardTitle>
+            <CardDescription>Bloco com imagem de fundo e texto sobre a abordagem institucional.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid lg:grid-cols-[1fr_300px] gap-8">
+              <div className="space-y-4">
+                <Field label="Título" value={inst.pensamento.title} onChange={(v:any) => updateInst("pensamento", {...inst.pensamento, title:v})} />
+                <Field label="Texto" value={inst.pensamento.text} onChange={(v:any) => updateInst("pensamento", {...inst.pensamento, text:v})} textarea />
+              </div>
+              <ImageUpload label="Imagem de Fundo" value={inst.pensamento.image} onChange={(v:any) => updateInst("pensamento", {...inst.pensamento, image:v})} />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* SEÇÃO 06 — ESTRUTURA ORGANIZACIONAL */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-navy flex items-center gap-2">
+              <Network className="w-5 h-5 text-gold" />
+              Seção 06 — Estrutura Organizacional
+            </CardTitle>
+            <CardDescription>Texto descritivo e organograma (nó principal + áreas vinculadas).</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <Field label="Texto Descritivo" value={inst.organizacional.text} onChange={(v:any) => updateInst("organizacional", {...inst.organizacional, text:v})} textarea />
+
+            {inst.organizacional.items.map((node, idx) => (
+              <div key={idx} className="border rounded-lg p-4 bg-muted/20 space-y-4">
+                <Field
+                  label={`Nó Principal #${idx + 1}`}
+                  value={node.label}
+                  onChange={(v: string) => {
+                    const items = [...inst.organizacional.items];
+                    items[idx] = { ...items[idx], label: v };
+                    updateInst("organizacional", { ...inst.organizacional, items });
+                  }}
+                />
+                <div className="space-y-2">
+                  <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Áreas Vinculadas (uma por linha)</Label>
+                  <textarea
+                    value={(node.children || []).map((c) => c.label).join("\n")}
+                    onChange={(e) => {
+                      const items = [...inst.organizacional.items];
+                      items[idx] = {
+                        ...items[idx],
+                        children: e.target.value.split("\n").filter(Boolean).map((label) => ({ label })),
+                      };
+                      updateInst("organizacional", { ...inst.organizacional, items });
+                    }}
+                    rows={6}
+                    className="w-full border border-input rounded-sm px-3 py-2 text-sm"
+                  />
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
