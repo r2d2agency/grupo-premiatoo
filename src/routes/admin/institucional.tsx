@@ -262,6 +262,7 @@ function AdminInstitucionalPage() {
                 </div>
               ))}
             </div>
+            <TypographyPanel sectionKey="hero" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -281,6 +282,7 @@ function AdminInstitucionalPage() {
               </div>
               <ImageUpload label="Imagem Lateral" value={inst.historia.image} onChange={(v:any) => updateInst("historia", {...inst.historia, image:v})} />
             </div>
+            <TypographyPanel sectionKey="historia" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -300,6 +302,7 @@ function AdminInstitucionalPage() {
               </div>
               <ImageUpload label="Imagem Equipe" value={inst.hoje.image} onChange={(v:any) => updateInst("hoje", {...inst.hoje, image:v})} />
             </div>
+            <TypographyPanel sectionKey="hoje" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -340,6 +343,8 @@ function AdminInstitucionalPage() {
                 className="w-full border border-input rounded-sm px-3 py-2 text-sm"
               />
             </div>
+            <TypographyPanel sectionKey="orientacao" label="Cabeçalho" typography={inst.typography} onChange={(t) => updateInst("typography", t)} hideText />
+            <TypographyPanel sectionKey="orientacaoCards" label="Cards (Propósito / Visão / Princípios)" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -360,6 +365,7 @@ function AdminInstitucionalPage() {
               </div>
               <ImageUpload label="Imagem de Fundo" value={inst.pensamento.image} onChange={(v:any) => updateInst("pensamento", {...inst.pensamento, image:v})} />
             </div>
+            <TypographyPanel sectionKey="pensamento" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -404,6 +410,7 @@ function AdminInstitucionalPage() {
                 </div>
               </div>
             ))}
+            <TypographyPanel sectionKey="organizacional" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -435,6 +442,7 @@ function AdminInstitucionalPage() {
               </div>
               <ImageUpload label="Foto Executiva" value={inst.lideranca.photo} onChange={(v:any) => updateInst("lideranca", {...inst.lideranca, photo:v})} />
             </div>
+            <TypographyPanel sectionKey="lideranca" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
@@ -446,8 +454,9 @@ function AdminInstitucionalPage() {
               Seção 09 — Manifesto
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <Field label="Texto do Manifesto" value={inst.manifesto.text} onChange={(v:any) => updateInst("manifesto", {text:v})} textarea />
+            <TypographyPanel sectionKey="manifesto" typography={inst.typography} onChange={(t) => updateInst("typography", t)} hideTitle />
           </CardContent>
         </Card>
 
@@ -468,6 +477,7 @@ function AdminInstitucionalPage() {
               </div>
               <ImageUpload label="Imagem de Fundo" value={inst.ctaFinal.image} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, image:v})} />
             </div>
+            <TypographyPanel sectionKey="ctaFinal" typography={inst.typography} onChange={(t) => updateInst("typography", t)} />
           </CardContent>
         </Card>
 
