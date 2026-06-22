@@ -137,6 +137,12 @@ export type SiteContent = {
       address: string;
     };
     copyright: string;
+    intranet?: {
+      enabled: boolean;
+      label: string;
+      url: string;
+      icon: string;
+    };
   };
   seo: {
     globalTitle: string;
@@ -544,6 +550,12 @@ export const defaultContent: SiteContent = {
       address: "Av. Brigadeiro Faria Lima, 3477 – 18º andar\nItaim Bibi, São Paulo – SP 04538-133",
     },
     copyright: "© 2024 Garantidora Premiatto. Todos os direitos reservados.",
+    intranet: {
+      enabled: true,
+      label: "Intranet",
+      url: "#",
+      icon: "lock",
+    },
   },
   seo: {
     globalTitle: "Garantidora Premiatto – Garantias e Soluções Financeiras",
@@ -566,7 +578,8 @@ export async function fetchContent(): Promise<SiteContent> {
       branding: { ...defaultContent.branding, ...data.branding },
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
-      seo: { ...defaultContent.seo, ...data.seo }
+      seo: { ...defaultContent.seo, ...data.seo },
+      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } }
     };
 
     // Migration for Hero

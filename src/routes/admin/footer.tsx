@@ -99,6 +99,42 @@ function AdminFooterPage() {
               </div>
             </div>
 
+            <div className="pt-6 border-t space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-bold text-navy uppercase tracking-wider">Intranet</h4>
+                <label className="flex items-center gap-2 text-xs">
+                  <input
+                    type="checkbox"
+                    checked={content.footer.intranet?.enabled ?? false}
+                    onChange={(e) => update("footer", { ...content.footer, intranet: { ...(content.footer.intranet || { label: "Intranet", url: "#", icon: "lock", enabled: false }), enabled: e.target.checked } })}
+                  />
+                  Exibir no rodapé
+                </label>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <Field
+                  label="Rótulo"
+                  value={content.footer.intranet?.label || ""}
+                  onChange={(v: string) => update("footer", { ...content.footer, intranet: { ...(content.footer.intranet || { enabled: true, label: "", url: "#", icon: "lock" }), label: v } })}
+                />
+                <Field
+                  label="URL"
+                  value={content.footer.intranet?.url || ""}
+                  placeholder="https://intranet.exemplo.com"
+                  onChange={(v: string) => update("footer", { ...content.footer, intranet: { ...(content.footer.intranet || { enabled: true, label: "Intranet", url: "", icon: "lock" }), url: v } })}
+                />
+                <Field
+                  label="Ícone (lucide)"
+                  value={content.footer.intranet?.icon || "lock"}
+                  placeholder="lock, key, shield, user, link..."
+                  onChange={(v: string) => update("footer", { ...content.footer, intranet: { ...(content.footer.intranet || { enabled: true, label: "Intranet", url: "#", icon: "" }), icon: v } })}
+                />
+              </div>
+              <p className="text-[11px] text-muted-foreground">
+                Use o nome do ícone da biblioteca <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer" className="underline">lucide.dev/icons</a> (ex.: <code>lock</code>, <code>key-round</code>, <code>shield</code>, <code>user-circle</code>).
+              </p>
+            </div>
+
             <div className="pt-6 border-t">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="text-sm font-bold text-navy uppercase tracking-wider">Colunas de Links</h4>

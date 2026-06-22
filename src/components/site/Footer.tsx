@@ -1,5 +1,6 @@
 import { Logo } from "./Logo";
-import { Linkedin, Instagram, Phone, Mail, MapPin } from "lucide-react";
+import * as Icons from "lucide-react";
+import { Linkedin, Instagram, Phone, Mail, MapPin, Lock } from "lucide-react";
 import { type SiteContent } from "@/lib/api";
 
 export function Footer({ content }: { content: SiteContent }) {
@@ -64,6 +65,26 @@ export function Footer({ content }: { content: SiteContent }) {
           </div>
         </div>
       </div>
+      {footer.intranet?.enabled && (
+        <div className="border-t border-navy-foreground/10">
+          <div className="mx-auto max-w-[1280px] px-6 py-4 flex justify-center">
+            <a
+              href={footer.intranet.url || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[12px] text-navy-foreground/80 hover:text-navy-foreground transition-colors"
+            >
+              {(() => {
+                const name = (footer.intranet?.icon || "Lock");
+                const pascal = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+                const Ico = (Icons as any)[pascal] || Lock;
+                return <Ico className="h-4 w-4" />;
+              })()}
+              <span className="uppercase tracking-wider">{footer.intranet.label || "Intranet"}</span>
+            </a>
+          </div>
+        </div>
+      )}
       <div className="border-t border-navy-foreground/10">
         <div className="mx-auto max-w-[1280px] px-6 py-5 flex flex-wrap justify-between items-center text-[11px] text-navy-foreground/60">
           <div>{footer.copyright}</div>
