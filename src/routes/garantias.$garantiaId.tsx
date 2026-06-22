@@ -186,6 +186,8 @@ function GarantiaDetail() {
               </div>
             </aside>
           </div>
+            );
+          })()}
         </div>
       </main>
       
