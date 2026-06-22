@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
+import { Route as GovernancaRouteImport } from './routes/governanca'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as GarantiasIndexRouteImport } from './routes/garantias.index'
@@ -26,6 +27,7 @@ import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
+import { Route as AdminGovernancaPaginaRouteImport } from './routes/admin/governanca-pagina'
 import { Route as AdminGovernancaRouteImport } from './routes/admin/governanca'
 import { Route as AdminGarantiasRouteImport } from './routes/admin/garantias'
 import { Route as AdminFooterRouteImport } from './routes/admin/footer'
@@ -36,6 +38,11 @@ import { Route as AdminBrandCardsRouteImport } from './routes/admin/brand-cards'
 const InstitucionalRoute = InstitucionalRouteImport.update({
   id: '/institucional',
   path: '/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernancaRoute = GovernancaRouteImport.update({
+  id: '/governanca',
+  path: '/governanca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -118,6 +125,11 @@ const AdminHeroRoute = AdminHeroRouteImport.update({
   path: '/admin/hero',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminGovernancaPaginaRoute = AdminGovernancaPaginaRouteImport.update({
+  id: '/admin/governanca-pagina',
+  path: '/admin/governanca-pagina',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminGovernancaRoute = AdminGovernancaRouteImport.update({
   id: '/admin/governanca',
   path: '/admin/governanca',
@@ -151,6 +163,7 @@ const AdminBrandCardsRoute = AdminBrandCardsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -158,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -176,6 +190,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -183,6 +198,7 @@ export interface FileRoutesByTo {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -202,6 +218,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -209,6 +226,7 @@ export interface FileRoutesById {
   '/admin/footer': typeof AdminFooterRoute
   '/admin/garantias': typeof AdminGarantiasRoute
   '/admin/governanca': typeof AdminGovernancaRoute
+  '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
   '/admin/login': typeof AdminLoginRoute
@@ -229,6 +247,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -236,6 +255,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -254,6 +274,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -261,6 +282,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -279,6 +301,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -286,6 +309,7 @@ export interface FileRouteTypes {
     | '/admin/footer'
     | '/admin/garantias'
     | '/admin/governanca'
+    | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
     | '/admin/login'
@@ -305,6 +329,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GovernancaRoute: typeof GovernancaRoute
   InstitucionalRoute: typeof InstitucionalRoute
   AdminBrandCardsRoute: typeof AdminBrandCardsRoute
   AdminBrandingRoute: typeof AdminBrandingRoute
@@ -312,6 +337,7 @@ export interface RootRouteChildren {
   AdminFooterRoute: typeof AdminFooterRoute
   AdminGarantiasRoute: typeof AdminGarantiasRoute
   AdminGovernancaRoute: typeof AdminGovernancaRoute
+  AdminGovernancaPaginaRoute: typeof AdminGovernancaPaginaRoute
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInstitucionalRoute: typeof AdminInstitucionalRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -336,6 +362,13 @@ declare module '@tanstack/react-router' {
       path: '/institucional'
       fullPath: '/institucional'
       preLoaderRoute: typeof InstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/governanca': {
+      id: '/governanca'
+      path: '/governanca'
+      fullPath: '/governanca'
+      preLoaderRoute: typeof GovernancaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -450,6 +483,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminHeroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/governanca-pagina': {
+      id: '/admin/governanca-pagina'
+      path: '/admin/governanca-pagina'
+      fullPath: '/admin/governanca-pagina'
+      preLoaderRoute: typeof AdminGovernancaPaginaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/governanca': {
       id: '/admin/governanca'
       path: '/admin/governanca'
@@ -497,6 +537,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GovernancaRoute: GovernancaRoute,
   InstitucionalRoute: InstitucionalRoute,
   AdminBrandCardsRoute: AdminBrandCardsRoute,
   AdminBrandingRoute: AdminBrandingRoute,
@@ -504,6 +545,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminFooterRoute: AdminFooterRoute,
   AdminGarantiasRoute: AdminGarantiasRoute,
   AdminGovernancaRoute: AdminGovernancaRoute,
+  AdminGovernancaPaginaRoute: AdminGovernancaPaginaRoute,
   AdminHeroRoute: AdminHeroRoute,
   AdminInstitucionalRoute: AdminInstitucionalRoute,
   AdminLoginRoute: AdminLoginRoute,

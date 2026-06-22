@@ -121,6 +121,39 @@ export type SiteContent = {
     image: string;
     items: string[];
   };
+  governancaPage: {
+    hero: {
+      title: string; subtitle: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      subtitleSize?: number; subtitleAlign?: "left" | "center" | "right" | "justify";
+    };
+    intro: {
+      badge: string; title: string; text: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    processo: {
+      badge: string;
+      steps: { number: string; title: string; description: string }[];
+      titleSize?: number; descriptionSize?: number;
+      itemAlign?: "left" | "center" | "right" | "justify";
+    };
+    riscos: {
+      badge: string; title: string; text: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    principios: {
+      badge: string; title: string; text: string; items: string[];
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+    ctaFinal: {
+      title: string; text: string; ctaLabel: string; ctaHref: string; image: string;
+      titleSize?: number; titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number; textAlign?: "left" | "center" | "right" | "justify";
+    };
+  };
   footer: {
     text: string;
     columns: {
@@ -330,7 +363,7 @@ export const defaultContent: SiteContent = {
       { label: "Institucional", href: "/institucional" },
       { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
-      { label: "Governança", href: "#" },
+      { label: "Governança", href: "/governanca" },
       { label: "Conteúdos", href: "#" },
       { label: "Parceiros", href: "#" },
       { label: "Contato", href: "#" },
@@ -494,6 +527,59 @@ export const defaultContent: SiteContent = {
       "Acompanhamento especializado",
     ],
   },
+  governancaPage: {
+    hero: {
+      title: "Governança que sustenta decisões consistentes.",
+      subtitle: "A atuação do Premiatto é fundamentada em critérios técnicos, processos estruturados e mecanismos de controle que contribuem para a segurança e sustentabilidade das operações.",
+      image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=1600&q=80",
+      titleSize: 56, titleAlign: "left",
+      subtitleSize: 14, subtitleAlign: "left",
+    },
+    intro: {
+      badge: "O QUE ENTENDEMOS POR GOVERNANÇA",
+      title: "Decisões responsáveis exigem estrutura, clareza e responsabilidade.",
+      text: "Governança não se resume a processos internos. Representa a capacidade de tomar decisões responsáveis, equilibrando análise, transparência e gestão de riscos em cada etapa da operação.",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
+      titleSize: 32, titleAlign: "left",
+      textSize: 14, textAlign: "left",
+    },
+    processo: {
+      badge: "COMO TOMAMOS DECISÕES",
+      steps: [
+        { number: "01", title: "Diagnóstico", description: "Compreensão profunda da realidade, objetivos e riscos envolvidos." },
+        { number: "02", title: "Análise", description: "Avaliação técnica, econômica, jurídica e de riscos da operação." },
+        { number: "03", title: "Validação", description: "Confronto de informações e validação dos critérios adotados." },
+        { number: "04", title: "Estruturação", description: "Desenho da solução mais adequada e alinhada aos objetivos da operação." },
+        { number: "05", title: "Acompanhamento", description: "Monitoramento contínuo e revisão de hipóteses e condições." },
+      ],
+      titleSize: 16, descriptionSize: 13, itemAlign: "center",
+    },
+    riscos: {
+      badge: "GESTÃO DE RISCOS",
+      title: "Riscos existem. Gestão reduz incertezas.",
+      text: "A gestão de riscos é parte integrante da cultura do Premiatto. Buscamos identificar, avaliar e monitorar fatores que possam impactar a segurança, a continuidade e a entrega de valor em cada operação.",
+      image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80",
+      titleSize: 36, titleAlign: "left",
+      textSize: 14, textAlign: "left",
+    },
+    principios: {
+      badge: "PRINCÍPIOS QUE NORTEIAM NOSSAS DECISÕES",
+      title: "",
+      text: "Nossos princípios orientam comportamentos, decisões e relações. São a base da confiança que construímos todos os dias.",
+      items: ["Governança", "Responsabilidade", "Transparência", "Ética", "Conformidade", "Sustentabilidade"],
+      titleSize: 28, titleAlign: "left",
+      textSize: 13, textAlign: "left",
+    },
+    ctaFinal: {
+      title: "Estruturas sólidas exigem governança sólida.",
+      text: "Conte com uma instituição comprometida com decisões responsáveis e relações duradouras.",
+      ctaLabel: "SOLICITAR ANÁLISE",
+      ctaHref: "#",
+      image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&q=80",
+      titleSize: 36, titleAlign: "left",
+      textSize: 14, textAlign: "left",
+    },
+  },
   footer: {
     text: "Estrutura, segurança e experiência para operações que exigem confiança e resultados sustentáveis.",
     columns: [
@@ -579,7 +665,17 @@ export async function fetchContent(): Promise<SiteContent> {
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
       seo: { ...defaultContent.seo, ...data.seo },
-      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } }
+      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } },
+      governancaPage: data.governancaPage ? {
+        ...defaultContent.governancaPage,
+        ...data.governancaPage,
+        hero: { ...defaultContent.governancaPage.hero, ...(data.governancaPage.hero || {}) },
+        intro: { ...defaultContent.governancaPage.intro, ...(data.governancaPage.intro || {}) },
+        processo: { ...defaultContent.governancaPage.processo, ...(data.governancaPage.processo || {}) },
+        riscos: { ...defaultContent.governancaPage.riscos, ...(data.governancaPage.riscos || {}) },
+        principios: { ...defaultContent.governancaPage.principios, ...(data.governancaPage.principios || {}) },
+        ctaFinal: { ...defaultContent.governancaPage.ctaFinal, ...(data.governancaPage.ctaFinal || {}) },
+      } : defaultContent.governancaPage,
     };
 
     // Migration for Hero
