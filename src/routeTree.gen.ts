@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
+import { Route as GovernancaRouteImport } from './routes/governanca'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as GarantiasIndexRouteImport } from './routes/garantias.index'
@@ -36,6 +37,11 @@ import { Route as AdminBrandCardsRouteImport } from './routes/admin/brand-cards'
 const InstitucionalRoute = InstitucionalRouteImport.update({
   id: '/institucional',
   path: '/institucional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovernancaRoute = GovernancaRouteImport.update({
+  id: '/governanca',
+  path: '/governanca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -151,6 +157,7 @@ const AdminBrandCardsRoute = AdminBrandCardsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -202,6 +210,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
@@ -229,6 +238,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -254,6 +264,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
     | '/admin/branding'
@@ -305,6 +317,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GovernancaRoute: typeof GovernancaRoute
   InstitucionalRoute: typeof InstitucionalRoute
   AdminBrandCardsRoute: typeof AdminBrandCardsRoute
   AdminBrandingRoute: typeof AdminBrandingRoute
@@ -336,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/institucional'
       fullPath: '/institucional'
       preLoaderRoute: typeof InstitucionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/governanca': {
+      id: '/governanca'
+      path: '/governanca'
+      fullPath: '/governanca'
+      preLoaderRoute: typeof GovernancaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -497,6 +517,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GovernancaRoute: GovernancaRoute,
   InstitucionalRoute: InstitucionalRoute,
   AdminBrandCardsRoute: AdminBrandCardsRoute,
   AdminBrandingRoute: AdminBrandingRoute,

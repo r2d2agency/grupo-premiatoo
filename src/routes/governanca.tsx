@@ -191,7 +191,7 @@ function GovernancaPage() {
         </div>
       </section>
 
-      <Footer data={content.footer} />
+      <Footer content={content} />
     </div>
   );
 }
