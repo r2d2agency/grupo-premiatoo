@@ -74,6 +74,11 @@ function GarantiaDetail() {
             <ArrowLeft className="w-4 h-4" /> VOLTAR PARA O INÍCIO
           </Link>
 
+          {(() => {
+            const alignCls = (a?: string) =>
+              a === "center" ? "text-center" : a === "right" ? "text-right" : a === "justify" ? "text-justify" : "text-left";
+            const sizeStyle = (s?: number) => (s ? { fontSize: `${s}px` } : undefined);
+            return (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Main Content */}
             <article className="lg:col-span-8 space-y-12">
@@ -81,10 +86,16 @@ function GarantiaDetail() {
                 <div className="w-16 h-16 rounded-2xl bg-brand-blue/10 flex items-center justify-center border border-brand-blue/20">
                   <Icon className="w-8 h-8 text-brand-blue" />
                 </div>
-                <h1 className="text-4xl md:text-5xl font-display text-navy leading-tight">
+                <h1
+                  className={cn("text-4xl md:text-5xl font-display text-navy leading-tight", alignCls(garantiaItem.detailTitleAlign))}
+                  style={sizeStyle(garantiaItem.detailTitleSize)}
+                >
                   {garantiaItem.title}
                 </h1>
-                <div className="text-slate-700 leading-relaxed text-lg space-y-6 font-normal whitespace-pre-line border-l-4 border-gold pl-6 py-2">
+                <div
+                  className={cn("text-slate-700 leading-relaxed text-lg space-y-6 font-normal whitespace-pre-line border-l-4 border-gold pl-6 py-2", alignCls(garantiaItem.detailDescriptionAlign))}
+                  style={sizeStyle(garantiaItem.detailDescriptionSize)}
+                >
                   {garantiaItem.description}
                 </div>
               </div>
@@ -99,7 +110,10 @@ function GarantiaDetail() {
                 </div>
               )}
 
-              <div className="text-slate-700 leading-relaxed text-lg space-y-6 font-normal whitespace-pre-line">
+              <div
+                className={cn("text-slate-700 leading-relaxed text-lg space-y-6 font-normal whitespace-pre-line", alignCls(garantiaItem.detailContentAlign))}
+                style={sizeStyle(garantiaItem.detailContentSize)}
+              >
                 {garantiaItem.content ? (
                   garantiaItem.content
                 ) : (
