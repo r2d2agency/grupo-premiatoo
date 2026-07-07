@@ -38,6 +38,25 @@ export type SiteContent = {
     news: boolean;
     parceiros: boolean;
     footer: boolean;
+    carbono: boolean;
+  };
+  carbono: {
+    home: {
+      badge: string;
+      title: string;
+      description: string;
+      cta: string;
+      ctaHref: string;
+      image: string;
+      products: { title: string; icon: string }[];
+    };
+    page: {
+      hero: { title: string; subtitle: string; ctaLabel: string; ctaHref: string; image: string };
+      intro: { badge: string; title: string; text: string; image: string };
+      solucoes: { badge: string; title: string; items: { title: string; description: string; icon: string }[] };
+      diferenciais: { badge: string; title: string; text: string; items: string[]; image: string };
+      ctaFinal: { title: string; text: string; ctaLabel: string; ctaHref: string; image: string };
+    };
   };
   parceiros: {
     tag: string;
