@@ -10,6 +10,7 @@ import { Capital } from "@/components/site/Capital";
 import { Governanca } from "@/components/site/Governanca";
 import { NewsArea } from "@/components/site/NewsArea";
 import { Parceiros } from "@/components/site/Parceiros";
+import { Carbono } from "@/components/site/Carbono";
 import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
