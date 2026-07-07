@@ -759,6 +759,16 @@ export async function fetchContent(): Promise<SiteContent> {
         principios: { ...defaultContent.governancaPage.principios, ...(data.governancaPage.principios || {}) },
         ctaFinal: { ...defaultContent.governancaPage.ctaFinal, ...(data.governancaPage.ctaFinal || {}) },
       } : defaultContent.governancaPage,
+      carbono: data.carbono ? {
+        home: { ...defaultContent.carbono.home, ...(data.carbono.home || {}) },
+        page: {
+          hero: { ...defaultContent.carbono.page.hero, ...(data.carbono.page?.hero || {}) },
+          intro: { ...defaultContent.carbono.page.intro, ...(data.carbono.page?.intro || {}) },
+          solucoes: { ...defaultContent.carbono.page.solucoes, ...(data.carbono.page?.solucoes || {}) },
+          diferenciais: { ...defaultContent.carbono.page.diferenciais, ...(data.carbono.page?.diferenciais || {}) },
+          ctaFinal: { ...defaultContent.carbono.page.ctaFinal, ...(data.carbono.page?.ctaFinal || {}) },
+        },
+      } : defaultContent.carbono,
     };
 
     // Migration for Hero
