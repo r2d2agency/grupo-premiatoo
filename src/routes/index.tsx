@@ -59,6 +59,7 @@ function Index() {
       {content.modules.garantias && <Garantias items={content.garantias} />}
       {content.modules.capital && <Capital data={content.capital} />}
       {content.modules.governanca && <Governanca data={content.governanca} />}
+      {content.modules.carbono && <Carbono data={content.carbono.home} />}
       {content.modules.news && <NewsArea news={content.news} />}
       {content.modules.parceiros && <Parceiros items={content.parceiros} />}
       {content.modules.footer && <Footer content={content} />}
