@@ -184,6 +184,16 @@ function AdminNewsPage() {
                           placeholder="#"
                         />
                       </div>
+                      <Field
+                        label="Vídeo do YouTube (opcional)"
+                        value={(item as any).videoUrl || ""}
+                        onChange={(v: string) => {
+                          const next = [...content.news];
+                          next[index] = { ...item, videoUrl: v } as any;
+                          update("news", next);
+                        }}
+                        placeholder="https://www.youtube.com/watch?v=..."
+                      />
                       <div className="grid grid-cols-2 gap-4">
                         <Field
                           label="Categoria"
@@ -230,7 +240,7 @@ function AdminNewsPage() {
                     </div>
                     <div className="space-y-4">
                       <ImageUpload
-                        label="Imagem da Notícia (800x600)"
+                        label="Capa da Notícia / Vídeo (800x600)"
                         value={item.image}
                         onChange={(v) => {
                           const next = [...content.news];
@@ -238,6 +248,11 @@ function AdminNewsPage() {
                           update("news", next);
                         }}
                       />
+                      {(item as any).videoUrl && (
+                        <p className="text-xs text-muted-foreground">
+                          Esta capa será exibida com um botão de play. Ao clicar, o vídeo do YouTube abre em tela cheia.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
