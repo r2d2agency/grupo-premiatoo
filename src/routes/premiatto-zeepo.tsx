@@ -380,13 +380,13 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
             </div>
           ) : (
             <form onSubmit={onSubmit} className="space-y-4">
-              <FormInput icon={<User className="w-4 h-4" />} placeholder="Nome completo" value={form.nome} onChange={(v) => setForm({ ...form, nome: v })} />
-              <FormInput placeholder="Empresa" value={form.empresa} onChange={(v) => setForm({ ...form, empresa: v })} />
-              <FormInput icon={<Phone className="w-4 h-4" />} placeholder="WhatsApp" value={form.whatsapp} onChange={(v) => setForm({ ...form, whatsapp: v })} />
-              <FormInput icon={<Mail className="w-4 h-4" />} placeholder="E-mail" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+              <FormInput icon={<User className="w-4 h-4" />} placeholder="Nome completo" value={form.nome} onChange={(v: string) => setForm({ ...form, nome: v })} />
+              <FormInput placeholder="Empresa" value={form.empresa} onChange={(v: string) => setForm({ ...form, empresa: v })} />
+              <FormInput icon={<Phone className="w-4 h-4" />} placeholder="WhatsApp" value={form.whatsapp} onChange={(v: string) => setForm({ ...form, whatsapp: v })} />
+              <FormInput icon={<Mail className="w-4 h-4" />} placeholder="E-mail" type="email" value={form.email} onChange={(v: string) => setForm({ ...form, email: v })} />
               <div className="grid grid-cols-2 gap-4">
-                <FormInput icon={<MapPin className="w-4 h-4" />} placeholder="Cidade" value={form.cidade} onChange={(v) => setForm({ ...form, cidade: v })} />
-                <FormInput placeholder="Estado" value={form.estado} onChange={(v) => setForm({ ...form, estado: v })} />
+                <FormInput icon={<MapPin className="w-4 h-4" />} placeholder="Cidade" value={form.cidade} onChange={(v: string) => setForm({ ...form, cidade: v })} />
+                <FormInput placeholder="Estado" value={form.estado} onChange={(v: string) => setForm({ ...form, estado: v })} />
               </div>
               <textarea
                 placeholder="Mensagem"
