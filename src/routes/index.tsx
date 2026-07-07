@@ -10,7 +10,6 @@ import { Capital } from "@/components/site/Capital";
 import { Governanca } from "@/components/site/Governanca";
 import { NewsArea } from "@/components/site/NewsArea";
 import { Parceiros } from "@/components/site/Parceiros";
-import { Carbono } from "@/components/site/Carbono";
 import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
@@ -59,7 +58,6 @@ function Index() {
       {content.modules.garantias && <Garantias items={content.garantias} />}
       {content.modules.capital && <Capital data={content.capital} />}
       {content.modules.governanca && <Governanca data={content.governanca} />}
-      {content.modules.carbono && <Carbono data={content.carbono.home} />}
       {content.modules.news && <NewsArea news={content.news} />}
       {content.modules.parceiros && <Parceiros items={content.parceiros} />}
       {content.modules.footer && <Footer content={content} />}

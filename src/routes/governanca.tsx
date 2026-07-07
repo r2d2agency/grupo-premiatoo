@@ -97,7 +97,7 @@ function GovernancaPage() {
                     hover:-translate-y-2 hover:shadow-[0_20px_50px_-15px_rgba(10,25,60,0.25)]
                     hover:border-brand-blue/40 ${alignCls(g.processo.itemAlign)}`}
                 >
-                  <div className="absolute -top-4 left-6 flex items-center justify-center w-10 h-10 bg-navy text-white font-display text-base font-bold rounded-full shadow-md ring-2 ring-white transition-all duration-500 group-hover:bg-brand-blue group-hover:scale-110 group-hover:rotate-[8deg]">
+                  <div className="absolute -top-4 left-6 flex items-center justify-center w-10 h-10 bg-navy text-gold font-display text-sm rounded-full shadow-md transition-all duration-500 group-hover:bg-brand-blue group-hover:scale-110 group-hover:rotate-[8deg]">
                     {s.number}
                   </div>
                   <div className="mt-4">
