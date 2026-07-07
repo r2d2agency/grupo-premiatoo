@@ -139,7 +139,16 @@ function AdminBrandCardsPage() {
                           update("brandCards", next);
                         }}
                       />
-                      <div className="space-y-1">
+                      <Field
+                        label="Link do Card (ex: /premiatto-zeepo)"
+                        value={card.href}
+                        onChange={(v: string) => {
+                          const next = [...content.brandCards];
+                          next[index] = { ...card, href: v };
+                          update("brandCards", next);
+                        }}
+                        placeholder="/premiatto-zeepo"
+                      />
                         <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Estilo do Card</Label>
                         <select
                           value={card.variant}
