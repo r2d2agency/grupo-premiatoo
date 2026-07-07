@@ -87,6 +87,7 @@ export type SiteContent = {
     variant: "light" | "dark";
     image: string;
     logoUrl?: string;
+    href?: string;
   }[];
   stats: { value: string; label: string }[];
   garantias: { 
@@ -251,6 +252,84 @@ export type SiteContent = {
       textSize?: number;
       textAlign?: "left" | "center" | "right" | "justify";
     }>;
+  };
+  premiattoZeepo: {
+    header: {
+      logoPremiatto: string;
+      logoZeepo: string;
+      menu: { label: string; href: string }[];
+      ctaLabel: string;
+      ctaHref: string;
+    };
+    hero: {
+      badge: string;
+      title: string;
+      titleHighlight: string;
+      text: string;
+      ctaPrimary: string;
+      ctaPrimaryHref: string;
+      ctaSecondary: string;
+      ctaSecondaryHref: string;
+      slides: { id: string; image: string; alt: string }[];
+      interval: number;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    parceria: {
+      badge: string;
+      title: string;
+      text: string;
+      image: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    beneficios: { items: { icon: string; label: string }[] };
+    solucoes: {
+      title: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      items: {
+        id: string;
+        image: string;
+        name: string;
+        resumo: string;
+        ctaLabel: string;
+        ctaHref: string;
+      }[];
+    };
+    cta: {
+      title: string;
+      text: string;
+      ctaLabel: string;
+      ctaHref: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    form: {
+      title: string;
+      subtitle: string;
+      ctaLabel: string;
+      lgpdLabel: string;
+      successMessage: string;
+      webhookUrl?: string;
+    };
+    footer: {
+      text: string;
+      linksTitle: string;
+      quickLinks: { label: string; href: string }[];
+      contactTitle: string;
+      phone: string;
+      email: string;
+      address: string;
+      social: { linkedin?: string; instagram?: string };
+      copyright: string;
+    };
   };
 };
 
