@@ -149,6 +149,7 @@ function AdminBrandCardsPage() {
                         }}
                         placeholder="/premiatto-zeepo"
                       />
+                      <div className="space-y-1">
                         <Label className="text-[11px] uppercase tracking-wider text-muted-foreground">Estilo do Card</Label>
                         <select
                           value={card.variant}
