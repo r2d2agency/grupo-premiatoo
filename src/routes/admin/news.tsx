@@ -240,7 +240,7 @@ function AdminNewsPage() {
                     </div>
                     <div className="space-y-4">
                       <ImageUpload
-                        label="Imagem da Notícia (800x600)"
+                        label="Capa da Notícia / Vídeo (800x600)"
                         value={item.image}
                         onChange={(v) => {
                           const next = [...content.news];
@@ -248,6 +248,11 @@ function AdminNewsPage() {
                           update("news", next);
                         }}
                       />
+                      {(item as any).videoUrl && (
+                        <p className="text-xs text-muted-foreground">
+                          Esta capa será exibida com um botão de play. Ao clicar, o vídeo do YouTube abre em tela cheia.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
