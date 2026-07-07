@@ -1,0 +1,14 @@
+node_modules
+dist
+.output
+.tanstack
+.git
+.workspace
+.lovable
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+backend/node_modules
+backend/uploads
