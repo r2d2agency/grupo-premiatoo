@@ -184,6 +184,16 @@ function AdminNewsPage() {
                           placeholder="#"
                         />
                       </div>
+                      <Field
+                        label="Vídeo do YouTube (opcional)"
+                        value={(item as any).videoUrl || ""}
+                        onChange={(v: string) => {
+                          const next = [...content.news];
+                          next[index] = { ...item, videoUrl: v } as any;
+                          update("news", next);
+                        }}
+                        placeholder="https://www.youtube.com/watch?v=..."
+                      />
                       <div className="grid grid-cols-2 gap-4">
                         <Field
                           label="Categoria"
