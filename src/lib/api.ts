@@ -38,6 +38,25 @@ export type SiteContent = {
     news: boolean;
     parceiros: boolean;
     footer: boolean;
+    carbono: boolean;
+  };
+  carbono: {
+    home: {
+      badge: string;
+      title: string;
+      description: string;
+      cta: string;
+      ctaHref: string;
+      image: string;
+      products: { title: string; icon: string }[];
+    };
+    page: {
+      hero: { title: string; subtitle: string; ctaLabel: string; ctaHref: string; image: string };
+      intro: { badge: string; title: string; text: string; image: string };
+      solucoes: { badge: string; title: string; items: { title: string; description: string; icon: string }[] };
+      diferenciais: { badge: string; title: string; text: string; items: string[]; image: string };
+      ctaFinal: { title: string; text: string; ctaLabel: string; ctaHref: string; image: string };
+    };
   };
   parceiros: {
     tag: string;
@@ -363,6 +382,7 @@ export const defaultContent: SiteContent = {
       { label: "Institucional", href: "/institucional" },
       { label: "Garantias", href: "/garantias" },
       { label: "Premiatto Capital", href: "#" },
+      { label: "Crédito de Carbono", href: "/carbono" },
       { label: "Governança", href: "/governanca" },
       { label: "Conteúdos", href: "#" },
       { label: "Parceiros", href: "#" },
@@ -388,6 +408,69 @@ export const defaultContent: SiteContent = {
     news: true,
     parceiros: true,
     footer: true,
+    carbono: true,
+  },
+  carbono: {
+    home: {
+      badge: "NOVA FRENTE PREMIATTO",
+      title: "Crédito de Carbono e CPR Verde",
+      description: "A Premiatto passa a atuar na comercialização de quotas de crédito de carbono e em estruturas ligadas à CPR Verde, conectando empresas, produtores e projetos ambientais a operações com governança, análise e responsabilidade.",
+      cta: "CONHECER SOLUÇÕES AMBIENTAIS",
+      ctaHref: "/carbono",
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600&q=80&auto=format&fit=crop",
+      products: [
+        { title: "Crédito de Carbono", icon: "leaf" },
+        { title: "CPR Verde", icon: "sprout" },
+        { title: "Quotas Ambientais", icon: "trees" },
+        { title: "Estruturação de Projetos Sustentáveis", icon: "sun" },
+      ],
+    },
+    page: {
+      hero: {
+        title: "Crédito de Carbono e CPR Verde",
+        subtitle: "Estruturas ambientais para empresas que enxergam sustentabilidade como ativo estratégico. A Premiatto atua na comercialização de quotas de crédito de carbono e em soluções relacionadas à CPR Verde, com foco em governança, segurança operacional e conexão entre oportunidades ambientais e mercado corporativo.",
+        ctaLabel: "FALAR COM ESPECIALISTA",
+        ctaHref: "#contato",
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80&auto=format&fit=crop",
+      },
+      intro: {
+        badge: "SUSTENTABILIDADE COMO ATIVO",
+        title: "Soluções ambientais estruturadas para empresas que buscam valor, sustentabilidade e novas oportunidades de mercado.",
+        text: "A transição para uma economia de baixo carbono abre caminhos concretos para empresas que compreendem a sustentabilidade como componente estratégico. Estruturamos operações que unem responsabilidade ambiental, segurança jurídica e valor econômico.",
+        image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&q=80&auto=format&fit=crop",
+      },
+      solucoes: {
+        badge: "NOSSAS SOLUÇÕES AMBIENTAIS",
+        title: "Estruturas ambientais com governança e critério técnico.",
+        items: [
+          { title: "Crédito de Carbono", description: "Comercialização de quotas certificadas conectando ofertantes a empresas comprometidas com metas ESG.", icon: "leaf" },
+          { title: "CPR Verde", description: "Estruturação de operações lastreadas em produção sustentável, com análise técnica e jurídica.", icon: "sprout" },
+          { title: "Quotas Ambientais", description: "Intermediação de quotas ambientais com transparência, governança e rastreabilidade.", icon: "trees" },
+          { title: "Estruturação de Projetos Sustentáveis", description: "Desenho e viabilização de projetos ambientais com foco em geração de valor de longo prazo.", icon: "sun" },
+        ],
+      },
+      diferenciais: {
+        badge: "POR QUE A PREMIATTO",
+        title: "Governança e experiência aplicadas ao mercado ambiental.",
+        text: "Aplicamos ao mercado ambiental o mesmo rigor institucional que sustenta nossas operações de garantias e capital: análise técnica, compliance e acompanhamento contínuo.",
+        items: [
+          "Governança institucional",
+          "Análise técnica e jurídica",
+          "Segurança operacional",
+          "Conexão com projetos verificáveis",
+          "Acompanhamento contínuo",
+          "Visão de longo prazo",
+        ],
+        image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&q=80&auto=format&fit=crop",
+      },
+      ctaFinal: {
+        title: "Sustentabilidade estruturada gera valor real.",
+        text: "Fale com um especialista Premiatto e conheça as oportunidades em crédito de carbono e CPR Verde.",
+        ctaLabel: "FALAR COM ESPECIALISTA",
+        ctaHref: "#contato",
+        image: "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?w=1600&q=80&auto=format&fit=crop",
+      },
+    },
   },
   news: [
     {
@@ -676,6 +759,16 @@ export async function fetchContent(): Promise<SiteContent> {
         principios: { ...defaultContent.governancaPage.principios, ...(data.governancaPage.principios || {}) },
         ctaFinal: { ...defaultContent.governancaPage.ctaFinal, ...(data.governancaPage.ctaFinal || {}) },
       } : defaultContent.governancaPage,
+      carbono: data.carbono ? {
+        home: { ...defaultContent.carbono.home, ...(data.carbono.home || {}) },
+        page: {
+          hero: { ...defaultContent.carbono.page.hero, ...(data.carbono.page?.hero || {}) },
+          intro: { ...defaultContent.carbono.page.intro, ...(data.carbono.page?.intro || {}) },
+          solucoes: { ...defaultContent.carbono.page.solucoes, ...(data.carbono.page?.solucoes || {}) },
+          diferenciais: { ...defaultContent.carbono.page.diferenciais, ...(data.carbono.page?.diferenciais || {}) },
+          ctaFinal: { ...defaultContent.carbono.page.ctaFinal, ...(data.carbono.page?.ctaFinal || {}) },
+        },
+      } : defaultContent.carbono,
     };
 
     // Migration for Hero

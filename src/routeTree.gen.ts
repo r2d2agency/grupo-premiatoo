@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
 import { Route as GovernancaRouteImport } from './routes/governanca'
+import { Route as CarbonoRouteImport } from './routes/carbono'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as GarantiasIndexRouteImport } from './routes/garantias.index'
@@ -43,6 +44,11 @@ const InstitucionalRoute = InstitucionalRouteImport.update({
 const GovernancaRoute = GovernancaRouteImport.update({
   id: '/governanca',
   path: '/governanca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarbonoRoute = CarbonoRouteImport.update({
+  id: '/carbono',
+  path: '/carbono',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -163,6 +169,7 @@ const AdminBrandCardsRoute = AdminBrandCardsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/carbono': typeof CarbonoRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/carbono': typeof CarbonoRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
@@ -218,6 +226,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/carbono': typeof CarbonoRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/carbono'
     | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/carbono'
     | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/carbono'
     | '/governanca'
     | '/institucional'
     | '/admin/brand-cards'
@@ -329,6 +341,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CarbonoRoute: typeof CarbonoRoute
   GovernancaRoute: typeof GovernancaRoute
   InstitucionalRoute: typeof InstitucionalRoute
   AdminBrandCardsRoute: typeof AdminBrandCardsRoute
@@ -369,6 +382,13 @@ declare module '@tanstack/react-router' {
       path: '/governanca'
       fullPath: '/governanca'
       preLoaderRoute: typeof GovernancaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/carbono': {
+      id: '/carbono'
+      path: '/carbono'
+      fullPath: '/carbono'
+      preLoaderRoute: typeof CarbonoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -537,6 +557,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CarbonoRoute: CarbonoRoute,
   GovernancaRoute: GovernancaRoute,
   InstitucionalRoute: InstitucionalRoute,
   AdminBrandCardsRoute: AdminBrandCardsRoute,
@@ -565,13 +586,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
