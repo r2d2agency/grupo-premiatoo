@@ -1,7 +1,8 @@
-# Frontend image — builds TanStack Start app and runs the Nitro node-server output
+# Frontend image — builds TanStack Start app and runs the Node server
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Install dependencies using bun.lock if available
 COPY package.json bun.lock* ./
 RUN npm install --legacy-peer-deps
 
@@ -13,13 +14,14 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-ENV PORT=3000
+# Set VITE_API_URL at runtime for SSR if needed
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 
-# TanStack Start (Nitro node-server preset) emits the entire runnable server
-# under .output/ — it is self-contained and does not need node_modules.
-COPY --from=builder /app/.output ./.output
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/server.mjs ./server.mjs
+COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "server.mjs"]
