@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PremiattoZeepoRouteImport } from './routes/premiatto-zeepo'
 import { Route as InstitucionalRouteImport } from './routes/institucional'
 import { Route as GovernancaRouteImport } from './routes/governanca'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +21,7 @@ import { Route as GarantiasGarantiaIdRouteImport } from './routes/garantias.$gar
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminStatsRouteImport } from './routes/admin/stats'
 import { Route as AdminSeoRouteImport } from './routes/admin/seo'
+import { Route as AdminPremiattoZeepoRouteImport } from './routes/admin/premiatto-zeepo'
 import { Route as AdminParceirosRouteImport } from './routes/admin/parceiros'
 import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
@@ -35,6 +37,11 @@ import { Route as AdminCapitalRouteImport } from './routes/admin/capital'
 import { Route as AdminBrandingRouteImport } from './routes/admin.branding'
 import { Route as AdminBrandCardsRouteImport } from './routes/admin/brand-cards'
 
+const PremiattoZeepoRoute = PremiattoZeepoRouteImport.update({
+  id: '/premiatto-zeepo',
+  path: '/premiatto-zeepo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InstitucionalRoute = InstitucionalRouteImport.update({
   id: '/institucional',
   path: '/institucional',
@@ -88,6 +95,11 @@ const AdminStatsRoute = AdminStatsRouteImport.update({
 const AdminSeoRoute = AdminSeoRouteImport.update({
   id: '/admin/seo',
   path: '/admin/seo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPremiattoZeepoRoute = AdminPremiattoZeepoRouteImport.update({
+  id: '/admin/premiatto-zeepo',
+  path: '/admin/premiatto-zeepo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminParceirosRoute = AdminParceirosRouteImport.update({
@@ -165,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
+  '/premiatto-zeepo': typeof PremiattoZeepoRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -179,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/admin/navigation': typeof AdminNavigationRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
@@ -192,6 +206,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
+  '/premiatto-zeepo': typeof PremiattoZeepoRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -206,6 +221,7 @@ export interface FileRoutesByTo {
   '/admin/navigation': typeof AdminNavigationRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
@@ -220,6 +236,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/governanca': typeof GovernancaRoute
   '/institucional': typeof InstitucionalRoute
+  '/premiatto-zeepo': typeof PremiattoZeepoRoute
   '/admin/brand-cards': typeof AdminBrandCardsRoute
   '/admin/branding': typeof AdminBrandingRoute
   '/admin/capital': typeof AdminCapitalRoute
@@ -234,6 +251,7 @@ export interface FileRoutesById {
   '/admin/navigation': typeof AdminNavigationRoute
   '/admin/news': typeof AdminNewsRoute
   '/admin/parceiros': typeof AdminParceirosRoute
+  '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
@@ -249,6 +267,7 @@ export interface FileRouteTypes {
     | '/'
     | '/governanca'
     | '/institucional'
+    | '/premiatto-zeepo'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -263,6 +282,7 @@ export interface FileRouteTypes {
     | '/admin/navigation'
     | '/admin/news'
     | '/admin/parceiros'
+    | '/admin/premiatto-zeepo'
     | '/admin/seo'
     | '/admin/stats'
     | '/admin/users'
@@ -276,6 +296,7 @@ export interface FileRouteTypes {
     | '/'
     | '/governanca'
     | '/institucional'
+    | '/premiatto-zeepo'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -290,6 +311,7 @@ export interface FileRouteTypes {
     | '/admin/navigation'
     | '/admin/news'
     | '/admin/parceiros'
+    | '/admin/premiatto-zeepo'
     | '/admin/seo'
     | '/admin/stats'
     | '/admin/users'
@@ -303,6 +325,7 @@ export interface FileRouteTypes {
     | '/'
     | '/governanca'
     | '/institucional'
+    | '/premiatto-zeepo'
     | '/admin/brand-cards'
     | '/admin/branding'
     | '/admin/capital'
@@ -317,6 +340,7 @@ export interface FileRouteTypes {
     | '/admin/navigation'
     | '/admin/news'
     | '/admin/parceiros'
+    | '/admin/premiatto-zeepo'
     | '/admin/seo'
     | '/admin/stats'
     | '/admin/users'
@@ -331,6 +355,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GovernancaRoute: typeof GovernancaRoute
   InstitucionalRoute: typeof InstitucionalRoute
+  PremiattoZeepoRoute: typeof PremiattoZeepoRoute
   AdminBrandCardsRoute: typeof AdminBrandCardsRoute
   AdminBrandingRoute: typeof AdminBrandingRoute
   AdminCapitalRoute: typeof AdminCapitalRoute
@@ -345,6 +370,7 @@ export interface RootRouteChildren {
   AdminNavigationRoute: typeof AdminNavigationRoute
   AdminNewsRoute: typeof AdminNewsRoute
   AdminParceirosRoute: typeof AdminParceirosRoute
+  AdminPremiattoZeepoRoute: typeof AdminPremiattoZeepoRoute
   AdminSeoRoute: typeof AdminSeoRoute
   AdminStatsRoute: typeof AdminStatsRoute
   AdminUsersRoute: typeof AdminUsersRoute
@@ -357,6 +383,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/premiatto-zeepo': {
+      id: '/premiatto-zeepo'
+      path: '/premiatto-zeepo'
+      fullPath: '/premiatto-zeepo'
+      preLoaderRoute: typeof PremiattoZeepoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/institucional': {
       id: '/institucional'
       path: '/institucional'
@@ -432,6 +465,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/seo'
       fullPath: '/admin/seo'
       preLoaderRoute: typeof AdminSeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/premiatto-zeepo': {
+      id: '/admin/premiatto-zeepo'
+      path: '/admin/premiatto-zeepo'
+      fullPath: '/admin/premiatto-zeepo'
+      preLoaderRoute: typeof AdminPremiattoZeepoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/parceiros': {
@@ -539,6 +579,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GovernancaRoute: GovernancaRoute,
   InstitucionalRoute: InstitucionalRoute,
+  PremiattoZeepoRoute: PremiattoZeepoRoute,
   AdminBrandCardsRoute: AdminBrandCardsRoute,
   AdminBrandingRoute: AdminBrandingRoute,
   AdminCapitalRoute: AdminCapitalRoute,
@@ -553,6 +594,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminNavigationRoute: AdminNavigationRoute,
   AdminNewsRoute: AdminNewsRoute,
   AdminParceirosRoute: AdminParceirosRoute,
+  AdminPremiattoZeepoRoute: AdminPremiattoZeepoRoute,
   AdminSeoRoute: AdminSeoRoute,
   AdminStatsRoute: AdminStatsRoute,
   AdminUsersRoute: AdminUsersRoute,

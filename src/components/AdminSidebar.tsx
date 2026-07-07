@@ -43,6 +43,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Painel Geral", path: "/admin" },
   { icon: Building2, label: "Página Institucional", path: "/admin/institucional" },
   { icon: Scale, label: "Página Governança", path: "/admin/governanca-pagina" },
+  { icon: Sparkles, label: "Landing Premiatto+Zeepo", path: "/admin/premiatto-zeepo" },
   { 
     icon: Home, 
     label: "Página Home", 

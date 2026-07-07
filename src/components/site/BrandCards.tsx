@@ -32,7 +32,7 @@ export function BrandCards({ cards }: { cards: SiteContent["brandCards"] }) {
                 <p className="mt-6 font-display text-2xl max-w-md leading-snug">{c.title}</p>
               </div>
               <a
-                href="#"
+                href={c.href || "#"}
                 className={
                   "relative inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider mt-6 " +
                   (dark ? "text-brand-blue" : "text-brand-blue")

@@ -87,6 +87,7 @@ export type SiteContent = {
     variant: "light" | "dark";
     image: string;
     logoUrl?: string;
+    href?: string;
   }[];
   stats: { value: string; label: string }[];
   garantias: { 
@@ -251,6 +252,84 @@ export type SiteContent = {
       textSize?: number;
       textAlign?: "left" | "center" | "right" | "justify";
     }>;
+  };
+  premiattoZeepo: {
+    header: {
+      logoPremiatto: string;
+      logoZeepo: string;
+      menu: { label: string; href: string }[];
+      ctaLabel: string;
+      ctaHref: string;
+    };
+    hero: {
+      badge: string;
+      title: string;
+      titleHighlight: string;
+      text: string;
+      ctaPrimary: string;
+      ctaPrimaryHref: string;
+      ctaSecondary: string;
+      ctaSecondaryHref: string;
+      slides: { id: string; image: string; alt: string }[];
+      interval: number;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    parceria: {
+      badge: string;
+      title: string;
+      text: string;
+      image: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    beneficios: { items: { icon: string; label: string }[] };
+    solucoes: {
+      title: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      items: {
+        id: string;
+        image: string;
+        name: string;
+        resumo: string;
+        ctaLabel: string;
+        ctaHref: string;
+      }[];
+    };
+    cta: {
+      title: string;
+      text: string;
+      ctaLabel: string;
+      ctaHref: string;
+      titleSize?: number;
+      titleAlign?: "left" | "center" | "right" | "justify";
+      textSize?: number;
+      textAlign?: "left" | "center" | "right" | "justify";
+    };
+    form: {
+      title: string;
+      subtitle: string;
+      ctaLabel: string;
+      lgpdLabel: string;
+      successMessage: string;
+      webhookUrl?: string;
+    };
+    footer: {
+      text: string;
+      linksTitle: string;
+      quickLinks: { label: string; href: string }[];
+      contactTitle: string;
+      phone: string;
+      email: string;
+      address: string;
+      social: { linkedin?: string; instagram?: string };
+      copyright: string;
+    };
   };
 };
 
@@ -654,6 +733,97 @@ export const defaultContent: SiteContent = {
     canonicalUrl: "https://garantidorapremiatto.com.br",
     scripts: []
   },
+  premiattoZeepo: {
+    header: {
+      logoPremiatto: "",
+      logoZeepo: "",
+      menu: [
+        { label: "Sobre a parceria", href: "#parceria" },
+        { label: "Soluções", href: "#solucoes" },
+        { label: "Contato", href: "#contato" },
+      ],
+      ctaLabel: "SOLICITAR CONTATO",
+      ctaHref: "#contato",
+    },
+    hero: {
+      badge: "PREMIATTO LOCADORA + ZEEPO",
+      title: "Tecnologia, inovação e energia para transformar o",
+      titleHighlight: "agronegócio.",
+      text: "A Premiatto Locadora, em parceria com a Zeepo, oferece soluções completas para empresas e produtores que desejam investir em mobilidade elétrica, eficiência operacional e sustentabilidade.",
+      ctaPrimary: "Quero falar com um especialista",
+      ctaPrimaryHref: "#contato",
+      ctaSecondary: "Conheça a parceria",
+      ctaSecondaryHref: "#parceria",
+      slides: [
+        { id: "s1", image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=1600&q=80&auto=format&fit=crop", alt: "Trator elétrico Zeepo em lavoura moderna" },
+        { id: "s2", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=80&auto=format&fit=crop", alt: "Equipamentos agrícolas elétricos" },
+        { id: "s3", image: "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=1600&q=80&auto=format&fit=crop", alt: "Carregadores industriais" },
+        { id: "s4", image: "https://images.unsplash.com/photo-1581092919535-6c3f6e0f3d7f?w=1600&q=80&auto=format&fit=crop", alt: "Equipe técnica realizando entrega" },
+        { id: "s5", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80&auto=format&fit=crop", alt: "Máquinas elétricas em operação" },
+      ],
+      interval: 5000,
+      titleSize: 56, titleAlign: "left",
+      textSize: 15, textAlign: "left",
+    },
+    parceria: {
+      badge: "SOBRE A PARCERIA",
+      title: "Uma parceria construída para o futuro.",
+      text: "A união entre a solidez financeira da Premiatto Locadora e a tecnologia da Zeepo cria novas possibilidades para aquisição, locação e implantação de soluções elétricas para o agronegócio e empresas.",
+      image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1200&q=80&auto=format&fit=crop",
+      titleSize: 40, titleAlign: "left",
+      textSize: 15, textAlign: "left",
+    },
+    beneficios: {
+      items: [
+        { icon: "cpu", label: "Tecnologia nacional" },
+        { icon: "trending-down", label: "Baixo custo operacional" },
+        { icon: "zap", label: "Alta eficiência" },
+        { icon: "wrench", label: "Baixa manutenção" },
+        { icon: "settings", label: "Soluções personalizadas" },
+        { icon: "headphones", label: "Atendimento consultivo" },
+      ],
+    },
+    solucoes: {
+      title: "Conheça algumas soluções Zeepo",
+      titleSize: 36, titleAlign: "center",
+      items: [
+        { id: "sol1", image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&q=80&auto=format&fit=crop", name: "Trator Elétrico TR25-E", resumo: "Alta performance com zero emissão para lavouras modernas.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
+        { id: "sol2", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80&auto=format&fit=crop", name: "Equipamentos Agrícolas", resumo: "Linha completa de implementos elétricos.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
+        { id: "sol3", image: "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=800&q=80&auto=format&fit=crop", name: "Estações de Carregamento", resumo: "Infraestrutura industrial para operação contínua.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
+      ],
+    },
+    cta: {
+      title: "Quer levar inovação para sua empresa?",
+      text: "Nossa equipe está preparada para apresentar a melhor solução para sua necessidade.",
+      ctaLabel: "Solicitar atendimento",
+      ctaHref: "#contato",
+      titleSize: 40, titleAlign: "center",
+      textSize: 16, textAlign: "center",
+    },
+    form: {
+      title: "Fale com um especialista",
+      subtitle: "Preencha o formulário e nossa equipe entrará em contato com as melhores condições para você.",
+      ctaLabel: "QUERO RECEBER UMA PROPOSTA",
+      lgpdLabel: "Li e concordo com a Política de Privacidade.",
+      successMessage: "Recebemos seu contato! Em breve nossa equipe entrará em contato.",
+      webhookUrl: "",
+    },
+    footer: {
+      text: "Soluções financeiras inteligentes para aquisição de equipamentos e impulsionamento do agro.",
+      linksTitle: "Links rápidos",
+      quickLinks: [
+        { label: "Sobre a parceria", href: "#parceria" },
+        { label: "Soluções", href: "#solucoes" },
+        { label: "Contato", href: "#contato" },
+      ],
+      contactTitle: "Contato",
+      phone: "+55 11 3030-6200",
+      email: "contato@premiattolocadora.com.br",
+      address: "São Paulo – SP",
+      social: { linkedin: "#", instagram: "#" },
+      copyright: "© 2026 Premiatto Locadora. Todos os direitos reservados.",
+    },
+  },
 };
 
 export async function fetchContent(): Promise<SiteContent> {
@@ -677,6 +847,18 @@ export async function fetchContent(): Promise<SiteContent> {
         principios: { ...defaultContent.governancaPage.principios, ...(data.governancaPage.principios || {}) },
         ctaFinal: { ...defaultContent.governancaPage.ctaFinal, ...(data.governancaPage.ctaFinal || {}) },
       } : defaultContent.governancaPage,
+      premiattoZeepo: data.premiattoZeepo ? {
+        ...defaultContent.premiattoZeepo,
+        ...data.premiattoZeepo,
+        header: { ...defaultContent.premiattoZeepo.header, ...(data.premiattoZeepo.header || {}) },
+        hero: { ...defaultContent.premiattoZeepo.hero, ...(data.premiattoZeepo.hero || {}) },
+        parceria: { ...defaultContent.premiattoZeepo.parceria, ...(data.premiattoZeepo.parceria || {}) },
+        beneficios: { ...defaultContent.premiattoZeepo.beneficios, ...(data.premiattoZeepo.beneficios || {}) },
+        solucoes: { ...defaultContent.premiattoZeepo.solucoes, ...(data.premiattoZeepo.solucoes || {}) },
+        cta: { ...defaultContent.premiattoZeepo.cta, ...(data.premiattoZeepo.cta || {}) },
+        form: { ...defaultContent.premiattoZeepo.form, ...(data.premiattoZeepo.form || {}) },
+        footer: { ...defaultContent.premiattoZeepo.footer, ...(data.premiattoZeepo.footer || {}) },
+      } : defaultContent.premiattoZeepo,
     };
 
     // Migration for Hero
