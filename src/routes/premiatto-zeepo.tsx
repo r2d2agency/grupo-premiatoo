@@ -414,7 +414,7 @@ function Solucoes({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.96, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative w-full max-w-[1100px] rounded-2xl overflow-hidden border border-white/10"
+              className="relative w-full max-w-[900px] max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10"
               style={{ background: NAVY }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -426,7 +426,7 @@ function Solucoes({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
                 <Icons.X className="w-5 h-5" />
               </button>
 
-              <div className="relative aspect-[16/10] bg-black/60">
+              <div className="relative mx-auto w-full max-w-[400px] aspect-square bg-black/60">
                 {gallery.length > 0 && (
                   <AnimatePresence mode="wait">
                     <motion.img
