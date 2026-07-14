@@ -212,15 +212,33 @@ function AdminPremiattoZeepo() {
                 </div>
                 {pz.solucoes.items.map((s, i) => (
                   <div key={s.id} className="border rounded p-4 grid md:grid-cols-2 gap-4">
-                    <ImageUpload label="Imagem" value={s.image} onChange={(v) => { const n = [...pz.solucoes.items]; n[i] = { ...s, image: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
+                    <ImageUpload label="Imagem principal (capa)" value={s.image} onChange={(v) => { const n = [...pz.solucoes.items]; n[i] = { ...s, image: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
                     <div className="space-y-3">
-                      <Field label="Nome" value={s.name} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, name: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
-                      <Field label="Resumo" value={s.resumo} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, resumo: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} textarea />
+                      <Field label="Nome (legenda)" value={s.name} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, name: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
+                      <Field label="Breve descrição" value={s.resumo} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, resumo: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} textarea />
                       <div className="grid grid-cols-2 gap-2">
                         <Field label="Botão" value={s.ctaLabel} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, ctaLabel: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
                         <Field label="Link" value={s.ctaHref} onChange={(v: string) => { const n = [...pz.solucoes.items]; n[i] = { ...s, ctaHref: v }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
                       </div>
                       <Button variant="ghost" size="sm" onClick={() => updatePZ({ solucoes: { ...pz.solucoes, items: pz.solucoes.items.filter((_, x) => x !== i) } })} className="text-destructive"><Trash2 className="w-4 h-4 mr-1" />Remover</Button>
+                    </div>
+                    <div className="md:col-span-2 border-t pt-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-semibold text-navy">Galeria (fotos adicionais)</span>
+                        <Button size="sm" variant="outline" onClick={() => { const n = [...pz.solucoes.items]; n[i] = { ...s, galeria: [...(s.galeria || []), ""] }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }}>
+                          <Plus className="w-3 h-3 mr-1" /> Foto
+                        </Button>
+                      </div>
+                      <div className="grid md:grid-cols-3 gap-3">
+                        {(s.galeria || []).map((g, gi) => (
+                          <div key={gi} className="space-y-2">
+                            <ImageUpload label={`Foto ${gi + 1}`} value={g} onChange={(v) => { const n = [...pz.solucoes.items]; const gal = [...(s.galeria || [])]; gal[gi] = v; n[i] = { ...s, galeria: gal }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }} />
+                            <Button variant="ghost" size="sm" className="text-destructive w-full" onClick={() => { const n = [...pz.solucoes.items]; n[i] = { ...s, galeria: (s.galeria || []).filter((_, x) => x !== gi) }; updatePZ({ solucoes: { ...pz.solucoes, items: n } }); }}>
+                              <Trash2 className="w-3 h-3 mr-1" /> Remover
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}

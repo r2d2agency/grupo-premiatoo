@@ -268,43 +268,241 @@ function Beneficios({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
 
 /* ---------------- SOLUÇÕES ---------------- */
 function Solucoes({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
+  const items = pz.solucoes.items;
+  const [page, setPage] = useState(0);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const [perView, setPerView] = useState(3);
+
+  useEffect(() => {
+    const calc = () => {
+      const w = window.innerWidth;
+      setPerView(w < 640 ? 1 : w < 1024 ? 2 : 3);
+    };
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
+
+  const totalPages = Math.max(1, Math.ceil(items.length / perView));
+  const currentPage = Math.min(page, totalPages - 1);
+
+  const openItem = (i: number) => { setOpenIdx(i); setPhotoIdx(0); };
+  const closeItem = () => setOpenIdx(null);
+
+  useEffect(() => {
+    if (openIdx === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeItem();
+      if (e.key === "ArrowRight") setPhotoIdx((p) => p + 1);
+      if (e.key === "ArrowLeft") setPhotoIdx((p) => p - 1);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [openIdx]);
+
+  const activeItem = openIdx !== null ? items[openIdx] : null;
+  const gallery = activeItem ? [activeItem.image, ...(activeItem.galeria || [])].filter(Boolean) : [];
+  const safePhoto = gallery.length ? ((photoIdx % gallery.length) + gallery.length) % gallery.length : 0;
+
   return (
     <section id="solucoes" className="py-24 border-t border-white/5">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <h2
-          className="font-display mb-12"
-          style={{
-            fontSize: `${pz.solucoes.titleSize || 36}px`,
-            textAlign: pz.solucoes.titleAlign || "center",
-          }}
-        >
-          {pz.solucoes.title}
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pz.solucoes.items.map((s, i) => (
-            <motion.div
-              key={s.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="group rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-[color:var(--cy)] transition-all"
-              style={{ ["--cy" as any]: CYAN }}
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img src={s.image} alt={s.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        <div className="flex items-end justify-between mb-10 gap-4 flex-wrap">
+          <h2
+            className="font-display"
+            style={{
+              fontSize: `${pz.solucoes.titleSize || 36}px`,
+              textAlign: pz.solucoes.titleAlign || "center",
+            }}
+          >
+            {pz.solucoes.title}
+          </h2>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={currentPage === 0}
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center disabled:opacity-30 hover:border-[color:var(--cy)] transition"
+                style={{ ["--cy" as any]: CYAN }}
+                aria-label="anterior"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                disabled={currentPage === totalPages - 1}
+                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center disabled:opacity-30 hover:border-[color:var(--cy)] transition"
+                style={{ ["--cy" as any]: CYAN }}
+                aria-label="próximo"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentPage * 100}%)` }}
+          >
+            {items.map((s, i) => (
+              <div
+                key={s.id}
+                className="shrink-0 px-3"
+                style={{ width: `${100 / perView}%` }}
+              >
+                <button
+                  onClick={() => openItem(i)}
+                  className="group text-left w-full rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-[color:var(--cy)] transition-all"
+                  style={{ ["--cy" as any]: CYAN }}
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    <img src={s.image} alt={s.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    {(s.galeria?.length ?? 0) > 0 && (
+                      <div className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(4,26,59,0.75)", color: CYAN }}>
+                        +{(s.galeria?.length ?? 0) + 1} FOTOS
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-2">{s.name}</h3>
+                    <p className="text-sm text-white/60 leading-relaxed mb-4 line-clamp-2">{s.resumo}</p>
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider" style={{ color: CYAN }}>
+                      Ver galeria <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </button>
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-semibold mb-2">{s.name}</h3>
-                <p className="text-sm text-white/60 mb-5 leading-relaxed">{s.resumo}</p>
-                <a href={s.ctaHref} className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider" style={{ color: CYAN }}>
-                  {s.ctaLabel} <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+            ))}
+          </div>
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex justify-center gap-2 mt-8">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i)}
+                aria-label={`página ${i + 1}`}
+                className="h-[3px] rounded-full transition-all"
+                style={{
+                  width: i === currentPage ? 32 : 16,
+                  background: i === currentPage ? CYAN : "rgba(255,255,255,0.3)",
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* LIGHTBOX */}
+      <AnimatePresence>
+        {activeItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10"
+            style={{ background: "rgba(2,12,26,0.92)" }}
+            onClick={closeItem}
+          >
+            <motion.div
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative w-full max-w-[1100px] rounded-2xl overflow-hidden border border-white/10"
+              style={{ background: NAVY }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={closeItem}
+                aria-label="fechar"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full flex items-center justify-center bg-black/50 hover:bg-black/80 text-white backdrop-blur transition"
+              >
+                <Icons.X className="w-5 h-5" />
+              </button>
+
+              <div className="relative aspect-[16/10] bg-black/60">
+                {gallery.length > 0 && (
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={safePhoto}
+                      src={gallery[safePhoto]}
+                      alt={activeItem.name}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
+                )}
+                {gallery.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setPhotoIdx((p) => p - 1)}
+                      aria-label="foto anterior"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center bg-black/40 hover:bg-black/70 text-white backdrop-blur transition"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => setPhotoIdx((p) => p + 1)}
+                      aria-label="próxima foto"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center bg-black/40 hover:bg-black/70 text-white backdrop-blur transition"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs px-3 py-1 rounded-full bg-black/50 text-white/90 backdrop-blur">
+                      {safePhoto + 1} / {gallery.length}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div className="p-6 md:p-8">
+                <h3 className="font-display text-2xl md:text-3xl mb-2">{activeItem.name}</h3>
+                <p className="text-white/70 text-sm md:text-base leading-relaxed mb-6 max-w-3xl">{activeItem.resumo}</p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={activeItem.ctaHref}
+                    onClick={closeItem}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-md text-xs font-semibold tracking-wider transition hover:opacity-90"
+                    style={{ background: CYAN, color: NAVY }}
+                  >
+                    {activeItem.ctaLabel} <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    onClick={closeItem}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-md text-xs font-semibold tracking-wider border border-white/20 hover:bg-white/5 transition"
+                  >
+                    Continuar navegando
+                  </button>
+                </div>
+
+                {gallery.length > 1 && (
+                  <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
+                    {gallery.map((g, gi) => (
+                      <button
+                        key={gi}
+                        onClick={() => setPhotoIdx(gi)}
+                        className={`shrink-0 w-20 h-14 rounded overflow-hidden border-2 transition ${gi === safePhoto ? "" : "opacity-60 hover:opacity-100"}`}
+                        style={{ borderColor: gi === safePhoto ? CYAN : "transparent" }}
+                      >
+                        <img src={g} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
-          ))}
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
