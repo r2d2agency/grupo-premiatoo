@@ -235,6 +235,158 @@ app.put("/api/users/:id/password", auth, async (req, res) => {
   }
 });
 
+// ==================== LEADS (CRM) ====================
+const LEAD_STATUSES = ["novo", "em_contato", "qualificado", "ganho", "perdido"];
+
+function renderTemplate(tpl, data) {
+  return String(tpl || "").replace(/\{\{(\w+)\}\}/g, (_, k) => (data[k] ?? ""));
+}
+
+async function sendLeadEmail(lead) {
+  try {
+    const cfg = await prisma.smtpConfig.findUnique({ where: { id: 1 } });
+    if (!cfg || !cfg.enabled || !cfg.host || !cfg.recipients) return;
+    const transporter = nodemailer.createTransport({
+      host: cfg.host,
+      port: cfg.port,
+      secure: cfg.secure,
+      auth: cfg.username ? { user: cfg.username, pass: cfg.password } : undefined,
+    });
+    const to = cfg.recipients.split(/[,;\s]+/).map(s => s.trim()).filter(Boolean);
+    if (!to.length) return;
+    const subject = renderTemplate(cfg.subject || "Novo lead: {{nome}}", lead);
+    const rows = [
+      ["Origem", lead.source], ["Nome", lead.nome], ["Empresa", lead.empresa],
+      ["WhatsApp", lead.whatsapp], ["E-mail", lead.email],
+      ["Cidade", lead.cidade], ["Estado", lead.estado], ["Mensagem", lead.mensagem],
+    ].filter(([, v]) => v);
+    const html = `
+      <div style="font-family:Arial,sans-serif;max-width:600px">
+        <h2 style="color:#001B3D">Novo lead recebido</h2>
+        <table cellpadding="8" style="border-collapse:collapse;width:100%;font-size:14px">
+          ${rows.map(([k, v]) => `<tr><td style="background:#f5f5f5;font-weight:600;width:140px">${k}</td><td>${String(v).replace(/</g,"&lt;")}</td></tr>`).join("")}
+        </table>
+        <p style="color:#888;font-size:12px;margin-top:16px">Recebido em ${new Date(lead.createdAt).toLocaleString("pt-BR")}</p>
+      </div>`;
+    await transporter.sendMail({
+      from: cfg.fromName ? `"${cfg.fromName}" <${cfg.fromEmail || cfg.username}>` : (cfg.fromEmail || cfg.username),
+      to, subject, html,
+      replyTo: lead.email || undefined,
+    });
+  } catch (err) {
+    console.error("sendLeadEmail error:", err.message);
+  }
+}
+
+// Public: create lead from site forms
+app.post("/api/leads", async (req, res) => {
+  try {
+    const b = req.body || {};
+    if (!b.nome || !b.email) return res.status(400).json({ error: "missing fields" });
+    const lead = await prisma.lead.create({
+      data: {
+        source: String(b.source || "premiatto-zeepo").slice(0, 80),
+        nome: String(b.nome).slice(0, 200),
+        empresa: b.empresa ? String(b.empresa).slice(0, 200) : null,
+        whatsapp: b.whatsapp ? String(b.whatsapp).slice(0, 60) : null,
+        email: String(b.email).slice(0, 200),
+        cidade: b.cidade ? String(b.cidade).slice(0, 120) : null,
+        estado: b.estado ? String(b.estado).slice(0, 60) : null,
+        mensagem: b.mensagem ? String(b.mensagem).slice(0, 2000) : null,
+      },
+    });
+    sendLeadEmail(lead); // fire-and-forget
+    res.status(201).json({ ok: true, id: lead.id });
+  } catch (err) {
+    console.error("create lead:", err);
+    res.status(500).json({ error: "Error creating lead", message: err.message });
+  }
+});
+
+app.get("/api/leads", auth, async (req, res) => {
+  try {
+    const { status, source } = req.query;
+    const where = {};
+    if (status && LEAD_STATUSES.includes(String(status))) where.status = String(status);
+    if (source) where.source = String(source);
+    const leads = await prisma.lead.findMany({ where, orderBy: { createdAt: "desc" }, take: 500 });
+    res.json(leads);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put("/api/leads/:id", auth, async (req, res) => {
+  try {
+    const { status, notes } = req.body || {};
+    const data = {};
+    if (status && LEAD_STATUSES.includes(status)) data.status = status;
+    if (typeof notes === "string") data.notes = notes;
+    const lead = await prisma.lead.update({ where: { id: req.params.id }, data });
+    res.json(lead);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete("/api/leads/:id", auth, async (req, res) => {
+  try {
+    await prisma.lead.delete({ where: { id: req.params.id } });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ==================== SMTP CONFIG ====================
+app.get("/api/smtp-config", auth, async (_req, res) => {
+  try {
+    const cfg = await prisma.smtpConfig.upsert({
+      where: { id: 1 }, update: {}, create: { id: 1 },
+    });
+    res.json({ ...cfg, password: cfg.password ? "••••••••" : "" });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put("/api/smtp-config", auth, async (req, res) => {
+  try {
+    const b = req.body || {};
+    const data = {
+      host: String(b.host || ""),
+      port: Number(b.port) || 587,
+      secure: !!b.secure,
+      username: String(b.username || ""),
+      fromEmail: String(b.fromEmail || ""),
+      fromName: String(b.fromName || "Premiatto"),
+      recipients: String(b.recipients || ""),
+      subject: String(b.subject || "Novo lead: {{nome}} ({{source}})"),
+      enabled: !!b.enabled,
+    };
+    if (b.password && b.password !== "••••••••") data.password = String(b.password);
+    const cfg = await prisma.smtpConfig.upsert({
+      where: { id: 1 }, update: data, create: { id: 1, ...data, password: data.password || "" },
+    });
+    res.json({ ok: true, updatedAt: cfg.updatedAt });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/smtp-config/test", auth, async (req, res) => {
+  try {
+    const to = (req.body?.to || "").trim();
+    if (!to) return res.status(400).json({ error: "missing 'to' address" });
+    const cfg = await prisma.smtpConfig.findUnique({ where: { id: 1 } });
+    if (!cfg || !cfg.host) return res.status(400).json({ error: "SMTP não configurado" });
+    const transporter = nodemailer.createTransport({
+      host: cfg.host, port: cfg.port, secure: cfg.secure,
+      auth: cfg.username ? { user: cfg.username, pass: cfg.password } : undefined,
+    });
+    await transporter.sendMail({
+      from: cfg.fromName ? `"${cfg.fromName}" <${cfg.fromEmail || cfg.username}>` : (cfg.fromEmail || cfg.username),
+      to, subject: "Teste SMTP - Premiatto",
+      text: "Este é um e-mail de teste da configuração SMTP.",
+    });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("smtp test:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 app.use((err, req, res, next) => {
   console.error("Unhandled Error:", err);
