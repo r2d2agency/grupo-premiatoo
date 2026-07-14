@@ -1025,3 +1025,97 @@ export async function updatePassword(id: string, password: string) {
   return res.json();
 }
 
+
+// ==================== LEADS ====================
+export type Lead = {
+  id: string; source: string; nome: string; empresa?: string | null;
+  whatsapp?: string | null; email: string; cidade?: string | null;
+  estado?: string | null; mensagem?: string | null;
+  status: string; notes?: string | null;
+  createdAt: string; updatedAt: string;
+};
+
+export async function submitLead(data: Record<string, any>) {
+  const res = await fetch(`${API_URL}/api/leads`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Falha ao enviar lead");
+  return res.json();
+}
+
+export async function getLeads(params?: { status?: string; source?: string }): Promise<Lead[]> {
+  const token = getToken();
+  const qs = new URLSearchParams(
+    Object.entries(params || {}).filter(([, v]) => v) as [string, string][]
+  ).toString();
+  const res = await fetch(`${API_URL}/api/leads${qs ? `?${qs}` : ""}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Falha ao carregar leads");
+  return res.json();
+}
+
+export async function updateLead(id: string, data: { status?: string; notes?: string }) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/leads/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Falha ao atualizar lead");
+  return res.json();
+}
+
+export async function deleteLead(id: string) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/leads/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Falha ao excluir lead");
+  return res.json();
+}
+
+// ==================== SMTP CONFIG ====================
+export type SmtpConfig = {
+  host: string; port: number; secure: boolean;
+  username: string; password: string;
+  fromEmail: string; fromName: string;
+  recipients: string; subject: string; enabled: boolean;
+};
+
+export async function getSmtpConfig(): Promise<SmtpConfig> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/smtp-config`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("Falha ao carregar SMTP");
+  return res.json();
+}
+
+export async function saveSmtpConfig(cfg: Partial<SmtpConfig>) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/smtp-config`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(cfg),
+  });
+  if (!res.ok) throw new Error("Falha ao salvar SMTP");
+  return res.json();
+}
+
+export async function testSmtpConfig(to: string) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/smtp-config/test`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ to }),
+  });
+  if (!res.ok) {
+    const j = await res.json().catch(() => ({}));
+    throw new Error(j.message || j.error || "Falha ao enviar teste");
+  }
+  return res.json();
+}
