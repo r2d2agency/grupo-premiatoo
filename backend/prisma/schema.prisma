@@ -22,3 +22,38 @@ model SiteContent {
   data      Json
   updatedAt DateTime @updatedAt
 }
+
+model Lead {
+  id        String   @id @default(cuid())
+  source    String   @default("premiatto-zeepo")
+  nome      String
+  empresa   String?
+  whatsapp  String?
+  email     String
+  cidade    String?
+  estado    String?
+  mensagem  String?
+  status    String   @default("novo")
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model SmtpConfig {
+  id         Int      @id @default(1)
+  host       String   @default("")
+  port       Int      @default(587)
+  secure     Boolean  @default(false)
+  username   String   @default("")
+  password   String   @default("")
+  fromEmail  String   @default("")
+  fromName   String   @default("Premiatto")
+  recipients String   @default("")
+  subject    String   @default("Novo lead: {{nome}} ({{source}})")
+  enabled    Boolean  @default(false)
+  updatedAt  DateTime @updatedAt
+}
+
