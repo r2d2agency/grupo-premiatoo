@@ -54,8 +54,11 @@ const menuItems = [
   },
   { icon: Palette, label: "Branding", path: "/admin/branding" },
   { icon: Layers, label: "Módulos", path: "/admin/modules" },
+  { icon: Inbox, label: "Leads (CRM)", path: "/admin/leads" },
+  { icon: Mail, label: "SMTP & E-mails", path: "/admin/smtp" },
   { icon: Users, label: "Usuários", path: "/admin/users" },
 ];
+
 
 export function AdminSidebar() {
   const location = useLocation();
