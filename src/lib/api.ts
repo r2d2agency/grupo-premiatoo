@@ -788,9 +788,9 @@ export const defaultContent: SiteContent = {
       title: "Conheça algumas soluções Zeepo",
       titleSize: 36, titleAlign: "center",
       items: [
-        { id: "sol1", image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&q=80&auto=format&fit=crop", name: "Trator Elétrico TR25-E", resumo: "Alta performance com zero emissão para lavouras modernas.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
-        { id: "sol2", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80&auto=format&fit=crop", name: "Equipamentos Agrícolas", resumo: "Linha completa de implementos elétricos.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
-        { id: "sol3", image: "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=800&q=80&auto=format&fit=crop", name: "Estações de Carregamento", resumo: "Infraestrutura industrial para operação contínua.", ctaLabel: "Saiba mais", ctaHref: "#contato" },
+        { id: "sol1", image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&q=80&auto=format&fit=crop", name: "Trator Elétrico TR25-E", resumo: "Alta performance com zero emissão para lavouras modernas.", ctaLabel: "Saiba mais", ctaHref: "#contato", galeria: ["https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=1600&q=80&auto=format&fit=crop", "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=80&auto=format&fit=crop"] },
+        { id: "sol2", image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80&auto=format&fit=crop", name: "Equipamentos Agrícolas", resumo: "Linha completa de implementos elétricos.", ctaLabel: "Saiba mais", ctaHref: "#contato", galeria: [] },
+        { id: "sol3", image: "https://images.unsplash.com/photo-1593941707882-a5bac6861d75?w=800&q=80&auto=format&fit=crop", name: "Estações de Carregamento", resumo: "Infraestrutura industrial para operação contínua.", ctaLabel: "Saiba mais", ctaHref: "#contato", galeria: [] },
       ],
     },
     cta: {
