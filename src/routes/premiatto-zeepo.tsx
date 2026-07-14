@@ -359,7 +359,7 @@ function Solucoes({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
                   className="group text-left w-full rounded-xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-[color:var(--cy)] transition-all"
                   style={{ ["--cy" as any]: CYAN }}
                 >
-                  <div className="relative h-56 overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden">
                     <img src={s.image} alt={s.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     {(s.galeria?.length ?? 0) > 0 && (
                       <div className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(4,26,59,0.75)", color: CYAN }}>
