@@ -20,6 +20,7 @@ import { Route as NewsNewsIdRouteImport } from './routes/news.$newsId'
 import { Route as GarantiasGarantiaIdRouteImport } from './routes/garantias.$garantiaId'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminStatsRouteImport } from './routes/admin/stats'
+import { Route as AdminSmtpRouteImport } from './routes/admin/smtp'
 import { Route as AdminSeoRouteImport } from './routes/admin/seo'
 import { Route as AdminPremiattoZeepoRouteImport } from './routes/admin/premiatto-zeepo'
 import { Route as AdminParceirosRouteImport } from './routes/admin/parceiros'
@@ -27,6 +28,7 @@ import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
 import { Route as AdminGovernancaPaginaRouteImport } from './routes/admin/governanca-pagina'
@@ -92,6 +94,11 @@ const AdminStatsRoute = AdminStatsRouteImport.update({
   path: '/admin/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSmtpRoute = AdminSmtpRouteImport.update({
+  id: '/admin/smtp',
+  path: '/admin/smtp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSeoRoute = AdminSeoRouteImport.update({
   id: '/admin/seo',
   path: '/admin/seo',
@@ -125,6 +132,11 @@ const AdminModulesRoute = AdminModulesRouteImport.update({
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminInstitucionalRoute = AdminInstitucionalRouteImport.update({
@@ -187,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -194,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -216,6 +230,7 @@ export interface FileRoutesByTo {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -223,6 +238,7 @@ export interface FileRoutesByTo {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -246,6 +262,7 @@ export interface FileRoutesById {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -253,6 +270,7 @@ export interface FileRoutesById {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -277,6 +295,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -284,6 +303,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -306,6 +326,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -313,6 +334,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -335,6 +357,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -342,6 +365,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -365,6 +389,7 @@ export interface RootRouteChildren {
   AdminGovernancaPaginaRoute: typeof AdminGovernancaPaginaRoute
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInstitucionalRoute: typeof AdminInstitucionalRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
@@ -372,6 +397,7 @@ export interface RootRouteChildren {
   AdminParceirosRoute: typeof AdminParceirosRoute
   AdminPremiattoZeepoRoute: typeof AdminPremiattoZeepoRoute
   AdminSeoRoute: typeof AdminSeoRoute
+  AdminSmtpRoute: typeof AdminSmtpRoute
   AdminStatsRoute: typeof AdminStatsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   GarantiasGarantiaIdRoute: typeof GarantiasGarantiaIdRoute
@@ -460,6 +486,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/smtp': {
+      id: '/admin/smtp'
+      path: '/admin/smtp'
+      fullPath: '/admin/smtp'
+      preLoaderRoute: typeof AdminSmtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/seo': {
       id: '/admin/seo'
       path: '/admin/seo'
@@ -507,6 +540,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/login'
       fullPath: '/admin/login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/institucional': {
@@ -589,6 +629,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminGovernancaPaginaRoute: AdminGovernancaPaginaRoute,
   AdminHeroRoute: AdminHeroRoute,
   AdminInstitucionalRoute: AdminInstitucionalRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
   AdminNavigationRoute: AdminNavigationRoute,
@@ -596,6 +637,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminParceirosRoute: AdminParceirosRoute,
   AdminPremiattoZeepoRoute: AdminPremiattoZeepoRoute,
   AdminSeoRoute: AdminSeoRoute,
+  AdminSmtpRoute: AdminSmtpRoute,
   AdminStatsRoute: AdminStatsRoute,
   AdminUsersRoute: AdminUsersRoute,
   GarantiasGarantiaIdRoute: GarantiasGarantiaIdRoute,

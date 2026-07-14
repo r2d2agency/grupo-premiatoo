@@ -548,6 +548,13 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
     e.preventDefault();
     if (!lgpd) { toast.error("Você precisa concordar com a política de privacidade."); return; }
     if (!form.nome || !form.email || !form.whatsapp) { toast.error("Preencha nome, WhatsApp e e-mail."); return; }
+    try {
+      const { submitLead } = await import("@/lib/api");
+      await submitLead({ ...form, source: "premiatto-zeepo" });
+    } catch (err: any) {
+      toast.error(err?.message || "Falha ao enviar. Tente novamente.");
+      return;
+    }
     if (pz.form.webhookUrl) {
       try {
         await fetch(pz.form.webhookUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
@@ -556,6 +563,7 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
     setSent(true);
     toast.success(pz.form.successMessage);
   }
+
 
   return (
     <section id="contato" className="py-24 border-t border-white/5">

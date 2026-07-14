@@ -19,8 +19,11 @@ import {
   ChevronDown,
   ChevronRight,
   Home,
-  Building2
+  Building2,
+  Mail,
+  Inbox
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { clearToken } from "@/lib/api";
 import { useNavigate } from "@tanstack/react-router";
@@ -51,8 +54,11 @@ const menuItems = [
   },
   { icon: Palette, label: "Branding", path: "/admin/branding" },
   { icon: Layers, label: "Módulos", path: "/admin/modules" },
+  { icon: Inbox, label: "Leads (CRM)", path: "/admin/leads" },
+  { icon: Mail, label: "SMTP & E-mails", path: "/admin/smtp" },
   { icon: Users, label: "Usuários", path: "/admin/users" },
 ];
+
 
 export function AdminSidebar() {
   const location = useLocation();
