@@ -20,6 +20,7 @@ import { Route as NewsNewsIdRouteImport } from './routes/news.$newsId'
 import { Route as GarantiasGarantiaIdRouteImport } from './routes/garantias.$garantiaId'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminStatsRouteImport } from './routes/admin/stats'
+import { Route as AdminSmtpRouteImport } from './routes/admin/smtp'
 import { Route as AdminSeoRouteImport } from './routes/admin/seo'
 import { Route as AdminPremiattoZeepoRouteImport } from './routes/admin/premiatto-zeepo'
 import { Route as AdminParceirosRouteImport } from './routes/admin/parceiros'
@@ -91,6 +92,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
 const AdminStatsRoute = AdminStatsRouteImport.update({
   id: '/admin/stats',
   path: '/admin/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSmtpRoute = AdminSmtpRouteImport.update({
+  id: '/admin/smtp',
+  path: '/admin/smtp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSeoRoute = AdminSeoRouteImport.update({
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -231,6 +238,7 @@ export interface FileRoutesByTo {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -262,6 +270,7 @@ export interface FileRoutesById {
   '/admin/parceiros': typeof AdminParceirosRoute
   '/admin/premiatto-zeepo': typeof AdminPremiattoZeepoRoute
   '/admin/seo': typeof AdminSeoRoute
+  '/admin/smtp': typeof AdminSmtpRoute
   '/admin/stats': typeof AdminStatsRoute
   '/admin/users': typeof AdminUsersRoute
   '/garantias/$garantiaId': typeof GarantiasGarantiaIdRoute
@@ -294,6 +303,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -354,6 +365,7 @@ export interface FileRouteTypes {
     | '/admin/parceiros'
     | '/admin/premiatto-zeepo'
     | '/admin/seo'
+    | '/admin/smtp'
     | '/admin/stats'
     | '/admin/users'
     | '/garantias/$garantiaId'
@@ -385,6 +397,7 @@ export interface RootRouteChildren {
   AdminParceirosRoute: typeof AdminParceirosRoute
   AdminPremiattoZeepoRoute: typeof AdminPremiattoZeepoRoute
   AdminSeoRoute: typeof AdminSeoRoute
+  AdminSmtpRoute: typeof AdminSmtpRoute
   AdminStatsRoute: typeof AdminStatsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   GarantiasGarantiaIdRoute: typeof GarantiasGarantiaIdRoute
@@ -471,6 +484,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/stats'
       fullPath: '/admin/stats'
       preLoaderRoute: typeof AdminStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/smtp': {
+      id: '/admin/smtp'
+      path: '/admin/smtp'
+      fullPath: '/admin/smtp'
+      preLoaderRoute: typeof AdminSmtpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/seo': {
@@ -617,6 +637,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminParceirosRoute: AdminParceirosRoute,
   AdminPremiattoZeepoRoute: AdminPremiattoZeepoRoute,
   AdminSeoRoute: AdminSeoRoute,
+  AdminSmtpRoute: AdminSmtpRoute,
   AdminStatsRoute: AdminStatsRoute,
   AdminUsersRoute: AdminUsersRoute,
   GarantiasGarantiaIdRoute: GarantiasGarantiaIdRoute,

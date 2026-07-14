@@ -19,8 +19,11 @@ import {
   ChevronDown,
   ChevronRight,
   Home,
-  Building2
+  Building2,
+  Mail,
+  Inbox
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { clearToken } from "@/lib/api";
 import { useNavigate } from "@tanstack/react-router";
