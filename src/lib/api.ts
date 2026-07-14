@@ -299,6 +299,7 @@ export type SiteContent = {
         resumo: string;
         ctaLabel: string;
         ctaHref: string;
+        galeria?: string[];
       }[];
     };
     cta: {
