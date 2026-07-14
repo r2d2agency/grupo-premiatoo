@@ -27,6 +27,7 @@ import { Route as AdminNewsRouteImport } from './routes/admin/news'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminModulesRouteImport } from './routes/admin.modules'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminInstitucionalRouteImport } from './routes/admin/institucional'
 import { Route as AdminHeroRouteImport } from './routes/admin/hero'
 import { Route as AdminGovernancaPaginaRouteImport } from './routes/admin/governanca-pagina'
@@ -127,6 +128,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminInstitucionalRoute = AdminInstitucionalRouteImport.update({
   id: '/admin/institucional',
   path: '/admin/institucional',
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -216,6 +223,7 @@ export interface FileRoutesByTo {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/admin/governanca-pagina': typeof AdminGovernancaPaginaRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/institucional': typeof AdminInstitucionalRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/modules': typeof AdminModulesRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -306,6 +316,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -335,6 +346,7 @@ export interface FileRouteTypes {
     | '/admin/governanca-pagina'
     | '/admin/hero'
     | '/admin/institucional'
+    | '/admin/leads'
     | '/admin/login'
     | '/admin/modules'
     | '/admin/navigation'
@@ -365,6 +377,7 @@ export interface RootRouteChildren {
   AdminGovernancaPaginaRoute: typeof AdminGovernancaPaginaRoute
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInstitucionalRoute: typeof AdminInstitucionalRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminModulesRoute: typeof AdminModulesRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
@@ -509,6 +522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/institucional': {
       id: '/admin/institucional'
       path: '/admin/institucional'
@@ -589,6 +609,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminGovernancaPaginaRoute: AdminGovernancaPaginaRoute,
   AdminHeroRoute: AdminHeroRoute,
   AdminInstitucionalRoute: AdminInstitucionalRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminModulesRoute: AdminModulesRoute,
   AdminNavigationRoute: AdminNavigationRoute,
