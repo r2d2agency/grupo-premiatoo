@@ -247,6 +247,7 @@ export type SiteContent = {
       title: string;
       text: string;
       ctaLabel: string;
+      ctaHref?: string;
       image: string;
     };
     typography?: Record<string, {
