@@ -473,7 +473,10 @@ function AdminInstitucionalPage() {
               <div className="space-y-4">
                 <Field label="Título" value={inst.ctaFinal.title} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, title:v})} />
                 <Field label="Texto" value={inst.ctaFinal.text} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, text:v})} textarea />
-                <Field label="Texto do Botão" value={inst.ctaFinal.ctaLabel} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, ctaLabel:v})} />
+                <div className="grid grid-cols-2 gap-4">
+                  <Field label="Texto do Botão" value={inst.ctaFinal.ctaLabel} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, ctaLabel:v})} />
+                  <Field label="Link do Botão" value={inst.ctaFinal.ctaHref || ""} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, ctaHref:v})} />
+                </div>
               </div>
               <ImageUpload label="Imagem de Fundo" value={inst.ctaFinal.image} onChange={(v:any) => updateInst("ctaFinal", {...inst.ctaFinal, image:v})} />
             </div>
