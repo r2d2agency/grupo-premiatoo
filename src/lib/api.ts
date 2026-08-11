@@ -572,7 +572,7 @@ export const defaultContent: SiteContent = {
     ctaEnabled: true,
     ctaLabel: "VER TODAS AS SOLUÇÕES DE CAPITAL",
     ctaHref: "#",
-
+    items: [
       {
         title: "Antecipação de Recebíveis",
         description: "Transforme seus recebíveis em fluxo de caixa imediato.",
