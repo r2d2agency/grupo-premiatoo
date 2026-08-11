@@ -112,6 +112,9 @@ export type SiteContent = {
   }[];
   capital: {
     title: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    ctaEnabled?: boolean;
     items: { title: string; description: string; icon: string }[];
   };
   governanca: {
