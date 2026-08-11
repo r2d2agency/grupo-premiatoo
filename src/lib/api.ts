@@ -569,7 +569,10 @@ export const defaultContent: SiteContent = {
   ],
   capital: {
     title: "Soluções financeiras sob medida para impulsionar seu negócio.",
-    items: [
+    ctaEnabled: true,
+    ctaLabel: "VER TODAS AS SOLUÇÕES DE CAPITAL",
+    ctaHref: "#",
+
       {
         title: "Antecipação de Recebíveis",
         description: "Transforme seus recebíveis em fluxo de caixa imediato.",
