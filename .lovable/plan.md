@@ -1,25 +1,22 @@
-Implement responsive images (Desktop, Tablet, Mobile) with automatic WebP conversion and compression for the CMS modules, primarily focusing on the Hero section.
+# Plano de Correção: Erro 401 e Mensagem de Falha ao Salvar
 
-### User Interface Changes
-- Update `ImageUpload` component to support image compression and WebP conversion client-side before sending to the backend.
-- Enhance the Hero administration in `admin.index.tsx` to allow uploading three versions of each banner image:
-  - Desktop
-  - Tablet
-  - Mobile
-- Update the Hero display component to use the `<picture>` tag or responsive background images for optimized loading on different devices.
+O usuário reportou um erro visual onde mensagens de erro "401 (Unauthorized)" e "erro ao salvar" aparecem no site. Isso ocorre quando a sessão do administrador expira mas o frontend tenta realizar operações autenticadas, ou quando o backend retorna erro sem que o frontend trate a expiração do token redirecionando para o login.
 
-### Technical Implementation
-- **Image Compression & Conversion**:
-  - Integrate a client-side library or use the Canvas API to resize and convert images to WebP format.
-  - Apply compression to ensure files remain under the storage limit while maintaining quality.
-- **Schema Updates**:
-  - Modify `SiteContent` type in `lib/api.ts` to include responsive image paths (`imageDesktop`, `imageTablet`, `imageMobile`) instead of a single `image` field for banners.
-- **Frontend Components**:
-  - `Hero.tsx`: Implement responsive rendering logic.
-  - `ImageUpload.tsx`: Add compression logic using `canvas`.
-  - `admin.index.tsx`: Update the UI to show three upload fields for each banner.
+## Alterações Técnicas
 
-### Verification Plan
-- Test image upload in the admin panel and verify WebP conversion.
-- Verify that different images are loaded when resizing the browser (Desktop/Tablet/Mobile viewports).
-- Check that the application remains fully responsive across all modules.
+### 1. Centralização da Tratativa de Erro 401
+- Modificar `src/lib/api.ts` para interceptar respostas 401 em todas as funções de API autenticadas.
+- Criar uma função auxiliar `handleResponse` que verifica `res.status === 401`.
+- Caso seja 401, limpar o token (`clearToken`) e lançar um erro específico de "Sessão expirada".
+
+### 2. Redirecionamento Automático no Frontend
+- Atualizar `src/routes/admin.index.tsx` e possivelmente `src/components/AdminSidebar.tsx` ou um hook global para detectar o erro de sessão expirada e redirecionar para `/admin/login`.
+- Atualmente, o `AdminSidebar.tsx` ou as páginas individuais de admin não parecem tratar o erro de fetch falho com 401 de forma global.
+
+### 3. Melhoria na Experiência do Usuário
+- Em `src/routes/admin.login.tsx`, garantir que se o usuário for redirecionado por expiração, uma mensagem clara seja exibida.
+- Corrigir a mensagem "erro ao salvar" para ser um Toast ou alerta amigável em vez de texto bruto injetado na tela (se for o caso de algum componente estar renderizando o erro diretamente no DOM de forma não formatada).
+
+## Detalhes de Implementação
+- **api.ts**: Refatorar chamadas de fetch para usar um wrapper que limpa o localStorage se o status for 401.
+- **Admin Layout/Sidebar**: Adicionar um listener ou verificação nas mutações de dados para disparar o redirecionamento.
