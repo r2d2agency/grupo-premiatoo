@@ -427,7 +427,10 @@ function InstitucionalPage() {
             <p className={`text-sm text-muted-foreground leading-relaxed ${alignClass(typo("ctaFinal").textAlign)}`} style={textStyle(typo("ctaFinal").textSize)}>
               {data.ctaFinal.text}
             </p>
-            <button className="bg-brand-blue text-brand-blue-foreground px-7 py-3 rounded-sm font-semibold tracking-wider uppercase text-[11px] hover:opacity-90 transition-all duration-500 shadow-xl group inline-flex items-center gap-3">
+            <button 
+              onClick={() => data.ctaFinal.ctaHref && (window.location.href = data.ctaFinal.ctaHref)}
+              className="bg-brand-blue text-brand-blue-foreground px-7 py-3 rounded-sm font-semibold tracking-wider uppercase text-[11px] hover:opacity-90 transition-all duration-500 shadow-xl group inline-flex items-center gap-3"
+            >
               {data.ctaFinal.ctaLabel}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
