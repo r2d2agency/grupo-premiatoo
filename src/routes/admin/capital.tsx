@@ -79,6 +79,25 @@ function AdminCapitalPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <Field label="Título da Seção" value={content.capital.title} onChange={(v: string) => update("capital", { ...content.capital, title: v })} textarea />
+
+            <div className="border border-border rounded-md p-4 space-y-3 bg-white">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-navy">Botão da Seção</span>
+                <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={content.capital.ctaEnabled !== false}
+                    onChange={(e) => update("capital", { ...content.capital, ctaEnabled: e.target.checked })}
+                  />
+                  Exibir botão
+                </label>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Field label="Texto do Botão" value={content.capital.ctaLabel ?? ""} placeholder="VER TODAS AS SOLUÇÕES DE CAPITAL" onChange={(v: string) => update("capital", { ...content.capital, ctaLabel: v })} />
+                <Field label="Link do Botão" value={content.capital.ctaHref ?? ""} placeholder="/capital ou https://..." onChange={(v: string) => update("capital", { ...content.capital, ctaHref: v })} />
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-4">
               {content.capital.items.map((it, i) => (
                 <div key={i} className="border border-border rounded-md p-4 space-y-3 bg-white">
