@@ -21,14 +21,16 @@ export function Capital({ data }: { data: SiteContent["capital"] }) {
             <h2 className="font-display text-3xl lg:text-4xl leading-tight">{data.title}</h2>
           </div>
           <div>
-            <div className="flex justify-end mb-8">
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider text-brand-blue"
-              >
-                VER TODAS AS SOLUÇÕES DE CAPITAL <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
+            {data.ctaEnabled !== false && (data.ctaLabel ?? "").trim() !== "" && (
+              <div className="flex justify-end mb-8">
+                <a
+                  href={data.ctaHref || "#"}
+                  className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-wider text-brand-blue"
+                >
+                  {data.ctaLabel} <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            )}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {data.items.map((it) => {
                 const Icon = iconMap[it.icon] || DollarSign;

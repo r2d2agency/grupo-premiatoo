@@ -112,6 +112,9 @@ export type SiteContent = {
   }[];
   capital: {
     title: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+    ctaEnabled?: boolean;
     items: { title: string; description: string; icon: string }[];
   };
   governanca: {
@@ -566,6 +569,9 @@ export const defaultContent: SiteContent = {
   ],
   capital: {
     title: "Soluções financeiras sob medida para impulsionar seu negócio.",
+    ctaEnabled: true,
+    ctaLabel: "VER TODAS AS SOLUÇÕES DE CAPITAL",
+    ctaHref: "#",
     items: [
       {
         title: "Antecipação de Recebíveis",
