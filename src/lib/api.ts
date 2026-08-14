@@ -750,6 +750,18 @@ export const defaultContent: SiteContent = {
       url: "#",
       icon: "lock",
     },
+    privacyPolicy: {
+      enabled: true,
+      label: "Política de Privacidade",
+      href: "#",
+      icon: "",
+    },
+    termsOfUse: {
+      enabled: true,
+      label: "Termos de Uso",
+      href: "#",
+      icon: "",
+    },
   },
   seo: {
     globalTitle: "Garantidora Premiatto – Garantias e Soluções Financeiras",
