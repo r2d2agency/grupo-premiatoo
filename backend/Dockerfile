@@ -9,9 +9,13 @@ COPY prisma ./prisma
 RUN npm install --omit=dev && npx prisma generate
 
 COPY src ./src
+COPY wait-for-db.js ./wait-for-db.js
 
 # Create uploads directory and set permissions
 RUN mkdir -p /app/uploads && chmod 777 /app/uploads
 
+COPY start.sh ./start.sh
+RUN chmod +x ./start.sh
+
 EXPOSE 4000
-CMD ["npm", "start"]
+CMD ["./start.sh"]
