@@ -133,35 +133,37 @@ function NewsIndex() {
                   params={{ newsId: featuredNews.id }}
                   className="group block relative"
                 >
-                  <div className="relative aspect-[21/10] w-full rounded-3xl overflow-hidden shadow-2xl bg-navy/5">
-                    <img 
-                      src={featuredNews.image} 
-                      alt={featuredNews.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                  <div className="space-y-8">
+                    <div className="relative aspect-[21/10] w-full rounded-3xl overflow-hidden shadow-2xl bg-navy/5">
+                      <img 
+                        src={featuredNews.image} 
+                        alt={featuredNews.title}
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent opacity-20 group-hover:opacity-10 transition-opacity duration-500" />
+                    </div>
                     
-                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="transform transition-transform duration-500">
                       <div className="flex flex-wrap gap-2 mb-4">
                         {featuredNews.category && (
-                          <span className="px-3 py-1 bg-brand-blue/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                          <span className="px-3 py-1 bg-brand-blue/90 text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
                             {featuredNews.category}
                           </span>
                         )}
                         {featuredNews.segment && (
-                          <span className="px-3 py-1 bg-gold/90 backdrop-blur-md text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
+                          <span className="px-3 py-1 bg-gold/90 text-white text-[9px] font-bold tracking-widest uppercase rounded-full">
                             {featuredNews.segment}
                           </span>
                         )}
                       </div>
-                      <h2 className="text-3xl md:text-5xl font-display text-white leading-tight mb-4 drop-shadow-lg">
+                      <h2 className="text-3xl md:text-5xl font-display text-navy leading-tight mb-4 transition-colors group-hover:text-brand-blue">
                         {featuredNews.title}
                       </h2>
-                      <div className="flex items-center gap-4 text-white/80 text-[11px] font-bold tracking-widest uppercase">
-                        <Calendar className="w-4 h-4 text-gold" />
+                      <div className="flex items-center gap-4 text-navy/60 text-[11px] font-bold tracking-widest uppercase">
+                        <Calendar className="w-4 h-4 text-brand-blue" />
                         {featuredNews.publishDate ? new Date(featuredNews.publishDate).toLocaleDateString('pt-BR') : 'Recentemente'}
-                        <span className="w-8 h-[1px] bg-gold/50 ml-2" />
-                        <span className="group-hover:text-white transition-colors">Ler agora</span>
+                        <span className="w-8 h-[1px] bg-brand-blue/20 ml-2" />
+                        <span className="group-hover:text-brand-blue transition-colors">Ler agora</span>
                       </div>
                     </div>
                   </div>
