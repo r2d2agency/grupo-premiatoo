@@ -640,7 +640,6 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
     </section>
   );
 }
-}
 
 function FormInput({ icon, ...props }: any) {
   return (
