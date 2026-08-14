@@ -339,6 +339,13 @@ export type SiteContent = {
       lgpdLabel: string;
       successMessage: string;
       webhookUrl?: string;
+      enabled?: boolean;
+      redirectEmail?: string; // New field for custom lead destination
+      clientAutoReply?: string; // Custom message for the user after submission
+      disabledCta?: {
+        label: string;
+        href: string;
+      };
     };
     footer: {
       text: string;
