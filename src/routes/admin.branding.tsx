@@ -6,8 +6,31 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Palette, Save, Trash } from "lucide-react";
+import { Palette, Save, Trash, Type } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
+
+const GOOGLE_FONTS = [
+  "Cormorant Garamond",
+  "Inter",
+  "Playfair Display",
+  "Roboto",
+  "Montserrat",
+  "Lato",
+  "Open Sans",
+  "Source Sans 3",
+  "Merriweather",
+  "Poppins",
+  "DM Sans",
+  "Work Sans",
+  "Sora",
+  "Urbanist",
+  "Outfit",
+  "Raleway",
+  "Nunito Sans",
+  "Libre Franklin",
+  "Crimson Text",
+  "EB Garamond",
+];
 
 export const Route = createFileRoute("/admin/branding")({
   component: AdminBrandingPage,
