@@ -11,6 +11,10 @@ export type SiteContent = {
     secondaryColor: string;
     logoUrl?: string;
     logoHeight?: number;
+    fonts?: {
+      titleFont?: string;
+      bodyFont?: string;
+    };
   };
   navigation: {
     links: {
