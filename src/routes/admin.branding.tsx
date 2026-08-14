@@ -6,8 +6,31 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Palette, Save, Trash } from "lucide-react";
+import { Palette, Save, Trash, Type } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
+
+const GOOGLE_FONTS = [
+  "Cormorant Garamond",
+  "Inter",
+  "Playfair Display",
+  "Roboto",
+  "Montserrat",
+  "Lato",
+  "Open Sans",
+  "Source Sans 3",
+  "Merriweather",
+  "Poppins",
+  "DM Sans",
+  "Work Sans",
+  "Sora",
+  "Urbanist",
+  "Outfit",
+  "Raleway",
+  "Nunito Sans",
+  "Libre Franklin",
+  "Crimson Text",
+  "EB Garamond",
+];
 
 export const Route = createFileRoute("/admin/branding")({
   component: AdminBrandingPage,
@@ -169,6 +192,82 @@ function AdminBrandingPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Type className="w-5 h-5 text-gold" />
+              Tipografia Global
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Fonte dos Títulos</label>
+                <select
+                  className="w-full border border-input rounded-sm px-3 py-2 text-sm bg-background"
+                  value={content.branding.fonts?.titleFont || "Cormorant Garamond"}
+                  onChange={(e) => setContent({
+                    ...content,
+                    branding: {
+                      ...content.branding,
+                      fonts: { ...content.branding.fonts, titleFont: e.target.value }
+                    }
+                  })}
+                >
+                  {GOOGLE_FONTS.map((font) => (
+                    <option key={font} value={font}>{font}</option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground">
+                  Aplicada em h1, h2, h3 e títulos de destaque.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Fonte dos Textos</label>
+                <select
+                  className="w-full border border-input rounded-sm px-3 py-2 text-sm bg-background"
+                  value={content.branding.fonts?.bodyFont || "Inter"}
+                  onChange={(e) => setContent({
+                    ...content,
+                    branding: {
+                      ...content.branding,
+                      fonts: { ...content.branding.fonts, bodyFont: e.target.value }
+                    }
+                  })}
+                >
+                  {GOOGLE_FONTS.map((font) => (
+                    <option key={font} value={font}>{font}</option>
+                  ))}
+                </select>
+                <p className="text-xs text-muted-foreground">
+                  Aplicada em parágrafos, descrições e conteúdo geral.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-dashed border-input rounded-sm bg-muted/20">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold mb-3">
+                Pré-visualização
+              </div>
+              <div className="space-y-2">
+                <h4
+                  className="text-2xl"
+                  style={{ fontFamily: content.branding.fonts?.titleFont || "Cormorant Garamond" }}
+                >
+                  Título de exemplo
+                </h4>
+                <p
+                  className="text-sm text-muted-foreground"
+                  style={{ fontFamily: content.branding.fonts?.bodyFont || "Inter" }}
+                >
+                  Texto de parágrafo de exemplo para visualizar a fonte escolhida.
+                </p>
               </div>
             </div>
           </CardContent>

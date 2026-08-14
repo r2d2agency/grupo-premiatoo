@@ -127,12 +127,29 @@ function RootComponent() {
     fetchContent().then(setContent);
   }, []);
 
+  const titleFont = content.branding?.fonts?.titleFont || "Cormorant Garamond";
+  const bodyFont = content.branding?.fonts?.bodyFont || "Inter";
+  const googleFontFamilies = Array.from(new Set([titleFont, bodyFont]))
+    .map(f => `family=${encodeURIComponent(f)}:wght@400;500;600;700`)
+    .join("&");
+
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <div className="min-h-screen font-sans antialiased">
+        <div
+          className="min-h-screen font-sans antialiased"
+          style={{
+            //@ts-ignore
+            "--font-title": titleFont,
+            "--font-body": bodyFont,
+          }}
+        >
           <Helmet>
             <title>{content.seo?.globalTitle || "Premiatto"}</title>
+            <link
+              rel="stylesheet"
+              href={`https://fonts.googleapis.com/css2?${googleFontFamilies}&display=swap`}
+            />
             <meta name="description" content={content.seo?.globalDescription || ""} />
             {content.seo?.canonicalUrl && <link rel="canonical" href={content.seo.canonicalUrl} />}
             
