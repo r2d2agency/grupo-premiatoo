@@ -179,6 +179,18 @@ export type SiteContent = {
       address: string;
     };
     copyright: string;
+    privacyPolicy?: {
+      enabled: boolean;
+      label: string;
+      href: string;
+      icon?: string;
+    };
+    termsOfUse?: {
+      enabled: boolean;
+      label: string;
+      href: string;
+      icon?: string;
+    };
     intranet?: {
       enabled: boolean;
       label: string;
@@ -738,6 +750,18 @@ export const defaultContent: SiteContent = {
       url: "#",
       icon: "lock",
     },
+    privacyPolicy: {
+      enabled: true,
+      label: "Política de Privacidade",
+      href: "#",
+      icon: "",
+    },
+    termsOfUse: {
+      enabled: true,
+      label: "Termos de Uso",
+      href: "#",
+      icon: "",
+    },
   },
   seo: {
     globalTitle: "Garantidora Premiatto – Garantias e Soluções Financeiras",
@@ -852,7 +876,13 @@ export async function fetchContent(): Promise<SiteContent> {
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
       seo: { ...defaultContent.seo, ...data.seo },
-      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } },
+      footer: { 
+        ...defaultContent.footer, 
+        ...data.footer, 
+        intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) },
+        privacyPolicy: { ...defaultContent.footer.privacyPolicy!, ...(data.footer?.privacyPolicy || {}) },
+        termsOfUse: { ...defaultContent.footer.termsOfUse!, ...(data.footer?.termsOfUse || {}) }
+      },
       governancaPage: data.governancaPage ? {
         ...defaultContent.governancaPage,
         ...data.governancaPage,

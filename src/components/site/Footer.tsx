@@ -89,9 +89,29 @@ export function Footer({ content }: { content: SiteContent }) {
         <div className="mx-auto max-w-[1280px] px-6 py-5 flex flex-wrap justify-between items-center text-[11px] text-navy-foreground/60">
           <div>{footer.copyright}</div>
           <div className="flex gap-5">
-            <a href="#">Política de Privacidade</a>
-            <a href="#">Termos de Uso</a>
-            <span className="opacity-40">TNS R2D2</span>
+            {footer.privacyPolicy?.enabled && (
+              <a href={footer.privacyPolicy.href} className="hover:text-navy-foreground inline-flex items-center gap-1">
+                {footer.privacyPolicy.icon && (() => {
+                  const name = footer.privacyPolicy.icon;
+                  const pascal = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+                  const Ico = (Icons as any)[pascal] || null;
+                  return Ico ? <Ico className="h-3 w-3" /> : null;
+                })()}
+                {footer.privacyPolicy.label}
+              </a>
+            )}
+            {footer.termsOfUse?.enabled && (
+              <a href={footer.termsOfUse.href} className="hover:text-navy-foreground inline-flex items-center gap-1">
+                {footer.termsOfUse.icon && (() => {
+                  const name = footer.termsOfUse.icon;
+                  const pascal = name.charAt(0).toUpperCase() + name.slice(1).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+                  const Ico = (Icons as any)[pascal] || null;
+                  return Ico ? <Ico className="h-3 w-3" /> : null;
+                })()}
+                {footer.termsOfUse.label}
+              </a>
+            )}
+            <span className="opacity-40 font-medium">TNS R2D2</span>
           </div>
         </div>
       </div>
