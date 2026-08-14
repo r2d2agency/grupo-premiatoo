@@ -13,5 +13,8 @@ COPY src ./src
 # Create uploads directory and set permissions
 RUN mkdir -p /app/uploads && chmod 777 /app/uploads
 
+COPY start.sh ./start.sh
+RUN chmod +x ./start.sh
+
 EXPOSE 4000
-CMD ["npm", "start"]
+CMD ["./start.sh"]
