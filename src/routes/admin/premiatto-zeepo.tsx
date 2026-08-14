@@ -258,12 +258,41 @@ function AdminPremiattoZeepo() {
 
               {/* FORM */}
               <TabsContent value="form" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-semibold">Exibição e Roteamento</h4>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <span className="text-xs">Ativar formulário</span>
+                    <input 
+                      type="checkbox" 
+                      checked={pz.form.enabled !== false} 
+                      onChange={(e) => updatePZ({ form: { ...pz.form, enabled: e.target.checked } })}
+                    />
+                  </label>
+                </div>
+                
                 <Field label="Título do formulário" value={pz.form.title} onChange={(v: string) => updatePZ({ form: { ...pz.form, title: v } })} />
                 <Field label="Subtítulo" value={pz.form.subtitle} onChange={(v: string) => updatePZ({ form: { ...pz.form, subtitle: v } })} textarea />
-                <Field label="Texto do botão enviar" value={pz.form.ctaLabel} onChange={(v: string) => updatePZ({ form: { ...pz.form, ctaLabel: v } })} />
-                <Field label="Texto LGPD" value={pz.form.lgpdLabel} onChange={(v: string) => updatePZ({ form: { ...pz.form, lgpdLabel: v } })} />
-                <Field label="Mensagem de sucesso" value={pz.form.successMessage} onChange={(v: string) => updatePZ({ form: { ...pz.form, successMessage: v } })} textarea />
-                <Field label="Webhook URL (integração CRM opcional)" value={pz.form.webhookUrl} onChange={(v: string) => updatePZ({ form: { ...pz.form, webhookUrl: v } })} placeholder="https://..." />
+                
+                {pz.form.enabled === false ? (
+                  <div className="border p-4 rounded-md bg-muted/20 space-y-4">
+                    <h5 className="text-xs font-bold uppercase text-navy">Configuração do Botão (Formulário Desativado)</h5>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Field label="Texto do Botão CTA" value={pz.form.disabledCta?.label} onChange={(v: string) => updatePZ({ form: { ...pz.form, disabledCta: { ...(pz.form.disabledCta || { href: "#" }), label: v } } })} />
+                      <Field label="Link do Botão CTA" value={pz.form.disabledCta?.href} onChange={(v: string) => updatePZ({ form: { ...pz.form, disabledCta: { ...(pz.form.disabledCta || { label: "Contato" }), href: v } } })} />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Field label="Texto do botão enviar" value={pz.form.ctaLabel} onChange={(v: string) => updatePZ({ form: { ...pz.form, ctaLabel: v } })} />
+                      <Field label="Destinatário customizado (E-mail)" value={pz.form.redirectEmail} onChange={(v: string) => updatePZ({ form: { ...pz.form, redirectEmail: v } })} placeholder="Vazio = padrão SMTP" />
+                    </div>
+                    <Field label="Auto-resposta ao cliente (Mensagem e-mail)" value={pz.form.clientAutoReply} onChange={(v: string) => updatePZ({ form: { ...pz.form, clientAutoReply: v } })} textarea placeholder="Mensagem que o cliente receberá por e-mail..." />
+                    <Field label="Texto LGPD" value={pz.form.lgpdLabel} onChange={(v: string) => updatePZ({ form: { ...pz.form, lgpdLabel: v } })} />
+                    <Field label="Mensagem de sucesso (No site)" value={pz.form.successMessage} onChange={(v: string) => updatePZ({ form: { ...pz.form, successMessage: v } })} textarea />
+                    <Field label="Webhook URL (Integração externa opcional)" value={pz.form.webhookUrl} onChange={(v: string) => updatePZ({ form: { ...pz.form, webhookUrl: v } })} placeholder="https://..." />
+                  </>
+                )}
               </TabsContent>
 
               {/* FOOTER */}

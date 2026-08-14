@@ -245,34 +245,67 @@ function renderTemplate(tpl, data) {
 async function sendLeadEmail(lead) {
   try {
     const cfg = await prisma.smtpConfig.findUnique({ where: { id: 1 } });
-    if (!cfg || !cfg.enabled || !cfg.host || !cfg.recipients) return;
+    if (!cfg || !cfg.enabled || !cfg.host) return;
+
+    // Get site content to check for custom lead settings
+    const contentRow = await prisma.siteContent.findUnique({ where: { id: 1 } });
+    const content = contentRow?.data || {};
+    const pz = content.premiattoZeepo || {};
+    const formSettings = pz.form || {};
+
     const transporter = nodemailer.createTransport({
       host: cfg.host,
       port: cfg.port,
       secure: cfg.secure,
       auth: cfg.username ? { user: cfg.username, pass: cfg.password } : undefined,
     });
-    const to = cfg.recipients.split(/[,;\s]+/).map(s => s.trim()).filter(Boolean);
-    if (!to.length) return;
-    const subject = renderTemplate(cfg.subject || "Novo lead: {{nome}}", lead);
-    const rows = [
-      ["Origem", lead.source], ["Nome", lead.nome], ["Empresa", lead.empresa],
-      ["WhatsApp", lead.whatsapp], ["E-mail", lead.email],
-      ["Cidade", lead.cidade], ["Estado", lead.estado], ["Mensagem", lead.mensagem],
-    ].filter(([, v]) => v);
-    const html = `
-      <div style="font-family:Arial,sans-serif;max-width:600px">
-        <h2 style="color:#001B3D">Novo lead recebido</h2>
-        <table cellpadding="8" style="border-collapse:collapse;width:100%;font-size:14px">
-          ${rows.map(([k, v]) => `<tr><td style="background:#f5f5f5;font-weight:600;width:140px">${k}</td><td>${String(v).replace(/</g,"&lt;")}</td></tr>`).join("")}
-        </table>
-        <p style="color:#888;font-size:12px;margin-top:16px">Recebido em ${new Date(lead.createdAt).toLocaleString("pt-BR")}</p>
-      </div>`;
-    await transporter.sendMail({
-      from: cfg.fromName ? `"${cfg.fromName}" <${cfg.fromEmail || cfg.username}>` : (cfg.fromEmail || cfg.username),
-      to, subject, html,
-      replyTo: lead.email || undefined,
-    });
+
+    // 1. Send lead notification to staff
+    const recipients = formSettings.redirectEmail || cfg.recipients;
+    const to = recipients.split(/[,;\s]+/).map(s => s.trim()).filter(Boolean);
+    
+    if (to.length) {
+      const subject = renderTemplate(cfg.subject || "Novo lead: {{nome}}", lead);
+      const rows = [
+        ["Origem", lead.source], ["Nome", lead.nome], ["Empresa", lead.empresa],
+        ["WhatsApp", lead.whatsapp], ["E-mail", lead.email],
+        ["Cidade", lead.cidade], ["Estado", lead.estado], ["Mensagem", lead.mensagem],
+      ].filter(([, v]) => v);
+      
+      const html = `
+        <div style="font-family:Arial,sans-serif;max-width:600px">
+          <h2 style="color:#001B3D">Novo lead recebido</h2>
+          <table cellpadding="8" style="border-collapse:collapse;width:100%;font-size:14px">
+            ${rows.map(([k, v]) => `<tr><td style="background:#f5f5f5;font-weight:600;width:140px">${k}</td><td>${String(v).replace(/</g,"&lt;")}</td></tr>`).join("")}
+          </table>
+          <p style="color:#888;font-size:12px;margin-top:16px">Recebido em ${new Date(lead.createdAt).toLocaleString("pt-BR")}</p>
+        </div>`;
+        
+      await transporter.sendMail({
+        from: cfg.fromName ? `"${cfg.fromName}" <${cfg.fromEmail || cfg.username}>` : (cfg.fromEmail || cfg.username),
+        to, subject, html,
+        replyTo: lead.email || undefined,
+      });
+    }
+
+    // 2. Send auto-reply to the client if configured
+    if (formSettings.clientAutoReply && lead.email) {
+      const autoReplySubject = `Recebemos seu contato - ${cfg.fromName || "Premiatto"}`;
+      const autoReplyHtml = `
+        <div style="font-family:Arial,sans-serif;max-width:600px;line-height:1.6">
+          <p>Olá <strong>${lead.nome}</strong>,</p>
+          <p>${formSettings.clientAutoReply.replace(/\n/g, "<br>")}</p>
+          <hr style="border:none;border-top:1px solid #eee;margin:20px 0" />
+          <p style="font-size:12px;color:#888">Esta é uma mensagem automática. Por favor, não responda a este e-mail.</p>
+        </div>`;
+        
+      await transporter.sendMail({
+        from: cfg.fromName ? `"${cfg.fromName}" <${cfg.fromEmail || cfg.username}>` : (cfg.fromEmail || cfg.username),
+        to: lead.email,
+        subject: autoReplySubject,
+        html: autoReplyHtml,
+      });
+    }
   } catch (err) {
     console.error("sendLeadEmail error:", err.message);
   }

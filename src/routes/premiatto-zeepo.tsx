@@ -565,6 +565,8 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
   }
 
 
+  const isEnabled = pz.form.enabled !== false;
+
   return (
     <section id="contato" className="py-24 border-t border-white/5">
       <div className="mx-auto max-w-[1200px] px-6 lg:px-10 grid lg:grid-cols-[1fr_1.2fr] gap-16 items-start">
@@ -576,7 +578,24 @@ function ContactForm({ pz }: { pz: SiteContent["premiattoZeepo"] }) {
         </div>
 
         <div className="rounded-2xl p-8 lg:p-10 border border-white/10" style={{ background: "rgba(255,255,255,0.03)" }}>
-          {sent ? (
+          {!isEnabled ? (
+            <div className="text-center py-12 flex flex-col items-center">
+              <div className="w-16 h-16 rounded-full mb-6 flex items-center justify-center border border-white/20">
+                <Icons.MessageSquare className="w-6 h-6 text-white/40" />
+              </div>
+              <h3 className="text-xl font-display mb-6">Entre em contato conosco</h3>
+              {pz.form.disabledCta && (
+                <a
+                  href={pz.form.disabledCta.href}
+                  className="px-8 py-4 rounded-md text-sm font-bold tracking-wider transition-all hover:opacity-90 flex items-center gap-2"
+                  style={{ background: CYAN, color: NAVY }}
+                >
+                  {pz.form.disabledCta.label}
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          ) : sent ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: CYAN }}>
                 <Check className="w-8 h-8" style={{ color: NAVY }} />
