@@ -179,6 +179,18 @@ export type SiteContent = {
       address: string;
     };
     copyright: string;
+    privacyPolicy?: {
+      enabled: boolean;
+      label: string;
+      href: string;
+      icon?: string;
+    };
+    termsOfUse?: {
+      enabled: boolean;
+      label: string;
+      href: string;
+      icon?: string;
+    };
     intranet?: {
       enabled: boolean;
       label: string;

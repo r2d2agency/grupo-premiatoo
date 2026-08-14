@@ -134,6 +134,84 @@ function AdminFooterPage() {
                 Use o nome do ícone da biblioteca <a href="https://lucide.dev/icons" target="_blank" rel="noopener noreferrer" className="underline">lucide.dev/icons</a> (ex.: <code>lock</code>, <code>key-round</code>, <code>shield</code>, <code>user-circle</code>).
               </p>
             </div>
+            
+            <div className="pt-6 border-t grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-navy uppercase tracking-wider">Política de Privacidade</h4>
+                  <label className="flex items-center gap-2 text-xs">
+                    <input
+                      type="checkbox"
+                      checked={content.footer.privacyPolicy?.enabled ?? false}
+                      onChange={(e) => update("footer", { 
+                        ...content.footer, 
+                        privacyPolicy: { 
+                          ...(content.footer.privacyPolicy || { label: "Política de Privacidade", href: "/privacidade", enabled: false }), 
+                          enabled: e.target.checked 
+                        } 
+                      })}
+                    />
+                    Ativo
+                  </label>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field
+                    label="Rótulo"
+                    value={content.footer.privacyPolicy?.label || ""}
+                    onChange={(v: string) => update("footer", { ...content.footer, privacyPolicy: { ...(content.footer.privacyPolicy || { enabled: true, label: "", href: "/privacidade" }), label: v } })}
+                  />
+                  <Field
+                    label="Link"
+                    value={content.footer.privacyPolicy?.href || ""}
+                    onChange={(v: string) => update("footer", { ...content.footer, privacyPolicy: { ...(content.footer.privacyPolicy || { enabled: true, label: "Política de Privacidade", href: "" }), href: v } })}
+                  />
+                </div>
+                <Field
+                  label="Ícone (opcional)"
+                  value={content.footer.privacyPolicy?.icon || ""}
+                  placeholder="shield, lock, file-text..."
+                  onChange={(v: string) => update("footer", { ...content.footer, privacyPolicy: { ...(content.footer.privacyPolicy || { enabled: true, label: "Política de Privacidade", href: "/privacidade" }), icon: v } })}
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-navy uppercase tracking-wider">Termos de Uso</h4>
+                  <label className="flex items-center gap-2 text-xs">
+                    <input
+                      type="checkbox"
+                      checked={content.footer.termsOfUse?.enabled ?? false}
+                      onChange={(e) => update("footer", { 
+                        ...content.footer, 
+                        termsOfUse: { 
+                          ...(content.footer.termsOfUse || { label: "Termos de Uso", href: "/termos", enabled: false }), 
+                          enabled: e.target.checked 
+                        } 
+                      })}
+                    />
+                    Ativo
+                  </label>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field
+                    label="Rótulo"
+                    value={content.footer.termsOfUse?.label || ""}
+                    onChange={(v: string) => update("footer", { ...content.footer, termsOfUse: { ...(content.footer.termsOfUse || { enabled: true, label: "", href: "/termos" }), label: v } })}
+                  />
+                  <Field
+                    label="Link"
+                    value={content.footer.termsOfUse?.href || ""}
+                    onChange={(v: string) => update("footer", { ...content.footer, termsOfUse: { ...(content.footer.termsOfUse || { enabled: true, label: "Termos de Uso", href: "" }), href: v } })}
+                  />
+                </div>
+                <Field
+                  label="Ícone (opcional)"
+                  value={content.footer.termsOfUse?.icon || ""}
+                  placeholder="file-check, scroll, info..."
+                  onChange={(v: string) => update("footer", { ...content.footer, termsOfUse: { ...(content.footer.termsOfUse || { enabled: true, label: "Termos de Uso", href: "/termos" }), icon: v } })}
+                />
+              </div>
+            </div>
 
             <div className="pt-6 border-t">
               <div className="flex items-center justify-between mb-6">
