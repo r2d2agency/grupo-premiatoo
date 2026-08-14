@@ -864,7 +864,13 @@ export async function fetchContent(): Promise<SiteContent> {
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
       seo: { ...defaultContent.seo, ...data.seo },
-      footer: { ...defaultContent.footer, ...data.footer, intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) } },
+      footer: { 
+        ...defaultContent.footer, 
+        ...data.footer, 
+        intranet: { ...defaultContent.footer.intranet!, ...(data.footer?.intranet || {}) },
+        privacyPolicy: { ...defaultContent.footer.privacyPolicy!, ...(data.footer?.privacyPolicy || {}) },
+        termsOfUse: { ...defaultContent.footer.termsOfUse!, ...(data.footer?.termsOfUse || {}) }
+      },
       governancaPage: data.governancaPage ? {
         ...defaultContent.governancaPage,
         ...data.governancaPage,
