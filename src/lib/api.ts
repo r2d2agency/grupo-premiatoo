@@ -446,6 +446,10 @@ export const defaultContent: SiteContent = {
     primaryColor: "#001B3D", // Navy
     secondaryColor: "#C5A059", // Gold/Tan
     logoHeight: 40,
+    fonts: {
+      titleFont: "Cormorant Garamond",
+      bodyFont: "Inter",
+    },
   },
   navigation: {
     links: [
