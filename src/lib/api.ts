@@ -848,7 +848,7 @@ export async function fetchContent(): Promise<SiteContent> {
     if (!res.ok) throw new Error("bad status");
     const data = await res.json();
     const content = { ...defaultContent, ...data, 
-      branding: { ...defaultContent.branding, ...data.branding },
+      branding: { ...defaultContent.branding, ...data.branding, fonts: { ...defaultContent.branding.fonts, ...(data.branding?.fonts || {}) } },
       navigation: { ...defaultContent.navigation, ...data.navigation },
       modules: { ...defaultContent.modules, ...data.modules },
       seo: { ...defaultContent.seo, ...data.seo },
