@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Button } from "./button";
 import { Upload, X, ImageIcon, Smartphone, Tablet, Monitor } from "lucide-react";
 import { toast } from "sonner";
-import { getToken, API_URL } from "@/lib/api";
+import { authFetch } from "@/lib/api";
 
 interface ImageUploadProps {
   value?: string;
@@ -74,11 +74,8 @@ export function ImageUpload({ value, onChange, label, type }: ImageUploadProps) 
       const formData = new FormData();
       formData.append("file", webpBlob, "image.webp");
 
-      const res = await fetch(`${API_URL}/api/upload`, {
+      const res = await authFetch("/api/upload", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
         body: formData,
       });
 

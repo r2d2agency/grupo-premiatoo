@@ -947,6 +947,39 @@ export const getToken = () =>
 export const setToken = (t: string) => localStorage.setItem(TOKEN_KEY, t);
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
+// Every authenticated request goes through here so an expired/invalid token
+// ends the session consistently instead of surfacing as a bare 401 in the console.
+export class SessionExpiredError extends Error {
+  constructor() {
+    super("Sua sessão expirou. Faça login novamente.");
+    this.name = "SessionExpiredError";
+  }
+}
+
+export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  const token = getToken();
+  if (!token) throw new SessionExpiredError();
+  const headers = new Headers(init.headers);
+  headers.set("Authorization", `Bearer ${token}`);
+  const res = await fetch(`${API_URL}${url}`, { ...init, headers });
+  if (res.status === 401 || res.status === 403) {
+    clearToken();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("admin-session-expired"));
+    }
+    throw new SessionExpiredError();
+  }
+  return res;
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("admin-session-expired", () => {
+    if (window.location.pathname !== "/admin/login") {
+      window.location.assign("/admin/login");
+    }
+  });
+}
+
 export async function login(email: string, password: string) {
   console.log(`Attempting login to: ${API_URL}/api/auth/login`);
   try {
@@ -974,46 +1007,12 @@ export async function login(email: string, password: string) {
   }
 }
 
-export async function register(email: string, password: string, name?: string) {
-  try {
-    const res = await fetch(`${API_URL}/api/auth/register`, {
-      method: "POST",
-      credentials: "omit",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name }),
-    });
-    
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.error || "Erro ao criar conta");
-    }
-    
-    const data = await res.json();
-    setToken(data.token);
-    return data;
-  } catch (error: any) {
-    if (error.message === 'Failed to fetch' || error.name === 'TypeError') {
-      throw new Error("Erro de conexão: o backend não respondeu.");
-    }
-    throw error;
-  }
-}
-
 export async function saveContent(content: SiteContent) {
-  const token = getToken();
-  if (!token) throw new Error("Sessão expirada. Faça login novamente.");
-  const res = await fetch(`${API_URL}/api/content`, {
+  const res = await authFetch("/api/content", {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(content),
   });
-  if (res.status === 401 || res.status === 403) {
-    clearToken();
-    throw new Error("Sua sessão expirou. Faça login novamente.");
-  }
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.error || errorData.message || "Falha ao salvar");
@@ -1022,22 +1021,15 @@ export async function saveContent(content: SiteContent) {
 }
 
 export async function getUsers() {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/users`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await authFetch("/api/users");
   if (!res.ok) throw new Error("Falha ao buscar usuários");
   return res.json();
 }
 
 export async function createUser(userData: any) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/users`, {
+  const res = await authFetch("/api/users", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
   });
   if (!res.ok) {
@@ -1048,23 +1040,15 @@ export async function createUser(userData: any) {
 }
 
 export async function deleteUser(id: string) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/users/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await authFetch(`/api/users/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Falha ao excluir usuário");
   return res.json();
 }
 
 export async function updateUser(id: string, userData: any) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/users/${id}`, {
+  const res = await authFetch(`/api/users/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userData),
   });
   if (!res.ok) throw new Error("Falha ao atualizar usuário");
@@ -1072,13 +1056,9 @@ export async function updateUser(id: string, userData: any) {
 }
 
 export async function updatePassword(id: string, password: string) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/users/${id}/password`, {
+  const res = await authFetch(`/api/users/${id}/password`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ password }),
   });
   if (!res.ok) throw new Error("Falha ao atualizar senha");
@@ -1106,22 +1086,18 @@ export async function submitLead(data: Record<string, any>) {
 }
 
 export async function getLeads(params?: { status?: string; source?: string }): Promise<Lead[]> {
-  const token = getToken();
   const qs = new URLSearchParams(
     Object.entries(params || {}).filter(([, v]) => v) as [string, string][]
   ).toString();
-  const res = await fetch(`${API_URL}/api/leads${qs ? `?${qs}` : ""}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await authFetch(`/api/leads${qs ? `?${qs}` : ""}`);
   if (!res.ok) throw new Error("Falha ao carregar leads");
   return res.json();
 }
 
 export async function updateLead(id: string, data: { status?: string; notes?: string }) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/leads/${id}`, {
+  const res = await authFetch(`/api/leads/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Falha ao atualizar lead");
@@ -1129,11 +1105,7 @@ export async function updateLead(id: string, data: { status?: string; notes?: st
 }
 
 export async function deleteLead(id: string) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/leads/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await authFetch(`/api/leads/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Falha ao excluir lead");
   return res.json();
 }
@@ -1147,19 +1119,15 @@ export type SmtpConfig = {
 };
 
 export async function getSmtpConfig(): Promise<SmtpConfig> {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/smtp-config`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await authFetch("/api/smtp-config");
   if (!res.ok) throw new Error("Falha ao carregar SMTP");
   return res.json();
 }
 
 export async function saveSmtpConfig(cfg: Partial<SmtpConfig>) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/smtp-config`, {
+  const res = await authFetch("/api/smtp-config", {
     method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cfg),
   });
   if (!res.ok) throw new Error("Falha ao salvar SMTP");
@@ -1167,10 +1135,9 @@ export async function saveSmtpConfig(cfg: Partial<SmtpConfig>) {
 }
 
 export async function testSmtpConfig(to: string) {
-  const token = getToken();
-  const res = await fetch(`${API_URL}/api/smtp-config/test`, {
+  const res = await authFetch("/api/smtp-config/test", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ to }),
   });
   if (!res.ok) {
