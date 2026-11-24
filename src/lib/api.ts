@@ -1001,6 +1001,7 @@ export async function register(email: string, password: string, name?: string) {
 
 export async function saveContent(content: SiteContent) {
   const token = getToken();
+  if (!token) throw new Error("Sessão expirada. Faça login novamente.");
   const res = await fetch(`${API_URL}/api/content`, {
     method: "PUT",
     headers: {
@@ -1009,7 +1010,14 @@ export async function saveContent(content: SiteContent) {
     },
     body: JSON.stringify(content),
   });
-  if (!res.ok) throw new Error("Falha ao salvar");
+  if (res.status === 401 || res.status === 403) {
+    clearToken();
+    throw new Error("Sua sessão expirou. Faça login novamente.");
+  }
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || errorData.message || "Falha ao salvar");
+  }
   return res.json();
 }
 
