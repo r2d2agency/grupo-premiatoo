@@ -99,34 +99,8 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-app.post("/api/auth/register", async (req, res) => {
-  try {
-    const { email, password, name } = req.body || {};
-    if (!email || !password) return res.status(400).json({ error: "missing fields" });
-    
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) return res.status(400).json({ error: "user already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name: name || null,
-        role: "admin"
-      }
-    });
-
-    const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name } });
-  } catch (err) {
-    console.error("Register Error:", err);
-    res.status(500).json({ error: "Internal Server Error", message: err.message });
-  }
-});
+// Public self-registration was removed: it allowed anyone to create an admin account.
+// Admin users must be provisioned via seed or directly in the database.
 
 app.get("/api/content", async (_req, res) => {
   try {
@@ -422,7 +396,11 @@ app.post("/api/smtp-config/test", auth, async (req, res) => {
 
 
 app.use((err, req, res, next) => {
-  console.error("Unhandled Error:", err);
+  // Don't log raw request bodies: malformed login JSON contains plaintext passwords.
+  console.error("Unhandled Error:", err.status || err.statusCode || 500, err.type || err.message);
+  if (err.status === 400 || err.statusCode === 400) {
+    return res.status(400).json({ error: "Invalid JSON body" });
+  }
   res.status(500).json({ error: "Internal Server Error", message: err.message });
 });
 
