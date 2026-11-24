@@ -14,4 +14,13 @@ export default defineConfig({
   nitro: {
     preset: "node-server",
   },
+  vite: {
+    environments: {
+      client: {
+        build: {
+          rollupOptions: { input: "virtual:tanstack-start-client-entry" },
+        },
+      },
+    },
+  },
 });
